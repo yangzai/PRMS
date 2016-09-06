@@ -1,0 +1,119 @@
+html, body  {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    color: black;
+    background-color: white;
+    font-family: Verdana, Arial, sans-serif;
+    font-size:12px;
+}
+.titleDiv {
+    background-color: #58ACF5;
+    font-weight:bold;
+    font-size:18px;
+    text-align:left;
+    padding-left:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+    border: thin groove #002133;
+}
+h1 { font-weight:bold; color: #001C4A; font-size:21px; text-align:left;}
+h2 { font-weight:bold; color: #001C4A; font-size:18px; text-align:left;}
+small {font-weight:bold; color: #001C4A; font-size:6px; text-align:center;}
+td { font-size:12px; padding-right:10px; }
+th { text-align:left; font-weight:bold; font-size:13px; padding-right:10px; }
+.tdLabel { font-weight: bold; white-space:nowrap; vertical-align:top;}
+
+A { color:#4A7F82; text-decoration:none;}
+A:link { text-decoration:none;}
+A:visited { text-decoration:none;}
+A:hover { text-decoration:none; color: red;}
+
+.borderAll {
+    border: 2px solid #162680;
+    width: 100%;
+}
+.footer {
+    width: 100%;
+    align: center;
+}
+.butStnd {
+    font-family:arial,sans-serif;
+    font-size:11px;
+    width:105px;
+    background-color:#DCFAFA;color:#4A5582;font-weight:bold;
+}
+
+.errorMessage {
+    color: red;
+    font-weight: bold;
+}
+.error {
+    color: red;
+    font-weight: bold;
+}
+.errorSection {
+    padding-left:18px;
+    padding-top:2px;
+    padding-bottom:10px;
+    padding-right:5px;
+}
+
+.even { background-color: #DCFAFA; }
+.odd { background-color: white; }
+
+.nowrap { white-space:nowrap; }
+
+button {
+	
+	border-style : none none none none;
+	background : transparent;
+	margin : 0px 0px 0px 0px;
+	padding : 0px 0px 0px 0px;
+	white-space : normal;
+	width : auto;
+}
+
+frame	{
+	margin : 0px 0px 0px 0px;
+	border : none;
+	border-width : 0px 0px 0px 0px;
+	padding : 0px 0px 0px 0px;
+}
+
+table.framed	{
+	border : thin groove #001E33;
+	 width: 100%;
+}
+
+
+.applicationTitle {
+	background : #0F0066;
+	color : white;
+	font-size : 30pt;
+}
+
+.pageTitle {
+	color : #003366;
+	font-weight : lighter;
+	font-size : 16pt;
+}
+
+.userTitle {
+	color : #000066;
+	font-size : 12pt;
+	font-weight : lighter;
+}
+
+.listSectionHeading {
+	color : #000066;
+	font-size : 11pt;
+	background : #EEEEFF;
+        text-align : left;
+}
+
+.listHeading {
+}
+
+.listRecord {
+}

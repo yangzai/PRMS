@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <display-name>PRMS</display-name>
+    <servlet-mapping>
+        <servlet-name>frontController</servlet-name>
+        <url-pattern>/nocturne/*</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>/pages/home.jsp</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>ApplicationResource</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>tiles</servlet-name>
+        <servlet-class>org.apache.tiles.web.startup.simple.SimpleTilesInitializerServlet</servlet-class>
+        <init-param>
+            <param-name>org.apache.tiles.impl.BasicTilesContainer.DEFINITIONS_CONFIG</param-name>
+            <param-value>/WEB-INF/tiles.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>frontController</servlet-name>
+        <servlet-class>at.nocturne.core.NocturneApplicationController</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+</web-app>
