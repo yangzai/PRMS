@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.phoenix.authenticate.delegate;
 
+import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.authenticate.service.AuthenticateService;
 
@@ -18,5 +19,6 @@ public class AuthenticateDelegate {
 	public User evaluateAccessPreviledge(User user) {
 		return service.evaluateAccessPreviledge(user);
 	}
-	
+
+	public Role getRole(String role) { return service.getRole(role); }
 }
