@@ -92,4 +92,13 @@ public class AuthenticateService {
 		}
 		return user;
 	}
+
+	public Role getRole(String role) {
+		try {
+			return rdao.getObject(role);
+		} catch (NotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
