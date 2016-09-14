@@ -24,4 +24,11 @@
 	<definition name="setuprpPage" extends="homePage">
 		<put-attribute name="body" value="/pages/tilepages/setuprp.jsp" />
 	</definition>
+	<definition name="cruduserPage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/cruduser.jsp" />
+	</definition>
+	<definition name="setupuserPage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/setupuser.jsp" />
+	</definition>
+
 </tiles-definitions>
