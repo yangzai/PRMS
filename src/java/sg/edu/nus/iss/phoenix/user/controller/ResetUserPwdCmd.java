@@ -25,7 +25,8 @@ public class ResetUserPwdCmd implements Perform {
         delegate.processResetPwd(userId, newPassword);
         ReviewSelectUserDelegate reviewSelectUserDelegate = new ReviewSelectUserDelegate();
         List<User> userList = reviewSelectUserDelegate.getAllUsers();
-        httpServletRequest.setAttribute("ul",userList);
+        httpServletRequest.setAttribute("ul", userList);
         return "/pages/cruduser.jsp";
     }
 }
+
