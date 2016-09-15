@@ -30,5 +30,7 @@
 	<definition name="setupuserPage" extends="homePage">
 		<put-attribute name="body" value="/pages/tilepages/setupuser.jsp" />
 	</definition>
-
+	<definition name="annualScheduleListPage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/annualScheduleListPage.jsp" />
+	</definition>
 </tiles-definitions>

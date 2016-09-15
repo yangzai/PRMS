@@ -1,5 +1,9 @@
 package sg.edu.nus.iss.phoenix.core.dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class DBConstants {
 	
 	// Data Connection Variables
@@ -25,8 +29,8 @@ public class DBConstants {
     //roles table field names
     public static final String r_role = "role";
     public static final String r_access ="accessPrivilege";
-    
 
-
-
+    public static Connection newConnection() throws SQLException {
+        return DriverManager.getConnection(dbUrl, dbUserName, dbPassword);
+    }
 }
