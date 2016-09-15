@@ -19,8 +19,18 @@
 
     <title><fmt:message key="title.setupuser" /></title>
 </head>
+
 <body>
-<form action="${pageContext.request.contextPath}/nocturne/enteruser" method=post>
+<c:choose>
+    <c:when test="${param['insert'] == 'true'}">
+        <c:set var="action_path" scope="page" value="${pageContext.request.contextPath}/nocturne/enteruser"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="action_path" scope="page" value="${pageContext.request.contextPath}/nocturne/resetUserPassword"/>
+    </c:otherwise>
+</c:choose>
+
+<form action="${action_path}" method=post>
     <center>
         <table cellpadding=4 cellspacing=2 border=0>
             <tr>
@@ -51,26 +61,20 @@
             </tr>
             <tr>
                 <td><fmt:message key="label.cruduser.password" /></td>
-                <td><input type="password" name="password"
+                <td><input type="password" name="password" required="required"
                            value="" size=15 maxlength=20></td>
             </tr>
             <tr>
                 <td><fmt:message key="label.cruduser.roles" /></td>
                 <td>
-                    <c:forEach items="${rolesMapping}" var="entry">
-
-                            <%-- If the user has the appropriate skill, the related checkbox will be checked. Otherwise unchecked. --%>
-                            <%-- Note: using skill as a key in the map of user skills --%>
-                            <input type="checkbox" name="chkSkills" value="${entry.key}" <c:if test="${entry.value == true}">checked</c:if> />${entry.key}
-
-
-
+                    <c:forEach items="${roles}" var="role">
+                            <input type="checkbox" name="chkRoles" value="${role.role}"/>${role.role} <br/>
                     </c:forEach>
                 </td>
             </tr>
         </table>
     </center>
-    <input type="submit" value="Submit"> <input type="reset"
+    <input type="submit" name="submit" value="Submit"> <input type="reset"
                                                 value="Reset">
 </form>
 

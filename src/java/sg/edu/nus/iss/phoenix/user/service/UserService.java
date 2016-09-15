@@ -6,7 +6,9 @@ import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactory;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
+import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +41,55 @@ public class UserService {
             return new ArrayList<>();
         }
     }
-    public Map getUserRolesMapping(String userId){
+
+    public int processCreate(User user, String[] chkRoles){
+        try {
+            if (userDAO.searchMatching(user.getId()) != null ){
+                // User id exists
+                return -1;
+            }
+            user.setRoles(this.searchRolesByStrings(chkRoles));
+            userDAO.create(user);
+            return 1;
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE,"SQL Error",ex.toString());
+        }
+        return 0;
+    }
+
+    public int resetPassword(String userId, String newPassword){
+        try {
+            User user = userDAO.searchMatching(userId);
+            if (user == null){
+                return -1;
+            }
+            user.setPassword(newPassword);
+            userDAO.save(user);
+            return 1;
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+
+    }
+    public ArrayList<Role> searchRolesByStrings(String[] strs){
+        ArrayList<Role> roles = new ArrayList<>();
+        for (String roleStr : strs){
+            Role role = null;
+            try {
+                role = roleDAO.searchMatching(roleStr);
+                if (role != null){
+                    roles.add(role);
+                }
+            } catch (SQLException ex){
+                logger.log(Level.SEVERE,"SQL Error",ex.toString());
+            }
+        }
+        return roles;
+    }
+/*    public Map getUserRolesMapping(String userId){
         try {
             ArrayList roles = userDAO.searchMatching(userId).getRoles();
             List<Role> allroles = this.getAllRoles();
@@ -53,5 +103,5 @@ public class UserService {
             logger.log(Level.SEVERE,"SQL Error",ex.toString());
             return new HashMap();
         }
-    }
+    }*/
 }

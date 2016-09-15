@@ -35,7 +35,7 @@ public class EnterProgramDetailsCmd implements Perform {
         System.out.println(rp.toString());
         Time t = Time.valueOf(dur);
         rp.setTypicalDuration(t);
-        String ins = (String) req.getParameter("ins");
+        String ins = req.getParameter("ins");
         Logger.getLogger(getClass().getName()).log(Level.INFO,
                         "Insert Flag: " + ins);
         if (ins.equalsIgnoreCase("true")) {
