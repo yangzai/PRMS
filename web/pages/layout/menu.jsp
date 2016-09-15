@@ -38,6 +38,13 @@
 				</a>
 			</td>
 		</tr>
+		<tr>
+			<td>
+				<a href="<c:url value="/nocturne/manageschedule"/>"> <fmt:message
+						key="caption.menu.manageschedule" />
+				</a>
+			</td>
+		</tr>
 	<tr>
 		<td>
 			<a href="<c:url value="/nocturne/create-annual-schedule"/>"> <fmt:message
