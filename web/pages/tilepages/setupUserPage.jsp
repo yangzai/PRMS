@@ -64,14 +64,16 @@
                 <td><input type="password" name="password" required="required"
                            value="" size=15 maxlength=20></td>
             </tr>
-            <tr>s
-                <td><fmt:message key="label.cruduser.roles" /></td>
-                <td>
-                    <c:forEach items="${roles}" var="role">
+            <c:if test="${param['insert'] == 'true'}">
+                <tr>
+                    <td><fmt:message key="label.cruduser.roles" /></td>
+                    <td>
+                        <c:forEach items="${roles}" var="role">
                             <input type="checkbox" name="chkRoles" value="${role.role}"/>${role.role} <br/>
-                    </c:forEach>
-                </td>
-            </tr>
+                        </c:forEach>
+                    </td>
+                </tr>
+            </c:if>
         </table>
     </center>
     <input type="submit" name="submit" value="Submit"> <input type="reset"

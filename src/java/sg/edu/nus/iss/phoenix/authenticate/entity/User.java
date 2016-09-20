@@ -76,6 +76,14 @@ public class User implements Cloneable, Serializable {
 		this.roles = roles;
 	}
 
+	public String getRolesInSring(){
+		//Get all roles in String to insert into database
+		String rolesStr = "";
+		for (Role role : this.getRoles()){
+			rolesStr = rolesStr + role.getRole() + ":";
+		}
+		return rolesStr.substring(0,rolesStr.length()-1);
+	}
 	/**
 	 * setAll allows to set all persistent variables in one method call. This is
 	 * useful, when all data is available and it is needed to set the initial

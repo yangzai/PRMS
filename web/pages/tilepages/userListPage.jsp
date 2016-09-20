@@ -46,7 +46,7 @@
                 <c:url var="delurl" scope="page" value="/nocturne/deleteuser">
                     <c:param name="id" value="${cruduser.id}"/>
                 </c:url>
-                <a href="${delurl}"><fmt:message key="label.cruduser.delete"/></a>
+                <a href="${delurl}" onclick="return confirm('Are you sure you want to delete this user?')"><fmt:message key="label.cruduser.delete"/></a>
             </td>
         </tr>
     </c:forEach>
