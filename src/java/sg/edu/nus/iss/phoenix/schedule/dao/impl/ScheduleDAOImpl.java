@@ -32,8 +32,9 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             SQLException {
 
         ProgramSlot valueObject = createValueObject();
-        //valueObject.setName(name);
-        //load(valueObject);
+        valueObject.setDuration(duration);
+        valueObject.setDateOfProgram(dateOfProgram);
+        load(valueObject);
         return valueObject;
     }
 
@@ -44,25 +45,25 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     public void load(ProgramSlot valueObject) throws NotFoundException,
             SQLException {
 
-//        if (valueObject.getName() == null) {
-//            // System.out.println("Can not select without Primary-Key!");
-//            throw new NotFoundException("Can not select without Primary-Key!");
-//        }
-//
-//        String sql = "SELECT * FROM `radio-program` WHERE (`name` = ? ); ";
-//        PreparedStatement stmt = null;
-//        openConnection();
-//        try {
-//            stmt = connection.prepareStatement(sql);
-//            stmt.setString(1, valueObject.getName());
-//
-//            singleQuery(stmt, valueObject);
-//
-//        } finally {
-//            if (stmt != null)
-//                stmt.close();
-//            closeConnection();
-//        }
+        if (valueObject.getDuration() == null || valueObject.getDateOfProgram() == null) {
+            // System.out.println("Can not select without Primary-Key!");
+            throw new NotFoundException("Can not select without Primary-Key!");
+        }
+
+        String sql = "SELECT * FROM `program-slot` WHERE (`duration` = ? and 'dateOfProgram' = ?); ";
+        PreparedStatement stmt = null;
+        openConnection();
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setTime(1, valueObject.getDuration());
+            stmt.setDate(2, valueObject.getDateOfProgram());
+            singleQuery(stmt, valueObject);
+
+        } finally {
+            if (stmt != null)
+                stmt.close();
+            closeConnection();
+        }
     }
 
     /* (non-Javadoc)
@@ -70,14 +71,13 @@ public class ScheduleDAOImpl implements ScheduleDAO{
      */
     @Override
     public List<ProgramSlot> loadAll() throws SQLException {
-//        openConnection();
-//        String sql = "SELECT * FROM `radio-program` ORDER BY `name` ASC; ";
-//        List<RadioProgram> searchResults = listQuery(connection
-//                .prepareStatement(sql));
-//        closeConnection();
-//        System.out.println("record size"+searchResults.size());
-//        return searchResults;
-        return null;
+        openConnection();
+        String sql = "SELECT * FROM `program-slot` ORDER BY `dateOfProgram` ASC; ";
+        List<ProgramSlot> searchResults = listQuery(connection
+                .prepareStatement(sql));
+        closeConnection();
+        System.out.println("record size"+searchResults.size());
+        return searchResults;
     }
 
     /* (non-Javadoc)
@@ -89,24 +89,25 @@ public class ScheduleDAOImpl implements ScheduleDAO{
 
         String sql = "";
         PreparedStatement stmt = null;
-//        openConnection();
-//        try {
-//            sql = "INSERT INTO `radio-program` (`name`, `desc`, `typicalDuration`) VALUES (?,?,?); ";
-//            stmt = connection.prepareStatement(sql);
-//            stmt.setString(1, valueObject.getName());
-//            stmt.setString(2, valueObject.getDescription());
-//            stmt.setTime(3, valueObject.getTypicalDuration());
-//            int rowcount = databaseUpdate(stmt);
-//            if (rowcount != 1) {
-//                // System.out.println("PrimaryKey Error when updating DB!");
-//                throw new SQLException("PrimaryKey Error when updating DB!");
-//            }
-//
-//        } finally {
-//            if (stmt != null)
-//                stmt.close();
-//            closeConnection();
-//        }
+        openConnection();
+        try {
+            sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, `program-name`) VALUES (?,?,?,?); ";
+            stmt = connection.prepareStatement(sql);
+            stmt.setTime(1, valueObject.getDuration());
+            stmt.setDate(2, valueObject.getDateOfProgram());
+            stmt.setDate(3, null);
+            stmt.setString(4, valueObject.getRadioProgram().getName());
+            int rowcount = databaseUpdate(stmt);
+            if (rowcount != 1) {
+                // System.out.println("PrimaryKey Error when updating DB!");
+                throw new SQLException("PrimaryKey Error when updating DB!");
+            }
+
+        } finally {
+            if (stmt != null)
+                stmt.close();
+            closeConnection();
+        }
 
     }
 
