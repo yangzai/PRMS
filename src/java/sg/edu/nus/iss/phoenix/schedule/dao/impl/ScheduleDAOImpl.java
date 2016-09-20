@@ -28,12 +28,13 @@ public class ScheduleDAOImpl implements ScheduleDAO{
      * @see sg.edu.nus.iss.phoenix.radioprogram.dao.impl.ProgramDAO#getObject(java.lang.String)
      */
     @Override
-    public ProgramSlot getObject(String name) throws NotFoundException,
+    public ProgramSlot getObject(Time duration, Date dateOfProgram) throws NotFoundException,
             SQLException {
 
         ProgramSlot valueObject = createValueObject();
-        //valueObject.setName(name);
-        //load(valueObject);
+        valueObject.setDuration(duration);
+        valueObject.setDateOfProgram(dateOfProgram);
+        load(valueObject);
         return valueObject;
     }
 
@@ -44,7 +45,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     public void load(ProgramSlot valueObject) throws NotFoundException,
             SQLException {
 
-        if (valueObject.getDuration() == null) {
+        if (valueObject.getDuration() == null || valueObject.getDateOfProgram() == null) {
             // System.out.println("Can not select without Primary-Key!");
             throw new NotFoundException("Can not select without Primary-Key!");
         }
@@ -63,6 +64,20 @@ public class ScheduleDAOImpl implements ScheduleDAO{
                 stmt.close();
             closeConnection();
         }
+//        String sql = "SELECT * FROM `program-slot` WHERE (`name` = ? ); ";
+//        PreparedStatement stmt = null;
+        openConnection();
+ //       try {
+//            stmt = connection.prepareStatement(sql);
+//            stmt.setString(1, valueObject.getName());
+//
+//            singleQuery(stmt, valueObject);
+//
+//        } finally {
+//            if (stmt != null)
+//                stmt.close();
+//            closeConnection();
+//        }
     }
 
     /* (non-Javadoc)
