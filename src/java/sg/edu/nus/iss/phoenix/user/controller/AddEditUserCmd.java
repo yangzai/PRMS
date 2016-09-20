@@ -25,6 +25,6 @@ public class AddEditUserCmd implements Perform {
         String selectedId = httpServletRequest.getParameter("id");
         List<Role> roleList = delegate.getAllRoles();
         httpServletRequest.setAttribute("roles",roleList);
-        return "/pages/setupuser.jsp";
+        return "/pages/setupUserPage.jsp";
     }
 }

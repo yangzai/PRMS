@@ -7,6 +7,7 @@ import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactory;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
+import sg.edu.nus.iss.phoenix.user.controller.ReturnCode;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,32 +47,31 @@ public class UserService {
         try {
             if (userDAO.searchMatching(user.getId()) != null ){
                 // User id exists
-                return -1;
+                return ReturnCode.USER_DUPLICATED;
             }
             user.setRoles(this.searchRolesByStrings(chkRoles));
             userDAO.create(user);
-            return 1;
+            return ReturnCode.SUCCESS;
         } catch (SQLException ex) {
             logger.log(Level.SEVERE,"SQL Error",ex.toString());
         }
-        return 0;
+        return ReturnCode.FAIL;
     }
 
     public int resetPassword(String userId, String newPassword){
         try {
             User user = userDAO.searchMatching(userId);
             if (user == null){
-                return -1;
+                //User does not exist
+                return ReturnCode.USER_NOT_FOUND;
             }
             user.setPassword(newPassword);
             userDAO.save(user);
-            return 1;
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return ReturnCode.SUCCESS;
+        } catch (Exception e) {
+            logger.log(Level.SEVERE,"Error ", e.toString());
         }
-        return 0;
+        return ReturnCode.FAIL;
 
     }
     public ArrayList<Role> searchRolesByStrings(String[] strs){
@@ -84,11 +84,33 @@ public class UserService {
                     roles.add(role);
                 }
             } catch (SQLException ex){
-                logger.log(Level.SEVERE,"SQL Error",ex.toString());
+                logger.log(Level.SEVERE,"SQL Error ",ex.toString());
             }
         }
         return roles;
     }
+
+    public User checkUserExist(String userid){
+        User user = null;
+        try {
+            user = userDAO.searchMatching(userid);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE,"SQL Error ", e.toString());
+        }
+        return user;
+    }
+
+    public int deleteUser(User user){
+        int returnCode = ReturnCode.FAIL;
+        try {
+            userDAO.delete(user);
+            returnCode = ReturnCode.SUCCESS;
+        } catch (Exception ex){
+            logger.log(Level.SEVERE,"Error ",ex.toString());
+        }
+        return  returnCode;
+    }
+
 /*    public Map getUserRolesMapping(String userId){
         try {
             ArrayList roles = userDAO.searchMatching(userId).getRoles();

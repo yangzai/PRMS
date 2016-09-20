@@ -22,11 +22,21 @@ public class ResetUserPwdCmd implements Perform {
         UserDelegate delegate = new UserDelegate();
         String newPassword = httpServletRequest.getParameter("password");
         String userId = httpServletRequest.getParameter("id");
-        delegate.processResetPwd(userId, newPassword);
-        ReviewSelectUserDelegate reviewSelectUserDelegate = new ReviewSelectUserDelegate();
-        List<User> userList = reviewSelectUserDelegate.getAllUsers();
-        httpServletRequest.setAttribute("ul", userList);
-        return "/pages/cruduser.jsp";
+        int returnCode = delegate.processResetPwd(userId, newPassword);
+        switch (returnCode){
+            case ReturnCode.SUCCESS:
+                ReviewSelectUserDelegate reviewSelectUserDelegate = new ReviewSelectUserDelegate();
+                List<User> userList = reviewSelectUserDelegate.getAllUsers();
+                httpServletRequest.setAttribute("ul", userList);
+                return "/pages/userListPage.jsp";
+            case ReturnCode.USER_NOT_FOUND:
+                httpServletRequest.setAttribute("err_message","User doest not exist");
+                return "/pages/error.jsp";
+            default:
+                httpServletRequest.setAttribute("err_message","System Error");
+                return "/pages/error.jsp";
+        }
+
     }
 }
 

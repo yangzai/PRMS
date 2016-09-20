@@ -33,12 +33,12 @@ public class EnterUserDetailsCmd implements Perform{
             returnCode = delegate.processCreate(user,chkRoles);
         }
         switch (returnCode) {
-            case 1:
+            case ReturnCode.SUCCESS:
                 ReviewSelectUserDelegate reviewSelectUserDelegate = new ReviewSelectUserDelegate();
                 List<User> userList = reviewSelectUserDelegate.getAllUsers();
                 httpServletRequest.setAttribute("ul",userList);
-                return "/pages/cruduser.jsp";
-            case -1:
+                return "/pages/userListPage.jsp";
+            case ReturnCode.USER_DUPLICATED:
                 httpServletRequest.setAttribute("err_message","Duplicate user id");
                 return "/pages/error.jsp";
             default:

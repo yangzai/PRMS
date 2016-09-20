@@ -2,6 +2,7 @@ package sg.edu.nus.iss.phoenix.user.delegate;
 
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+import sg.edu.nus.iss.phoenix.user.controller.ReturnCode;
 import sg.edu.nus.iss.phoenix.user.service.UserService;
 
 import java.util.ArrayList;
@@ -28,5 +29,13 @@ public class UserDelegate {
 
     public int processCreate(User user, String[] chkRoles){
         return service.processCreate(user, chkRoles);
+    }
+
+    public int processDelete(String userid){
+        User user = service.checkUserExist(userid);
+        if (user == null){
+            return ReturnCode.USER_NOT_FOUND;
+        }
+        return service.deleteUser(user);
     }
 }

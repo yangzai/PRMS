@@ -64,7 +64,7 @@
                 <td><input type="password" name="password" required="required"
                            value="" size=15 maxlength=20></td>
             </tr>
-            <tr>
+            <tr>s
                 <td><fmt:message key="label.cruduser.roles" /></td>
                 <td>
                     <c:forEach items="${roles}" var="role">
