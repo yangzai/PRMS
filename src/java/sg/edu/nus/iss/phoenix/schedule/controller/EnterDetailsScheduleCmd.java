@@ -72,7 +72,7 @@ public class EnterDetailsScheduleCmd implements Perform {
         ReviewSelectScheduledProgramDelegate rsdel = new ReviewSelectScheduledProgramDelegate();
         List<ProgramSlot> data = rsdel.reviewSelectScheduledProgram();
         //parse programslots to scheduleProgramList page
-        req.setAttribute("pss", data);
+        req.setAttribute("psl", data);
         return "/pages/scheduleProgramList.jsp";
     }
 }
