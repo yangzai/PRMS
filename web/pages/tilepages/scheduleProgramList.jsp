@@ -18,7 +18,7 @@
 </head>
 <body>
 <h1><fmt:message key="label.scheduleProgramList"/></h1>
-<c:url var="url" scope="page" value="/nocturne/addeditrp">
+<c:url var="url" scope="page" value="/nocturne/addeditps">
     <c:param name="duration" value=""/>
     <c:param name="dateOfProgram" value=""/>
     <c:param name="radioprogram" value=""/>

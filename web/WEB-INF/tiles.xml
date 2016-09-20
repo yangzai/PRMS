@@ -39,4 +39,7 @@
 	<definition name="scheduleProgramListPage" extends="homePage">
 		<put-attribute name="body" value="/pages/tilepages/scheduleProgramList.jsp" />
 	</definition>
+	<definition name="setupSchedulePage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/setupschedule.jsp" />
+	</definition>
 </tiles-definitions>
