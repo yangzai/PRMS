@@ -7,6 +7,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 import java.sql.*;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by yao on 15/09/16.
@@ -48,7 +49,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             throw new NotFoundException("Can not select without Primary-Key!");
         }
 
-        String sql = "SELECT * FROM `program-slot` WHERE (`duration` = ? and 'dateOfProgram' = ?); ";
+        String sql = "SELECT * FROM `program-slot` WHERE (`duration` = ? AND `dateOfProgram` = ?); ";
         PreparedStatement stmt = null;
         openConnection();
         try {
@@ -89,7 +90,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
         PreparedStatement stmt = null;
         openConnection();
         try {
-            sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, `program-name`) VALUES (?,?,?,?); ";
+            sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, `program-name`, `presenter`, `producer`) VALUES (?,?,?,?,?,?); ";
             stmt = connection.prepareStatement(sql);
             stmt.setTime(1, valueObject.getDuration());
             stmt.setDate(2, valueObject.getDateOfProgram());
@@ -99,7 +100,6 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             stmt.setString(6, valueObject.getProducer().getName());
             int rowcount = databaseUpdate(stmt);
             if (rowcount != 1) {
-                // System.out.println("PrimaryKey Error when updating DB!");
                 throw new SQLException("PrimaryKey Error when updating DB!");
             }
 
@@ -118,32 +118,32 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     public void save(ProgramSlot valueObject) throws NotFoundException,
             SQLException {
 
-        String sql = "UPDATE `radio-program` SET `desc` = ?, `typicalDuration` = ? WHERE (`name` = ? ); ";
+        String sql = "UPDATE `program-slot` SET `program-name` = ?, `presenter` = ?, `producer` = ? WHERE (`duration` = ? AND `dateOfProgram` = ?); ";
         PreparedStatement stmt = null;
-//        openConnection();
-//        try {
-//            stmt = connection.prepareStatement(sql);
-//            stmt.setString(1, valueObject.getDescription());
-//            stmt.setTime(2, valueObject.getTypicalDuration());
-//
-//            stmt.setString(3, valueObject.getName());
-//
-//            int rowcount = databaseUpdate(stmt);
-//            if (rowcount == 0) {
-//                // System.out.println("Object could not be saved! (PrimaryKey not found)");
-//                throw new NotFoundException(
-//                        "Object could not be saved! (PrimaryKey not found)");
-//            }
-//            if (rowcount > 1) {
-//                // System.out.println("PrimaryKey Error when updating DB! (Many objects were affected!)");
-//                throw new SQLException(
-//                        "PrimaryKey Error when updating DB! (Many objects were affected!)");
-//            }
-//        } finally {
-//            if (stmt != null)
-//                stmt.close();
-//            closeConnection();
-//        }
+        openConnection();
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, valueObject.getRadioProgram().getName());
+            stmt.setString(2, valueObject.getPresenter().getName());
+            stmt.setString(3, valueObject.getProducer().getName());
+
+            stmt.setTime(4, valueObject.getDuration());
+            stmt.setDate(5, valueObject.getDateOfProgram());
+
+            int rowcount = databaseUpdate(stmt);
+            if (rowcount == 0) {
+                throw new NotFoundException(
+                        "Object could not be saved! (PrimaryKey not found)");
+            }
+            if (rowcount > 1) {
+                throw new SQLException(
+                        "PrimaryKey Error when updating DB! (Many objects were affected!)");
+            }
+        } finally {
+            if (stmt != null)
+                stmt.close();
+            closeConnection();
+        }
     }
 
     /* (non-Javadoc)
@@ -153,34 +153,32 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     public void delete(ProgramSlot valueObject) throws NotFoundException,
             SQLException {
 
-//        if (valueObject.getName() == null) {
-//            // System.out.println("Can not delete without Primary-Key!");
-//            throw new NotFoundException("Can not delete without Primary-Key!");
-//        }
-//
-//        String sql = "DELETE FROM `radio-program` WHERE (`name` = ? ); ";
-//        PreparedStatement stmt = null;
-//        openConnection();
-//        try {
-//            stmt = connection.prepareStatement(sql);
-//            stmt.setString(1, valueObject.getName());
-//
-//            int rowcount = databaseUpdate(stmt);
-//            if (rowcount == 0) {
-//                // System.out.println("Object could not be deleted (PrimaryKey not found)");
-//                throw new NotFoundException(
-//                        "Object could not be deleted! (PrimaryKey not found)");
-//            }
-//            if (rowcount > 1) {
-//                // System.out.println("PrimaryKey Error when updating DB! (Many objects were deleted!)");
-//                throw new SQLException(
-//                        "PrimaryKey Error when updating DB! (Many objects were deleted!)");
-//            }
-//        } finally {
-//            if (stmt != null)
-//                stmt.close();
-//            closeConnection();
-//        }
+        if (valueObject.getDuration() == null || valueObject.getDateOfProgram() == null) {
+            throw new NotFoundException("Can not delete without Primary-Key!");
+        }
+
+        String sql = "DELETE FROM `program-slot` WHERE (`duration` = ? AND `dateOfProgram` = ?); ";
+        PreparedStatement stmt = null;
+        openConnection();
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setTime(1, valueObject.getDuration());
+            stmt.setDate(2, valueObject.getDateOfProgram());
+
+            int rowcount = databaseUpdate(stmt);
+            if (rowcount == 0) {
+                throw new NotFoundException(
+                        "Object could not be deleted! (PrimaryKey not found)");
+            }
+            if (rowcount > 1) {
+                throw new SQLException(
+                        "PrimaryKey Error when updating DB! (Many objects were deleted!)");
+            }
+        } finally {
+            if (stmt != null)
+                stmt.close();
+            closeConnection();
+        }
     }
 
     /* (non-Javadoc)
@@ -189,19 +187,18 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     @Override
     public void deleteAll(Connection conn) throws SQLException {
 
-//        String sql = "DELETE FROM `radio-program`";
-//        PreparedStatement stmt = null;
-//        openConnection();
-//        try {
-//            stmt = connection.prepareStatement(sql);
-//            int rowcount = databaseUpdate(stmt);
-//            System.out.println(""+rowcount);
-//        } finally {
-//            if (stmt != null)
-//                stmt.close();
-//            closeConnection();
-//
-//        }
+        String sql = "DELETE FROM `program-slot`";
+        PreparedStatement stmt = null;
+        openConnection();
+        try {
+            stmt = connection.prepareStatement(sql);
+            int rowcount = databaseUpdate(stmt);
+            System.out.println(""+rowcount);
+        } finally {
+            if (stmt != null)
+                stmt.close();
+            closeConnection();
+        }
     }
 
     /* (non-Javadoc)
@@ -210,26 +207,25 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     @Override
     public int countAll() throws SQLException {
 
-//        String sql = "SELECT count(*) FROM `radio-program`";
-//        PreparedStatement stmt = null;
-//        ResultSet result = null;
-//        int allRows = 0;
-//        openConnection();
-//        try {
-//            stmt = connection.prepareStatement(sql);
-//            result = stmt.executeQuery();
-//
-//            if (result.next())
-//                allRows = result.getInt(1);
-//        } finally {
-//            if (result != null)
-//                result.close();
-//            if (stmt != null)
-//                stmt.close();
-//            closeConnection();
-//        }
-//        return allRows;
-        return 0;
+        String sql = "SELECT count(*) FROM `program-slot`";
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        int allRows = 0;
+        openConnection();
+        try {
+            stmt = connection.prepareStatement(sql);
+            result = stmt.executeQuery();
+
+            if (result.next())
+                allRows = result.getInt(1);
+        } finally {
+            if (result != null)
+                result.close();
+            if (stmt != null)
+                stmt.close();
+            closeConnection();
+        }
+        return allRows;
     }
 
     /* (non-Javadoc)
@@ -238,49 +234,62 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     @Override
     public List<ProgramSlot> searchMatching(ProgramSlot valueObject) throws SQLException {
 
-//        @SuppressWarnings("UnusedAssignment")
-//        List<RadioProgram> searchResults = new ArrayList<>();
-//        openConnection();
-//        boolean first = true;
-//        StringBuilder sql = new StringBuilder(
-//                "SELECT * FROM `radio-program` WHERE 1=1 ");
-//
-//        if (valueObject.getName() != null) {
-//            if (first) {
-//                first = false;
-//            }
-//            sql.append("AND `name` LIKE '").append(valueObject.getName())
-//                    .append("%' ");
-//        }
-//
-//        if (valueObject.getDescription() != null) {
-//            if (first) {
-//                first = false;
-//            }
-//            sql.append("AND `desc` LIKE '").append(valueObject.getDescription())
-//                    .append("%' ");
-//        }
-//
-//        if (valueObject.getTypicalDuration() != null) {
-//            if (first) {
-//                first = false;
-//            }
-//            sql.append("AND `typicalDuration` = '")
-//                    .append(valueObject.getTypicalDuration()).append("' ");
-//        }
-//
-//        sql.append("ORDER BY `name` ASC ");
-//
-//        // Prevent accidential full table results.
-//        // Use loadAll if all rows must be returned.
-//        if (first)
-//            searchResults = new ArrayList<>();
-//        else
-//            searchResults = listQuery(connection.prepareStatement(sql
-//                    .toString()));
-//        closeConnection();
-//        return searchResults;
-        return null;
+        @SuppressWarnings("UnusedAssignment")
+        List<ProgramSlot> searchResults = new ArrayList<>();
+        openConnection();
+        boolean first = true;
+        StringBuilder sql = new StringBuilder(
+                "SELECT * FROM `program-slot` WHERE 1=1 ");
+
+        if (valueObject.getDuration() != null) {
+            if (first) {
+                first = false;
+            }
+            sql.append("AND `duration` = '").append(valueObject.getDuration())
+                    .append("' ");
+        }
+
+        if (valueObject.getDateOfProgram() != null) {
+            if (first) {
+                first =false;
+            }
+            sql.append("AND `dateOfProgram` = '").append(valueObject.getDateOfProgram()).append("' ");
+        }
+
+        if (valueObject.getRadioProgram() != null) {
+            if (first) {
+                first = false;
+            }
+            sql.append("AND `program-name` LIKE '").append(valueObject.getRadioProgram().getName())
+                    .append("%' ");
+        }
+
+        if (valueObject.getPresenter() != null) {
+            if (first) {
+                first = false;
+            }
+            sql.append("AND `presenter` LIKE '")
+                    .append(valueObject.getPresenter().getName()).append("%' ");
+        }
+
+        if (valueObject.getProducer() != null) {
+            if (first) {
+                first = false;
+            }
+            sql.append("AND `producer` LIKE '").append(valueObject.getProducer().getName()).append("%' ");
+        }
+
+        sql.append("ORDER BY `dateOfProgram` ASC ");
+
+        // Prevent accidential full table results.
+        // Use loadAll if all rows must be returned.
+        if (first)
+            searchResults = new ArrayList<>();
+        else
+            searchResults = listQuery(connection.prepareStatement(sql
+                    .toString()));
+        closeConnection();
+        return searchResults;
     }
 
     /**
@@ -319,28 +328,29 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             throws NotFoundException, SQLException {
 
         ResultSet result = null;
-//        openConnection();
-//        try {
-//            result = stmt.executeQuery();
-//
-//            if (result.next()) {
-//
+        openConnection();
+        try {
+            result = stmt.executeQuery();
+
+            if (result.next()) {
+                valueObject.setDuration(result.getTime("duration"));
+                valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
+ //               valueObject.setRadioProgram(result.getString("program-name"));
 //                valueObject.setName(result.getString("name"));
 //                valueObject.setDescription(result.getString("desc"));
 //                valueObject.setTypicalDuration(result
 //                        .getTime("typicalDuration"));
-//
-//            } else {
-//                // System.out.println("RadioProgram Object Not Found!");
-//                throw new NotFoundException("RadioProgram Object Not Found!");
-//            }
-//        } finally {
-//            if (result != null)
-//                result.close();
-//            if (stmt != null)
-//                stmt.close();
-//            closeConnection();
-//        }
+
+            } else {
+                throw new NotFoundException("ProgramSlot Object Not Found!");
+            }
+        } finally {
+            if (result != null)
+                result.close();
+            if (stmt != null)
+                stmt.close();
+            closeConnection();
+        }
     }
 
     /**
