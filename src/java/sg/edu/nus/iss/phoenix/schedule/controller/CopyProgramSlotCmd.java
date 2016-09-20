@@ -11,10 +11,10 @@ import java.io.IOException;
 /**
  * Created by yao on 15/09/16.
  */
-@Action("copyprogramslot")
+@Action("copyps")
 public class CopyProgramSlotCmd implements Perform {
     @Override
     public String perform(String s, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException, ServletException {
-        return null;
+        return "/pages/setupschedule.jsp";
     }
 }
