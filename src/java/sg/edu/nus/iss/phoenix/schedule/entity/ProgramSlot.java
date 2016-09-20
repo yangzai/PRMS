@@ -11,26 +11,25 @@ import java.util.Date;
 public class ProgramSlot {
 
     //attribute
-    private Date startTime;
+    private Date dateOfProgram;
     private Time duration;
     private RadioProgram radioProgram;
-//    private Presenter presenter;//Is there an entity call this? or two????????????
-//    private Producer producer;
-    private User preOrPro;
+    private User presenter;
+    private User producer;
     private User assignedBy;
 
     public ProgramSlot () {
 
     }
     public  ProgramSlot(Date startTime){
-        this.startTime=startTime;
+        this.dateOfProgram=startTime;
     }
 
     public Date getStartTime(){
-        return this.startTime;
+        return this.dateOfProgram;
     }
     public void setStartTime(Date startTime){
-        this.startTime=startTime;
+        this.dateOfProgram=startTime;
     }
 
     public Time getDuration(){
@@ -47,11 +46,18 @@ public class ProgramSlot {
         this.radioProgram=radioProgram;
     }
 
-    public User getPreOrPro(){
-        return this.preOrPro;
+    public User getPresenter(){
+        return this.presenter;
     }
-    public void setPreOrPro(User preOrPro){
-        this.preOrPro=preOrPro;
+    public void setPresenter(User presenter){
+        this.presenter=presenter;
+    }
+
+    public User getProducer(){
+        return this.producer;
+    }
+    public void setProducer(User producer){
+        this.producer=producer;
     }
 
     public User getAssignedBy(){
@@ -62,20 +68,21 @@ public class ProgramSlot {
     }
 
     public void setAll(Date startTime,
-                       Time duration,RadioProgram radioProgram,User preOrPro,User assignedBy) {
-        this.startTime = startTime;
+                       Time duration,RadioProgram radioProgram,User presenter,User producer,User assignedBy) {
+        this.dateOfProgram = startTime;
         this.duration = duration;
         this.radioProgram = radioProgram;
-        this.preOrPro=preOrPro;
+        this.presenter=presenter;
+        this.producer=producer;
         this.assignedBy=assignedBy;
     }
 
     public boolean hasEqualMapping(ProgramSlot valueObject) {
 
-        if (this.startTime == null) {
+        if (this.dateOfProgram == null) {
             if (valueObject.getStartTime() != null)
                 return(false);
-        } else if (!this.startTime.equals(valueObject.getStartTime())) {
+        } else if (!this.dateOfProgram.equals(valueObject.getStartTime())) {
             return(false);
         }
         if (this.duration == null) {
@@ -90,10 +97,16 @@ public class ProgramSlot {
         } else if (!this.radioProgram.equals(valueObject.getRadioProgram())) {
             return(false);
         }
-        if (this.preOrPro == null) {
-            if (valueObject.getPreOrPro() != null)
+        if (this.presenter == null) {
+            if (valueObject.getPresenter() != null)
                 return(false);
-        } else if (!this.getPreOrPro().equals(valueObject.getPreOrPro())) {
+        } else if (!this.getPresenter().equals(valueObject.getPresenter())) {
+            return(false);
+        }
+        if (this.producer == null) {
+            if (valueObject.getProducer() != null)
+                return(false);
+        } else if (!this.getProducer().equals(valueObject.getProducer())) {
             return(false);
         }
 
