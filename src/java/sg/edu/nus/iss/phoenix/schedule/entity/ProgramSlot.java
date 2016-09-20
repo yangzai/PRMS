@@ -24,8 +24,9 @@ public class ProgramSlot {
     public ProgramSlot () {
 
     }
-    public  ProgramSlot(Date startTime){
-        this.dateOfProgram=startTime;
+    public ProgramSlot(Time duration, Date dateOfProgram){
+        this.duration = duration;
+        this.dateOfProgram = dateOfProgram;
     }
 
     public Date getDateOfProgram(){

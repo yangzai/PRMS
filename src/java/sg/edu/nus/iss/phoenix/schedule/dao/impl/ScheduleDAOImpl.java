@@ -2,12 +2,10 @@ package sg.edu.nus.iss.phoenix.schedule.dao.impl;
 
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
-import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -97,6 +95,8 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             stmt.setDate(2, valueObject.getDateOfProgram());
             stmt.setDate(3, null);
             stmt.setString(4, valueObject.getRadioProgram().getName());
+            stmt.setString(5, valueObject.getPresenter().getName());
+            stmt.setString(6, valueObject.getProducer().getName());
             int rowcount = databaseUpdate(stmt);
             if (rowcount != 1) {
                 // System.out.println("PrimaryKey Error when updating DB!");
