@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by yao on 15/09/16.
+ * Added by Xuemin on 15/09/20.
  */
 @Action("copyps")
 public class CopyProgramSlotCmd implements Perform {

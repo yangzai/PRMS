@@ -13,24 +13,27 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 /**
- * Created by yao on 15/09/16.
+ * Added by Xuemin on 15/09/20.
  */
 @Action("deleteps")
 public class DeleteProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         ScheduleDelegate del = new ScheduleDelegate();
-        String dateOfProgram = req.getParameter("dateOfProgram");
-        String duration=req.getParameter("duration");
+        String dateOfPr = req.getParameter("dateOfProgram");
+        Date dateOfProgram=Date.valueOf(dateOfPr);
+        String dur=req.getParameter("duration");
+        Time duration=Time.valueOf(dur);
         del.processDelete(duration,dateOfProgram);
 
         ReviewSelectScheduledProgramDelegate rsDel = new ReviewSelectScheduledProgramDelegate();
         List<ProgramSlot> data = rsDel.reviewSelectScheduledProgram();
         req.setAttribute("rps", data);
         return "/pages/scheduleProgramList.jsp";
-        return null;
     }
 }

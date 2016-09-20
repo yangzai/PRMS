@@ -24,7 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by yao on 15/09/16.
+ * Added by Xuemin on 15/09/20.
  */
 @Action("enterps")
 public class EnterDetailsScheduleCmd implements Perform {
@@ -64,9 +64,9 @@ public class EnterDetailsScheduleCmd implements Perform {
                 "Insert Flag: " + ins);
         //ins==true means create or copy
         if (ins.equalsIgnoreCase("true")) {
-            del.processCreate(rp);
+            del.processCreate(ps);
         } else {
-            del.processModify(rp);
+            del.processModify(ps);
         }
 
         ReviewSelectScheduledProgramDelegate rsdel = new ReviewSelectScheduledProgramDelegate();
