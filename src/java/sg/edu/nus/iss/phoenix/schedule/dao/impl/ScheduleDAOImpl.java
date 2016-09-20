@@ -7,8 +7,8 @@ import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Date;
 
 /**
  * Created by yao on 15/09/16.
@@ -28,7 +28,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
      * @see sg.edu.nus.iss.phoenix.radioprogram.dao.impl.ProgramDAO#getObject(java.lang.String)
      */
     @Override
-    public ProgramSlot getObject(String name) throws NotFoundException,
+    public ProgramSlot getObject(Time duration, Date dateOfProgram) throws NotFoundException,
             SQLException {
 
         ProgramSlot valueObject = createValueObject();

@@ -1,6 +1,9 @@
 package sg.edu.nus.iss.phoenix.schedule.entity;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+import sg.edu.nus.iss.phoenix.user.entity.Presenter;
+import sg.edu.nus.iss.phoenix.user.entity.Producer;
+
 import java.sql.Time;
 import java.util.Date;
 
@@ -14,8 +17,8 @@ public class ProgramSlot {
     private Date dateOfProgram;
     private Time duration;
     private RadioProgram radioProgram;
-    private User presenter;
-    private User producer;
+    private Presenter presenter;
+    private Producer producer;
     private User assignedBy;
 
     public ProgramSlot () {
@@ -46,17 +49,17 @@ public class ProgramSlot {
         this.radioProgram=radioProgram;
     }
 
-    public User getPresenter(){
+    public Presenter getPresenter(){
         return this.presenter;
     }
-    public void setPresenter(User presenter){
+    public void setPresenter(Presenter presenter){
         this.presenter=presenter;
     }
 
-    public User getProducer(){
+    public Producer getProducer(){
         return this.producer;
     }
-    public void setProducer(User producer){
+    public void setProducer(Producer producer){
         this.producer=producer;
     }
 
@@ -68,7 +71,7 @@ public class ProgramSlot {
     }
 
     public void setAll(Date startTime,
-                       Time duration,RadioProgram radioProgram,User presenter,User producer,User assignedBy) {
+                       Time duration,RadioProgram radioProgram,Presenter presenter,Producer producer,User assignedBy) {
         this.dateOfProgram = startTime;
         this.duration = duration;
         this.radioProgram = radioProgram;

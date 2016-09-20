@@ -5,6 +5,8 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +33,7 @@ public interface ScheduleDAO {
      * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
      * @throws java.sql.SQLException
      */
-    public abstract ProgramSlot getObject(String name)
+    public abstract ProgramSlot getObject(Time duration, Date dateOfProgram)
             throws NotFoundException, SQLException;
 
     /**
