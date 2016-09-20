@@ -28,17 +28,17 @@ public class ProgramSlot {
         this.dateOfProgram=startTime;
     }
 
-    public Date getStartTime(){
+    public Date getDateOfProgram(){
         return this.dateOfProgram;
     }
-    public void setStartTime(Date startTime){
+    public void setDateOfProgram(Date startTime){
         this.dateOfProgram=startTime;
     }
 
     public Time getDuration(){
         return this.duration;
     }
-    public void setStarDuration(Time duration){
+    public void setDuration(Time duration){
         this.duration=duration;
     }
 
@@ -83,9 +83,9 @@ public class ProgramSlot {
     public boolean hasEqualMapping(ProgramSlot valueObject) {
 
         if (this.dateOfProgram == null) {
-            if (valueObject.getStartTime() != null)
+            if (valueObject.getDateOfProgram() != null)
                 return(false);
-        } else if (!this.dateOfProgram.equals(valueObject.getStartTime())) {
+        } else if (!this.dateOfProgram.equals(valueObject.getDateOfProgram())) {
             return(false);
         }
         if (this.duration == null) {
