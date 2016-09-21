@@ -119,15 +119,13 @@ public class UserDaoImpl implements UserDao {
 			sql = "INSERT INTO user ( id, password, name, "
 					+ "role) VALUES (?, ?, ?, ?) ";
 			stmt = this.connection.prepareStatement(sql);
-
 			stmt.setString(1, valueObject.getId());
 			stmt.setString(2, valueObject.getPassword());
 			stmt.setString(3, valueObject.getName());
-			stmt.setString(4, valueObject.getRoles().get(0).getRole());
-
+			//stmt.setString(4, valueObject.getRoles().get(0).getRole());
+			stmt.setString(4,valueObject.getRolesInSring());
 			int rowcount = databaseUpdate(stmt);
 			if (rowcount != 1) {
-				// System.out.println("PrimaryKey Error when updating DB!");
 				throw new SQLException("PrimaryKey Error when updating DB!");
 			}
 
@@ -155,7 +153,7 @@ public class UserDaoImpl implements UserDao {
 			stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, valueObject.getPassword());
 			stmt.setString(2, valueObject.getName());
-			stmt.setString(3, valueObject.getRoles().get(0).getRole());
+			stmt.setString(3, valueObject.getRolesInSring());
 
 			stmt.setString(4, valueObject.getId());
 

@@ -24,7 +24,7 @@
         <th><fmt:message key="label.cruduser.id"/></th>
         <th><fmt:message key="label.cruduser.name"/></th>
         <th><fmt:message key="label.cruduser.roles"/></th>
-        <th><fmt:message key="label.cruduser.edit"/> <fmt:message key="label.cruduser.delete"/></th>
+        <th><fmt:message key="label.cruduser.resetPwd"/> <fmt:message key="label.cruduser.delete"/></th>
     </tr>
     <c:forEach var="cruduser" items="${ul}" varStatus="status">
         <tr class="${status.index%2==0?'even':'odd'}">
@@ -41,12 +41,12 @@
                     <c:param name="name" value="${cruduser.name}"/>
                     <c:param name="insert" value="false"/>
                 </c:url>
-                <a href="${updurl}"><fmt:message key="label.cruduser.edit"/></a>
+                <a href="${updurl}"><fmt:message key="label.cruduser.resetPwd"/></a>
                 &nbsp;&nbsp;&nbsp;
                 <c:url var="delurl" scope="page" value="/nocturne/deleteuser">
-                    <c:param name="name" value="${cruduser.name}"/>
+                    <c:param name="id" value="${cruduser.id}"/>
                 </c:url>
-                <a href="${delurl}"><fmt:message key="label.cruduser.delete"/></a>
+                <a href="${delurl}" onclick="return confirm('Are you sure you want to delete this user?')"><fmt:message key="label.cruduser.delete"/></a>
             </td>
         </tr>
     </c:forEach>

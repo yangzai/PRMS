@@ -24,15 +24,7 @@ public class AddEditUserCmd implements Perform {
         UserDelegate delegate = new UserDelegate();
         String selectedId = httpServletRequest.getParameter("id");
         List<Role> roleList = delegate.getAllRoles();
-        HashMap<String,Boolean> roleMapping = new HashMap<>();
-        boolean bool = !selectedId.equals("");
-        Map map = delegate.getUserRolesMapping(selectedId);
-        roleMapping.put("manager",bool);
-        roleMapping.put("admin",bool);
-        roleMapping.put("presenter",bool);
-        roleMapping.put("producer",bool);
         httpServletRequest.setAttribute("roles",roleList);
-        httpServletRequest.setAttribute("rolesMapping",roleMapping);
-        return "/pages/setupuser.jsp";
+        return "/pages/setupUserPage.jsp";
     }
 }
