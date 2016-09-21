@@ -19,7 +19,11 @@
 
     <title><fmt:message key="title.setupuser" /></title>
 </head>
-
+<script type="text/javascript">
+    function validateForm(){
+        alert("This is from javascript")
+    }
+</script>
 <body>
 <c:choose>
     <c:when test="${param['insert'] == 'true'}">
@@ -44,7 +48,7 @@
                 <td>
                     <c:if test="${param['insert'] == 'true'}">
                         <input type="text" name="id" value="" size=15
-                               maxlength=20>
+                               maxlength=20 required="required">
                         <input type="hidden" name="ins" value="true" />
                     </c:if>
                     <c:if test="${param['insert']=='false'}">
@@ -57,7 +61,7 @@
             <tr>
                 <td><fmt:message key="label.cruduser.name" /></td>
                 <td><input type="text" name="name"
-                           value="${param['name']}" size=45 maxlength=20></td>
+                           value="${param['name']}" size=45 maxlength=20 required="required"></td>
             </tr>
             <tr>
                 <td><fmt:message key="label.cruduser.password" /></td>

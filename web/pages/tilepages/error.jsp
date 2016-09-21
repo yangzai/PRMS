@@ -9,7 +9,6 @@
 </head>
 <body>
 	<h2>
-		<fmt:message key="error.incorrectLogin" />
         <br/>
 		<h>
             Error Message Details:
