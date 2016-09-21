@@ -24,27 +24,48 @@
     <c:param name="radioprogram" value=""/>
     <c:param name="presenter" value=""/>
     <c:param name="producer" value=""/>
+    <c:param name="insert" value="true"/>
 </c:url>
 <a href="${url}"><fmt:message key="label.scheduleProgramList.add"/></a>
 <br/><br/>
 <table class="borderAll">
     <tr>
+        <th><fmt:message key="label.scheduleProgramList.dateOfProgram"/></th>
         <th><fmt:message key="label.scheduleProgramList.duration"/></th>
-        <th><fmt:message key="label.scheduleProgramList.edit"/> <fmt:message key="label.scheduleProgramList.delete"/></th>
+        <th><fmt:message key="label.scheduleProgramList.radioProgram"/></th>
+        <th><fmt:message key="label.scheduleProgramList.presenter"/></th>
+        <th><fmt:message key="label.scheduleProgramList.producer"/></th>
+        <th><fmt:message key="label.scheduleProgramList.assignedBy"/></th>
+        <th><fmt:message key="label.scheduleProgramList.edit"/> <fmt:message key="label.scheduleProgramList.delete"/><fmt:message key="label.scheduleProgramList.copy"/></th>
     </tr>
-    <c:forEach var="scheduleProgramList" items="${rps}" varStatus="status">
+    <c:forEach var="scheduleProgramList" items="${psl}" varStatus="status">
         <tr class="${status.index%2==0?'even':'odd'}">
-            <td class="nowrap">${scheduleProgramList.typicalDuration}</td>
+            <td class="nowrap">${scheduleProgramList.dateOfProgram}</td>
+            <td class="nowrap">${scheduleProgramList.duration}</td>
+            <td class="nowrap">${scheduleProgramList.radioProgram}</td>
+            <td class="nowrap">${scheduleProgramList.presenter}</td>
+            <td class="nowrap">${scheduleProgramList.producer}</td>
+            <td class="nowrap">${scheduleProgramList.assignedBy}</td>
             <td class="nowrap">
-                <c:url var="updurl" scope="page" value="/nocturne/addeditschedule">
-                    <c:param name="typicalDuration" value="${scheduleProgramList.typicalDuration}"/>
+                <c:url var="updurl" scope="page" value="/nocturne/addeditps">
+                    <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
+                    <c:param name="duration" value="${scheduleProgramList.duration}"/>
+                    <c:param name="insert" value="false"/>
                 </c:url>
                 <a href="${updurl}"><fmt:message key="label.scheduleProgramList.edit"/></a>
                 &nbsp;&nbsp;&nbsp;
-                <c:url var="delurl" scope="page" value="/nocturne/deleteschedule">
-                    <c:param name="name" value="${scheduleProgramList.name}"/>
+                <c:url var="delurl" scope="page" value="/nocturne/deleteps">
+                    <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
+                    <c:param name="duration" value="${scheduleProgramList.duration}"/>
                 </c:url>
                 <a href="${delurl}"><fmt:message key="label.scheduleProgramList.delete"/></a>
+                &nbsp;&nbsp;&nbsp;
+                <c:url var="copurl" scope="page" value="/nocturne/copyps">
+                    <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
+                    <c:param name="duration" value="${scheduleProgramList.duration}"/>
+                    <c:param name="insert" value="false"/>
+                </c:url>
+                <a href="${copurl}"><fmt:message key="label.scheduleProgramList.copy"/></a>
             </td>
         </tr>
     </c:forEach>
