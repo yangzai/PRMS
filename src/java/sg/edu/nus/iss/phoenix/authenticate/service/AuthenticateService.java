@@ -60,7 +60,7 @@ public class AuthenticateService {
 			logger.log(Level.SEVERE, "user searchMatching", ex);
 			return (null);
 		}
-		if (null == found)
+		if (null == found || !found.getPassword().equals(toAuth.getPassword()))
 			return (null);
 
 		//Populate the roles

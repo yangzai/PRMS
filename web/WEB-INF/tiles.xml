@@ -24,11 +24,11 @@
 	<definition name="setuprpPage" extends="homePage">
 		<put-attribute name="body" value="/pages/tilepages/setuprp.jsp" />
 	</definition>
-	<definition name="cruduserPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/cruduser.jsp" />
+	<definition name="userListPage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/userListPage.jsp" />
 	</definition>
-	<definition name="setupuserPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/setupuser.jsp" />
+	<definition name="setupUserPage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/setupUserPage.jsp" />
 	</definition>
 	<definition name="annualScheduleListPage" extends="homePage">
 		<put-attribute name="body" value="/pages/tilepages/annualScheduleListPage.jsp" />

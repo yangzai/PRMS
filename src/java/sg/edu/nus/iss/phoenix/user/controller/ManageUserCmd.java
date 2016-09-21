@@ -21,7 +21,7 @@ public class ManageUserCmd implements Perform {
         ReviewSelectUserDelegate delegate = new ReviewSelectUserDelegate();
         List<User> userList = delegate.getAllUsers();
         httpServletRequest.setAttribute("ul",userList);
-        return "/pages/cruduser.jsp";
+        return "/pages/userListPage.jsp";
 
     }
 }
