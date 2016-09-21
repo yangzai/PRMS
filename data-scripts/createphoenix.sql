@@ -117,16 +117,20 @@ CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
   `dateOfProgram` DATETIME NOT NULL ,
   `startTime` DATETIME NULL ,
   `program-name` VARCHAR(45) NULL ,
-  `presenter` VARCHAR(45) NULL ,
-  `producer` VARCHAR(45) NULL ,
+  `presenter` VARCHAR(40) NULL ,
+  `producer` VARCHAR(40) NULL ,
   PRIMARY KEY (`duration`, `dateOfProgram`) ,
-  CONSTRAINT `name`
+  CONSTRAINT
     FOREIGN KEY (`program-name` )
     REFERENCES `phoenix`.`radio-program` (`name` )
-    FOREIGN KEY (`presenter`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION ,
+    FOREIGN KEY (`presenter` )
     REFERENCES `phoenix`.`user` (`id`)
-    FOREIGN KEY (`producer`)
-    REFERENCES `phoenix`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION ,
+    FOREIGN KEY (`producer` )
+    REFERENCES `phoenix`.`user` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
