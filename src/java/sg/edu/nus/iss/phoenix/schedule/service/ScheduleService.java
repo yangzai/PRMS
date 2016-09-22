@@ -50,7 +50,6 @@ public class ScheduleService {
             throw new IllegalArgumentException("Year cannot be negative.");
 
         try {
-            //should have been designed to call from create
             if (annualScheduleDAO.checkAnnualScheduleExists(year))
                 throw new IllegalArgumentException("Schedule already exist.");
 
