@@ -24,7 +24,14 @@
         <th><fmt:message key="label.cruduser.id"/></th>
         <th><fmt:message key="label.cruduser.name"/></th>
         <th><fmt:message key="label.cruduser.roles"/></th>
-        <th><fmt:message key="label.cruduser.resetPwd"/> <fmt:message key="label.cruduser.delete"/></th>
+        <c:choose>
+            <c:when test="${reqtype=='selectpnp'}">
+                <th><fmt:message key="label.cruduser.select"/></th>
+            </c:when>
+            <c:otherwise>
+                <th><fmt:message key="label.cruduser.resetPwd"/> <fmt:message key="label.cruduser.delete"/></th>
+            </c:otherwise>
+        </c:choose>
     </tr>
     <c:forEach var="cruduser" items="${ul}" varStatus="status">
         <tr class="${status.index%2==0?'even':'odd'}">
@@ -35,19 +42,32 @@
                     <c:out value="${role.role}"></c:out>
                 </c:forEach>
             </td>
-            <td class="nowrap">
-                <c:url var="updurl" scope="page" value="/nocturne/addedituser">
-                    <c:param name="id" value="${cruduser.id}"/>
-                    <c:param name="name" value="${cruduser.name}"/>
-                    <c:param name="insert" value="false"/>
-                </c:url>
-                <a href="${updurl}"><fmt:message key="label.cruduser.resetPwd"/></a>
-                &nbsp;&nbsp;&nbsp;
-                <c:url var="delurl" scope="page" value="/nocturne/deleteuser">
-                    <c:param name="id" value="${cruduser.id}"/>
-                </c:url>
-                <a href="${delurl}" onclick="return confirm('Are you sure you want to delete this user?')"><fmt:message key="label.cruduser.delete"/></a>
-            </td>
+
+            <c:choose>
+                <c:when test="${reqtype=='selectpnp'}">
+                    <td class="nowrap">
+                        <c:url var="selecturl" scope="page" value="/nocturne/addeditprogramslot">
+                            <c:param name="id" value="${cruduser.id}"/>
+                            <c:param name="name" value="${cruduser.name}"/>
+                        </c:url>
+                     </td>
+                </c:when>
+                <c:otherwise>
+                    <td class="nowrap">
+                        <c:url var="updurl" scope="page" value="/nocturne/addedituser">
+                            <c:param name="id" value="${cruduser.id}"/>
+                            <c:param name="name" value="${cruduser.name}"/>
+                            <c:param name="insert" value="false"/>
+                        </c:url>
+                        <a href="${updurl}"><fmt:message key="label.cruduser.resetPwd"/></a>
+                        &nbsp;&nbsp;&nbsp;
+                        <c:url var="delurl" scope="page" value="/nocturne/deleteuser">
+                            <c:param name="id" value="${cruduser.id}"/>
+                        </c:url>
+                        <a href="${delurl}" onclick="return confirm('Are you sure you want to delete this user?')"><fmt:message key="label.cruduser.delete"/></a>
+                    </td>
+                </c:otherwise>
+            </c:choose>
         </tr>
     </c:forEach>
 </table>
