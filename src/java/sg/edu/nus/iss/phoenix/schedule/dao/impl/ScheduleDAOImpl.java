@@ -1,13 +1,21 @@
 package sg.edu.nus.iss.phoenix.schedule.dao.impl;
 
+import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+import sg.edu.nus.iss.phoenix.radioprogram.service.ProgramService;
 import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.user.entity.Presenter;
+import sg.edu.nus.iss.phoenix.user.entity.Producer;
 
 import java.sql.*;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Created by yao on 15/09/16.
@@ -335,12 +343,9 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             if (result.next()) {
                 valueObject.setDuration(result.getTime("duration"));
                 valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
- //               valueObject.setRadioProgram(result.getString("program-name"));
-//                valueObject.setName(result.getString("name"));
-//                valueObject.setDescription(result.getString("desc"));
-//                valueObject.setTypicalDuration(result
-//                        .getTime("typicalDuration"));
-
+                valueObject.setRadioProgram(createRP(stmt, result));
+                valueObject.setPresenter(createPresenter(stmt, result));
+                valueObject.setProducer(createProducer(stmt, result));
             } else {
                 throw new NotFoundException("ProgramSlot Object Not Found!");
             }
@@ -366,31 +371,91 @@ public class ScheduleDAOImpl implements ScheduleDAO{
      */
     protected List<ProgramSlot> listQuery(PreparedStatement stmt) throws SQLException {
 
-//        ArrayList<RadioProgram> searchResults = new ArrayList<>();
-//        ResultSet result = null;
-//        openConnection();
-//        try {
-//            result = stmt.executeQuery();
-//
-//            while (result.next()) {
-//                RadioProgram temp = createValueObject();
-//
-//                temp.setName(result.getString("name"));
-//                temp.setDescription(result.getString("desc"));
-//                temp.setTypicalDuration(result.getTime("typicalDuration"));
-//
-//                searchResults.add(temp);
-//            }
-//
-//        } finally {
-//            if (result != null)
-//                result.close();
-//            if (stmt != null)
-//                stmt.close();
-//            closeConnection();
-//        }
+        ArrayList<ProgramSlot> searchResults = new ArrayList<>();
+        ResultSet result = null;
+        openConnection();
+        try {
+            result = stmt.executeQuery();
+
+            while (result.next()) {
+                ProgramSlot temp = createValueObject();
+
+                temp.setDuration(result.getTime("duration"));
+                temp.setDateOfProgram(result.getDate("dateOfProgram"));
+                temp.setRadioProgram(createRP(stmt, result));
+                temp.setPresenter(createPresenter(stmt, result));
+                temp.setProducer(createProducer(stmt, result));
+
+                searchResults.add(temp);
+            }
+
+        } finally {
+            if (result != null)
+                result.close();
+            if (stmt != null)
+                stmt.close();
+            closeConnection();
+        }
 //
 //        return (List<RadioProgram>) searchResults;
+        return null;
+    }
+
+    private RadioProgram createRP(PreparedStatement stmt, ResultSet result) throws SQLException {
+        openConnection();
+        String sql = "SELECT * FROM phoenix.`program-slot` LEFT JOIN phoenix.`radio-program` AS rp ON `program-name` = rp.name";
+        RadioProgram program = new RadioProgram();
+        try {
+            stmt = connection.prepareStatement(sql);
+            result = stmt.executeQuery();
+            program.setDescription(result.getString("desc"));
+            program.setName(result.getString("name"));
+            program.setTypicalDuration(result.getTime("typicalDuration"));
+        } finally {
+            closeConnection();
+        }
+        return program;
+    }
+
+    private Presenter createPresenter(PreparedStatement stmt, ResultSet result) throws SQLException {
+        openConnection();
+        String sql = "SELECT * FROM phoenix.`program-slot` LEFT JOIN phoenix.`user` AS pres ON presenter = pres.id";
+        Presenter presenter;
+        try {
+            stmt = connection.prepareStatement(sql);
+            result = stmt.executeQuery();
+            presenter = new Presenter(result.getString("id"));
+            presenter.setName(result.getString("name"));
+            presenter.setPassword(result.getString("password"));
+            String[] array = result.getString("role").split(":");
+            List<Role> roleList = Arrays.stream(array)
+                    .map(Role::new)
+                    .collect(Collectors.toList());
+            presenter.setRoles((ArrayList<Role>) roleList);
+        } finally {
+            closeConnection();
+        }
+        return presenter;
+    }
+
+    private Producer createProducer(PreparedStatement stmt, ResultSet result) throws SQLException {
+        openConnection();
+        String sql = "select * from phoenix.`program-slot` left join phoenix.`user` as prod on producer = prod.id";
+        Producer producer;
+        try {
+            stmt = connection.prepareStatement(sql);
+            result = stmt.executeQuery();
+            producer = new Producer(result.getString("id"));
+            producer.setName(result.getString("name"));
+            producer.setPassword(result.getString("password"));
+            String[] array = result.getString("role").split(":");
+            List<Role> roleList = Arrays.stream(array)
+                    .map(Role::new)
+                    .collect(Collectors.toList());
+            producer.setRoles((ArrayList<Role>) roleList);
+        } finally {
+            closeConnection();
+        }
         return null;
     }
 
