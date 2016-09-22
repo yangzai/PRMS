@@ -42,7 +42,7 @@ public class EnterDetailsScheduleCmd implements Perform {
         Time duration=Time.valueOf(dur);
         ps.setDuration(duration);
 
-        String programName=req.getParameter("radioProgramName");
+        String programName=req.getParameter("radioProgram");
         RadioProgram rp=new RadioProgram(programName);
         ps.setRadioProgram(rp);
 
@@ -53,11 +53,6 @@ public class EnterDetailsScheduleCmd implements Perform {
         String producerId=req.getParameter("producerId");
         Producer producer=new Producer(producerId);
         ps.setProducer(producer);
-
-        String assignedById=req.getParameter("assignedById");
-        User assignedBy=new User(assignedById);
-        ps.setAssignedBy(assignedBy);
-
 
         String ins = (String) req.getParameter("ins");
         Logger.getLogger(getClass().getName()).log(Level.INFO,

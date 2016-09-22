@@ -5,6 +5,9 @@
   Time: 14:40
   To change this template use File | Settings | File Templates.
 --%>
+<%--
+    changed by xuemin
+--%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -35,21 +38,24 @@
         <th><fmt:message key="label.scheduleProgramList.radioProgram"/></th>
         <th><fmt:message key="label.scheduleProgramList.presenter"/></th>
         <th><fmt:message key="label.scheduleProgramList.producer"/></th>
-        <th><fmt:message key="label.scheduleProgramList.assignedBy"/></th>
         <th><fmt:message key="label.scheduleProgramList.edit"/> <fmt:message key="label.scheduleProgramList.delete"/><fmt:message key="label.scheduleProgramList.copy"/></th>
     </tr>
     <c:forEach var="scheduleProgramList" items="${psl}" varStatus="status">
         <tr class="${status.index%2==0?'even':'odd'}">
             <td class="nowrap">${scheduleProgramList.dateOfProgram}</td>
             <td class="nowrap">${scheduleProgramList.duration}</td>
-            <td class="nowrap">${scheduleProgramList.radioProgram}</td>
-            <td class="nowrap">${scheduleProgramList.presenter}</td>
-            <td class="nowrap">${scheduleProgramList.producer}</td>
-            <td class="nowrap">${scheduleProgramList.assignedBy}</td>
+            <td class="nowrap">${scheduleProgramList.radioProgram.name}</td>
+            <td class="nowrap">${scheduleProgramList.presenter.name}</td>
+            <td class="nowrap">${scheduleProgramList.producer.name}</td>
             <td class="nowrap">
                 <c:url var="updurl" scope="page" value="/nocturne/addeditps">
                     <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
                     <c:param name="duration" value="${scheduleProgramList.duration}"/>
+                    <c:param name="radioProgram" value="${scheduleProgramList.radioProgram.name}"/>
+                    <c:param name="presenterId" value="${scheduleProgramList.presenter.id}"/>
+                    <c:param name="presenterName" value="${scheduleProgramList.presenter.name}"/>
+                    <c:param name="producerId" value="${scheduleProgramList.producer.id}"/>
+                    <c:param name="producerName" value="${scheduleProgramList.producer.name}"/>
                     <c:param name="insert" value="false"/>
                 </c:url>
                 <a href="${updurl}"><fmt:message key="label.scheduleProgramList.edit"/></a>
@@ -63,7 +69,12 @@
                 <c:url var="copurl" scope="page" value="/nocturne/copyps">
                     <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
                     <c:param name="duration" value="${scheduleProgramList.duration}"/>
-                    <c:param name="insert" value="false"/>
+                    <c:param name="radioProgram" value="${scheduleProgramList.radioProgram.name}"/>
+                    <c:param name="presenterId" value="${scheduleProgramList.presenter.id}"/>
+                    <c:param name="presenterName" value="${scheduleProgramList.presenter.name}"/>
+                    <c:param name="producerId" value="${scheduleProgramList.producer.id}"/>
+                    <c:param name="producerName" value="${scheduleProgramList.producer.name}"/>
+                    <c:param name="insert" value="true"/>
                 </c:url>
                 <a href="${copurl}"><fmt:message key="label.scheduleProgramList.copy"/></a>
             </td>
