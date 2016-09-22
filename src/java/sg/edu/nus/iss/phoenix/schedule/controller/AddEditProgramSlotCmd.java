@@ -19,6 +19,12 @@ import java.util.List;
 public class AddEditProgramSlotCmd implements Perform{
     @Override
     public String perform(String s, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+        String step = (req.getParameter("step") != null ? req.getParameter("step") : "details");
+
+        req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
+        req.setAttribute("ps_duration", req.getParameter("duration"));
+        req.setAttribute("ps_radioProgramName", req.getParameter("radioProgramName"));
+        req.setAttribute("step", step);
         return "/pages/setupschedule.jsp";
     }
 }

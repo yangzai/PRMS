@@ -19,12 +19,21 @@
         </c:url>
         <a href="${url}"><fmt:message key="label.crudrp.add"/></a>
         <br/><br/>
+        <%--<c:if test="${step = 2}">--%>
+            <table class="borderAll">
+                <td>
+                    <input type="text" name="step" value="${step}">
+                    <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}">
+                    <input type="text" name="dateOfProgram" value="${ps_duration}">
+                </td>
+            </table>
+        <%--</c:if>--%>
         <table class="borderAll">
             <tr>
                 <th><fmt:message key="label.crudrp.name"/></th>
                 <th><fmt:message key="label.crudrp.description"/></th>
                 <th><fmt:message key="label.crudrp.duration"/></th>
-                <th><fmt:message key="label.crudrp.edit"/> <fmt:message key="label.crudrp.delete"/></th>
+                <th><fmt:message key="label.crudrp.edit"/> <fmt:message key="label.crudrp.delete"/><fmt:message key="label.crudrp.select"/></th>
             </tr>
             <c:forEach var="crudrp" items="${rps}" varStatus="status">
                 <tr class="${status.index%2==0?'even':'odd'}">
@@ -44,6 +53,13 @@
                             <c:param name="name" value="${crudrp.name}"/>
                         </c:url>
                         <a href="${delurl}"><fmt:message key="label.crudrp.delete"/></a>
+                        <c:url var="selurl" scope="page" value="/nocturne/addeditps">
+                            <c:param name="radioProgramName" value="${crudrp.name}"/>
+                            <c:param name="dateOfProgram" value="${ps_dateOfProgram}"/>
+                            <c:param name="duration" value="${ps_duration}"/>
+                            <c:param name="step" value="${step}"/>
+                        </c:url>
+                        <a href="${selurl}"><fmt:message key="label.crudrp.select"/></a>
                     </td>
                 </tr>
             </c:forEach>
