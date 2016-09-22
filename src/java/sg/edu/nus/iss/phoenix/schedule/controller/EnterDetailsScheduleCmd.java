@@ -2,6 +2,7 @@ package sg.edu.nus.iss.phoenix.schedule.controller;
 
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
+import jdk.nashorn.internal.ir.IfNode;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.radioprogram.dao.ProgramDAO;
 import sg.edu.nus.iss.phoenix.radioprogram.delegate.ProgramDelegate;
@@ -33,6 +34,18 @@ public class EnterDetailsScheduleCmd implements Perform {
         ScheduleDelegate del = new ScheduleDelegate();
         ProgramSlot ps = new ProgramSlot();
 
+        String step = req.getParameter("step");
+        req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
+        req.setAttribute("ps_duration", req.getParameter("duration"));
+        if (step.equals("details")){
+            step = "selectProgram";
+            req.setAttribute("step", step);
+            ReviewSelectProgramDelegate rpdel = new ReviewSelectProgramDelegate();
+            List<RadioProgram> data = rpdel.reviewSelectRadioProgram();
+            req.setAttribute("rps", data);
+            return "/pages/crudrp.jsp";
+        } else if (step.equals("selectProgram")){
+        }
 
         String dateOfP=req.getParameter("dateOfProgram");
         Date dateOfProgram=Date.valueOf(dateOfP);

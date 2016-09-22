@@ -23,56 +23,35 @@
     <title><fmt:message key="title.setupschedule" /></title>
 </head>
 <body>
+
+<br/><br/>
 <form action="${pageContext.request.contextPath}/nocturne/enterps" method=post>
     <center>
         <table cellpadding=4 cellspacing=2 border=0>
             <tr>
-                <td><fmt:message key="label.scheduleProgramList.dateOfProgram" /></td>
-                <td><c:if test="${param['insert'] == 'true'}">
-                    <input type="text" name="dateOfProgram" value="${param['dateOfProgram']}" size=15
+                <td><fmt:message key="label.pslot.date" /></td>
+                <td>
+                        <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}" size=15
+                               maxlength=20>
+                </td>
+            </tr>
+            <tr>
+                <td><fmt:message key="label.pslot.duration" /></td>
+                <td>
+                    <input type="text" name="duration" value="${ps_duration}" size=15
                            maxlength=20>
-                    <input type="hidden" name="ins" value="true" />
-                </c:if>
-                    <c:if test="${param['insert']=='false'}">
-                        <input type="text" name="dateOfProgram" value="${param['dateOfProgram']}" size=15
-                               maxlength=20 >
-                        <input type="hidden" name="ins" value="false" />
-                    </c:if></td>
-            </tr>
-            <tr>
-                <td><fmt:message key="label.scheduleProgramList.duration" /></td>
-                <td><input type="text" name="duration"
-                           value="${param['duration']}" size=15 maxlength=20></td>
-            </tr>
-            <tr>
-                <td><fmt:message key="label.scheduleProgramList.radioProgram" /></td>
-                <td><input type="text" name="radioProgram"
-                           value="${param['radioProgram']}" size=15 maxlength=20></td>
-                <td>
-                    <c:url var="selectrpurl" scope="page" value="/nocturne/selectrp">
-                    </c:url>
-                    <a href="${selectrpurl}"><fmt:message key="label.scheduleProgramList.select"/></a>
                 </td>
             </tr>
             <tr>
-                <td><fmt:message key="label.scheduleProgramList.presenter" /></td>
-                <td><input type="text" name="presenterName"
-                           value="${param['presenterName']}" size=15 maxlength=20></td>
+                <td><fmt:message key="label.pslot.rp_name" /></td>
                 <td>
-                    <c:url var="selectPresenterurl" scope="page" value="/nocturne/selectpresenter">
-                    </c:url>
-                    <a href="${selectPresenterurl}"><fmt:message key="label.scheduleProgramList.select"/></a>
+                    <input type="text" name="radioProgramName" value="${ps_radioProgramName}" size=15
+                           maxlength=20>
                 </td>
-
             </tr>
             <tr>
-                <td><fmt:message key="label.scheduleProgramList.producer" /></td>
-                <td><input type="text" name="producerName"
-                           value="${param['producerName']}" size=15 maxlength=20></td>
                 <td>
-                    <c:url var="selectpProducerurl" scope="page" value="/nocturne/selectproducer">
-                    </c:url>
-                    <a href="${selectpProducerurl}"><fmt:message key="label.scheduleProgramList.select"/></a>
+                    <input type="hidden" name="step" value="${step}">
                 </td>
             </tr>
         </table>
