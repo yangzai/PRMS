@@ -9,6 +9,9 @@ import java.util.ArrayList;
  */
 public class User implements Cloneable, Serializable {
 
+	public enum Type {
+		PRSENTER, PRODUCER, ALL
+	}
 	/**
 	 * For eclipse based unique identity
 	 */

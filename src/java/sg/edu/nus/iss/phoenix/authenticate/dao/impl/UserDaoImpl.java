@@ -15,7 +15,6 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
-import sg.edu.nus.iss.phoenix.user.UserType;
 import sg.edu.nus.iss.phoenix.user.entity.Presenter;
 import sg.edu.nus.iss.phoenix.user.entity.Producer;
 
@@ -101,7 +100,7 @@ public class UserDaoImpl implements UserDao {
 
 		String sql = "SELECT * FROM user ORDER BY id ASC ";
 		List<User> searchResults = listQuery(this.connection
-				.prepareStatement(sql), UserType.ALL);
+				.prepareStatement(sql), User.Type.ALL);
 
 		return searchResults;
 	}
@@ -116,7 +115,7 @@ public class UserDaoImpl implements UserDao {
 	public List<User> loadAllProducers() throws SQLException {
         String sql = "SELECT * FROM user ORDER BY id ASC WHERE role LIKE 'producer'";
         List<User> searchResults = listQuery(this.connection
-                .prepareStatement(sql), UserType.PRODUCER);
+                .prepareStatement(sql), User.Type.PRODUCER);
         return searchResults;
 	}
 	/*
@@ -130,7 +129,7 @@ public class UserDaoImpl implements UserDao {
 	public List<User> loadAllPresenters() throws SQLException {
         String sql = "SELECT * FROM user ORDER BY id ASC WHERE role LIKE 'presenter'";
         List<User> searchResults = listQuery(this.connection
-                .prepareStatement(sql), UserType.PRSENTER);
+                .prepareStatement(sql), User.Type.ALL);
         return searchResults;
 	}
 
@@ -357,7 +356,7 @@ public class UserDaoImpl implements UserDao {
 			searchResults = new ArrayList<User>();
 		else
 			searchResults = listQuery(this.connection.prepareStatement(sql
-					.toString()),UserType.ALL);
+					.toString()), User.Type.ALL);
 
 		return searchResults;
 	}
@@ -431,15 +430,15 @@ public class UserDaoImpl implements UserDao {
      * @return 
      * @throws java.sql.SQLException
 	 */
-	protected List<User> listQuery(PreparedStatement stmt, int type) throws SQLException {
+	protected List<User> listQuery(PreparedStatement stmt, User.Type type) throws SQLException {
 
 		ArrayList<User> searchResults = new ArrayList<>();
 		try (ResultSet result = stmt.executeQuery()) {
 
 			while (result.next()) {
                 User temp;
-				if (type == UserType.PRODUCER)  {  temp = new Producer();}
-				else if (type == UserType.PRSENTER) { temp = new Presenter();}
+				if (type == User.Type.PRODUCER)  {  temp = new Producer();}
+				else if (type == User.Type.PRSENTER) { temp = new Presenter();}
 				else {  temp = createValueObject(); }
 
 				temp.setId(result.getString("id"));
