@@ -24,7 +24,12 @@ public class AddEditProgramSlotCmd implements Perform{
         req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
         req.setAttribute("ps_duration", req.getParameter("duration"));
         req.setAttribute("ps_radioProgramName", req.getParameter("radioProgramName"));
+        req.setAttribute("ps_presenterId", req.getParameter("presenterId"));
+        req.setAttribute("ps_presenterName", req.getParameter("presenterName"));
+        req.setAttribute("ps_producerId", req.getParameter("producerId"));
+        req.setAttribute("ps_producerName", req.getParameter("producerName"));
         req.setAttribute("step", step);
+        req.setAttribute("ins", req.getParameter("insert"));
         return "/pages/setupschedule.jsp";
     }
 }

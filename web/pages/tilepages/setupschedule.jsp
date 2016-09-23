@@ -50,14 +50,49 @@
                 </td>
             </tr>
             <tr>
+                <td><fmt:message key="label.pslot.presenter_name" /></td>
+                <td>
+                    <input type="text" name="presenterName" value="${ps_presenterName}" size=15
+                           maxlength=20>
+                </td>
+            </tr>
+            <tr>
+                <td><fmt:message key="label.pslot.producer_name" /></td>
+                <td>
+                    <input type="text" name="producerName" value="${ps_producerName}" size=15
+                           maxlength=20>
+                </td>
+            </tr>
+            <tr>
                 <td>
                     <input type="hidden" name="step" value="${step}">
                 </td>
             </tr>
+            <tr>
+                <td><c:if test="${param['ins'] == 'true'}">
+                    <input type="hidden" name="insert" value="true" />
+                </c:if>
+                    <c:if test="${param['ins']=='false'}">
+                        <input type="hidden" name="insert" value="false" />
+                    </c:if></td>
+            </tr>
         </table>
     </center>
-    <input type="submit" value="Submit"> <input type="reset"
-                                                value="Reset">
+    <c:choose>
+        <c:when test="${step=='details'}">
+            <input type="submit" value="Select Radio Program">
+        </c:when>
+        <c:when test="${step=='selectPresenter'}">
+            <input type="submit" value="Select Presenter">
+        </c:when>
+        <c:when test="${step=='selectProducer'}">
+            <input type="submit" value="Select Producer">
+        </c:when>
+        <c:otherwise>
+            <input type="submit" value="Submit">
+        </c:otherwise>
+    </c:choose>
+
 </form>
 
 </body>
