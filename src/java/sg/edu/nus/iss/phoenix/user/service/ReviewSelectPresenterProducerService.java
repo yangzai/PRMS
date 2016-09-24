@@ -42,7 +42,7 @@ public class ReviewSelectPresenterProducerService {
     public List<Presenter> getAllPresenters() {
         try {
             ArrayList<Presenter> pList = new ArrayList<>();
-            for (User tmp:userDAO.loadAllProducers()) {
+            for (User tmp:userDAO.loadAllPresenters()) {
                 pList.add((Presenter)tmp);
             }
             return pList;

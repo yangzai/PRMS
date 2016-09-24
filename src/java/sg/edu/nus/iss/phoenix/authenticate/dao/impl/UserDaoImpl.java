@@ -113,7 +113,7 @@ public class UserDaoImpl implements UserDao {
 	 */
 	@Override
 	public List<User> loadAllProducers() throws SQLException {
-        String sql = "SELECT * FROM user ORDER BY id ASC WHERE role LIKE 'producer'";
+        String sql = "SELECT * FROM user WHERE role LIKE '%producer%'ORDER BY id ASC";
         List<User> searchResults = listQuery(this.connection
                 .prepareStatement(sql), User.Type.PRODUCER);
         return searchResults;
@@ -127,9 +127,9 @@ public class UserDaoImpl implements UserDao {
 	 */
 	@Override
 	public List<User> loadAllPresenters() throws SQLException {
-        String sql = "SELECT * FROM user ORDER BY id ASC WHERE role LIKE 'presenter'";
+        String sql = "SELECT * FROM user WHERE role LIKE '%presenter%' ORDER BY id ASC";
         List<User> searchResults = listQuery(this.connection
-                .prepareStatement(sql), User.Type.ALL);
+                .prepareStatement(sql), User.Type.PRSENTER);
         return searchResults;
 	}
 
