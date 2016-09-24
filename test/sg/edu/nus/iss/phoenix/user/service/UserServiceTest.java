@@ -1,34 +1,23 @@
-package sg.edu.nus.iss.phoenix.schedule.service;
+package sg.edu.nus.iss.phoenix.user.service;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.*;
-import org.mockito.internal.matchers.Null;
 import org.mockito.runners.MockitoJUnitRunner;
-import sg.edu.nus.iss.phoenix.authenticate.dao.RoleDao;
-import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
 import sg.edu.nus.iss.phoenix.authenticate.dao.impl.RoleDaoImpl;
 import sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDaoImpl;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.user.controller.ReturnCode;
 import sg.edu.nus.iss.phoenix.user.service.UserService;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Haijun on 2016/9/23.
