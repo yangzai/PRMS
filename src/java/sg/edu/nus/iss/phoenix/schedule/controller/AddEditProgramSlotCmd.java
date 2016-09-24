@@ -4,6 +4,7 @@ import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +13,23 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by yao on 15/09/16.
+ * Added by Xuemin on 15/09/20.
  */
-@Action("create-annual-schedule")
+@Action("addeditps")
 public class AddEditProgramSlotCmd implements Perform{
     @Override
     public String perform(String s, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        ScheduleDelegate scheduleDelegate = new ScheduleDelegate();
-        List<AnnualSchedule> data = scheduleDelegate.processRetrieveAllAnnualSchedule();
-        req.setAttribute("scheduleProgramList", data);
+        String step = (req.getParameter("step") != null ? req.getParameter("step") : "details");
+
+        req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
+        req.setAttribute("ps_duration", req.getParameter("duration"));
+        req.setAttribute("ps_radioProgramName", req.getParameter("radioProgramName"));
+        req.setAttribute("ps_presenterId", req.getParameter("presenterId"));
+        req.setAttribute("ps_presenterName", req.getParameter("presenterName"));
+        req.setAttribute("ps_producerId", req.getParameter("producerId"));
+        req.setAttribute("ps_producerName", req.getParameter("producerName"));
+        req.setAttribute("step", step);
+        req.setAttribute("insps", req.getParameter("insertps"));
         return "/pages/setupschedule.jsp";
     }
 }

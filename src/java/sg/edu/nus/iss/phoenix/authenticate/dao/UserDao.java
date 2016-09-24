@@ -5,6 +5,8 @@ import java.util.List;
 
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
+import sg.edu.nus.iss.phoenix.user.entity.Presenter;
+import sg.edu.nus.iss.phoenix.user.entity.Producer;
 
 public interface UserDao {
 
@@ -61,6 +63,28 @@ public interface UserDao {
      * @throws java.sql.SQLException
 	 */
 	public abstract List<User> loadAll() throws SQLException;
+
+	/**
+	 * loadPresenters-method. This will read all Presenters from database table and build
+	 * a List containing valueObjects. Please note, that this method will
+	 * consume huge amounts of resources if table has lot's of rows. This should
+	 * only be used when target tables have only small amounts of data.
+	 *
+	 * @return
+	 * @throws java.sql.SQLException
+	 */
+	public abstract List<User> loadAllPresenters() throws  SQLException;
+
+	/**
+	 * loadProducers-method. This will read all Producers from database table and build
+	 * a List containing valueObjects. Please note, that this method will
+	 * consume huge amounts of resources if table has lot's of rows. This should
+	 * only be used when target tables have only small amounts of data.
+	 *
+	 * @return
+	 * @throws java.sql.SQLException
+	 */
+	public abstract List<User> loadAllProducers() throws SQLException;
 
 	/**
 	 * create-method. This will create new row in database according to supplied

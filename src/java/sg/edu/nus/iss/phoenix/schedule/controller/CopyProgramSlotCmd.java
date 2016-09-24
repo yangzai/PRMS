@@ -9,12 +9,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by yao on 15/09/16.
+ * Added by Xuemin on 15/09/20.
  */
-@Action("copyprogramslot")
+@Action("copyps")
 public class CopyProgramSlotCmd implements Perform {
     @Override
-    public String perform(String s, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException, ServletException {
-        return null;
+    public String perform(String s, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+        String step = (req.getParameter("step") != null ? req.getParameter("step") : "details");
+
+        req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
+        req.setAttribute("ps_duration", req.getParameter("duration"));
+        req.setAttribute("ps_radioProgramName", req.getParameter("radioProgramName"));
+        req.setAttribute("ps_presenterId", req.getParameter("presenterId"));
+        req.setAttribute("ps_presenterName", req.getParameter("presenterName"));
+        req.setAttribute("ps_producerId", req.getParameter("producerId"));
+        req.setAttribute("ps_producerName", req.getParameter("producerName"));
+        req.setAttribute("step", step);
+        req.setAttribute("insps", req.getParameter("insertps"));
+        return "/pages/setupschedule.jsp";
     }
 }
