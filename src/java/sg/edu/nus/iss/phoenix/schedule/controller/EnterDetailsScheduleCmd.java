@@ -51,7 +51,7 @@ public class EnterDetailsScheduleCmd implements Perform {
         req.setAttribute("ps_presenterName", req.getParameter("presenterName"));
         req.setAttribute("ps_producerId", req.getParameter("producerId"));
         req.setAttribute("ps_producerName", req.getParameter("producerName"));
-        req.setAttribute("ins",req.getParameter("insert"));
+        req.setAttribute("insps",req.getParameter("insertps"));
         if (step.equals("details")){
             step = "selectPresenter";
             req.setAttribute("step", step);
@@ -66,7 +66,7 @@ public class EnterDetailsScheduleCmd implements Perform {
             ReviewSelectPresenterProducerDelegate ppdel=new ReviewSelectPresenterProducerDelegate();
             List<Presenter> dataOfPre=ppdel.getAllPresenters();
             req.setAttribute("ul",dataOfPre);
-        //    req.setAttribute("ul",userList);
+        //   req.setAttribute("ul",userList);
             req.setAttribute("reqtype","selectpre");
             return "/pages/userListPage.jsp";
         }else if (step.equals("selectProducer")){
@@ -115,11 +115,11 @@ public class EnterDetailsScheduleCmd implements Perform {
         Producer producer=new Producer(producerId);
         ps.setProducer(producer);
 
-        String ins = (String) req.getParameter("insert");
+        String insps = (String) req.getParameter("insertps");
         Logger.getLogger(getClass().getName()).log(Level.INFO,
-                "Insert Flag: " + ins);
+                "Insert Flag: " + insps);
         //ins==true means create or copy
-        if (ins.equalsIgnoreCase("true")) {
+        if (insps.equalsIgnoreCase("true")) {
             del.processCreate(ps);
         } else {
             del.processModify(ps);

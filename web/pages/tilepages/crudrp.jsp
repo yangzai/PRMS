@@ -25,6 +25,7 @@
                     <input type="text" name="step" value="${step}">
                     <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}">
                     <input type="text" name="dateOfProgram" value="${ps_duration}">
+                    <input type="text" name="insertps" value="${insps}">
                 </td>
             </table>
         <%--</c:if>--%>
@@ -59,7 +60,7 @@
                                 <c:param name="presenterName" value="${ps_presenterName}"/>
                                 <c:param name="producerId" value="${ps_producerId}"/>
                                 <c:param name="producerName" value="${ps_producerName}"/>
-                                <c:param name="insert" value="${ins}"/>
+                                <c:param name="insertps" value="${insps}"/>
                             </c:url>
                             <a href="${selurl}"><fmt:message key="label.crudrp.select"/></a>
                             </td>

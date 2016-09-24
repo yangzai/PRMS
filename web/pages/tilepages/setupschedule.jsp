@@ -69,12 +69,9 @@
                 </td>
             </tr>
             <tr>
-                <td><c:if test="${param['ins'] == 'true'}">
-                    <input type="hidden" name="insert" value="true" />
-                </c:if>
-                    <c:if test="${param['ins']=='false'}">
-                        <input type="hidden" name="insert" value="false" />
-                    </c:if></td>
+                <td>
+                    <input type="hidden" name="insertps" value="${insps}" />
+                </td>
             </tr>
         </table>
     </center>

@@ -55,7 +55,7 @@
                             <c:param name="producerName" value="${ps_producerName}"/>
                             <c:param name="presenterId" value="${cruduser.id}"/>
                             <c:param name="presenterName" value="${cruduser.name}"/>
-                            <c:param name="insert" value="${ins}"/>
+                            <c:param name="insertps" value="${insps}"/>
                         </c:url>
                         <a href="${selecturl}"><fmt:message key="label.cruduser.select"/></a>
                      </td>
@@ -71,7 +71,7 @@
                             <c:param name="presenterName" value="${ps_presenterName}"/>
                             <c:param name="producerId" value="${cruduser.id}"/>
                             <c:param name="producerName" value="${cruduser.name}"/>
-                            <c:param name="insert" value="${ins}"/>
+                            <c:param name="insertps" value="${insps}"/>
                         </c:url>
                         <a href="${selecturl}"><fmt:message key="label.cruduser.select"/></a>
                     </td>
