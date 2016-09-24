@@ -25,7 +25,7 @@
         <th><fmt:message key="label.cruduser.name"/></th>
         <th><fmt:message key="label.cruduser.roles"/></th>
         <c:choose>
-            <c:when test="${reqtype=='selectpnp'}">
+            <c:when test="${reqtype=='selectpre'||'selectpro'}">
                 <th><fmt:message key="label.cruduser.select"/></th>
             </c:when>
             <c:otherwise>
@@ -44,13 +44,37 @@
             </td>
 
             <c:choose>
-                <c:when test="${reqtype=='selectpnp'}">
+                <c:when test="${reqtype=='selectpre'}">
                     <td class="nowrap">
-                        <c:url var="selecturl" scope="page" value="/nocturne/addeditprogramslot">
-                            <c:param name="id" value="${cruduser.id}"/>
-                            <c:param name="name" value="${cruduser.name}"/>
+                        <c:url var="selecturl" scope="page" value="/nocturne/addeditps">
+                            <c:param name="radioProgramName" value="${ps_radioProgramName}"/>
+                            <c:param name="dateOfProgram" value="${ps_dateOfProgram}"/>
+                            <c:param name="duration" value="${ps_duration}"/>
+                            <c:param name="step" value="${step}"/>
+                            <c:param name="producerId" value="${ps_producerId}"/>
+                            <c:param name="producerName" value="${ps_producerName}"/>
+                            <c:param name="presenterId" value="${cruduser.id}"/>
+                            <c:param name="presenterName" value="${cruduser.name}"/>
+                            <c:param name="insertps" value="${insps}"/>
                         </c:url>
+                        <a href="${selecturl}"><fmt:message key="label.cruduser.select"/></a>
                      </td>
+                </c:when>
+                <c:when test="${reqtype=='selectpro'}">
+                    <td class="nowrap">
+                        <c:url var="selecturl" scope="page" value="/nocturne/addeditps">
+                            <c:param name="radioProgramName" value="${ps_radioProgramName}"/>
+                            <c:param name="dateOfProgram" value="${ps_dateOfProgram}"/>
+                            <c:param name="duration" value="${ps_duration}"/>
+                            <c:param name="step" value="${step}"/>
+                            <c:param name="presenterId" value="${ps_presenterId}"/>
+                            <c:param name="presenterName" value="${ps_presenterName}"/>
+                            <c:param name="producerId" value="${cruduser.id}"/>
+                            <c:param name="producerName" value="${cruduser.name}"/>
+                            <c:param name="insertps" value="${insps}"/>
+                        </c:url>
+                        <a href="${selecturl}"><fmt:message key="label.cruduser.select"/></a>
+                    </td>
                 </c:when>
                 <c:otherwise>
                     <td class="nowrap">
