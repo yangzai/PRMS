@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 import sg.edu.nus.iss.phoenix.authenticate.dao.impl.RoleDaoImpl;
@@ -17,7 +16,6 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDaoImpl;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.user.controller.ReturnCode;
-import sg.edu.nus.iss.phoenix.user.service.UserService;
 
 /**
  * Created by Haijun on 2016/9/23.
@@ -33,7 +31,6 @@ public class UserServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
     }
 
     /*
