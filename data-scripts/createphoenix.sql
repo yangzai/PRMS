@@ -135,6 +135,8 @@ CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+insert into `phoenix`.`program-slot` values('00:30:00', '1000-01-01 00:00:00', NULL , "news", "dilbert", "dilbert");
+
 CREATE INDEX `name_program_slot` ON `phoenix`.`program-slot` (`program-name` ASC) ;
 
 CREATE UNIQUE INDEX `dateOfProgram_UNIQUE` ON `phoenix`.`program-slot` (`dateOfProgram` ASC) ;

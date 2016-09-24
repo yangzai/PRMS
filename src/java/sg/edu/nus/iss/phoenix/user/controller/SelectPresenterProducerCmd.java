@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Gao.Haijun on 15/09/16.
  */
 
-@Action("selectpnp")
+@Action("selectPresenterProducer")
 public class SelectPresenterProducerCmd implements Perform{
     @Override
     public String perform(String s, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException, ServletException {

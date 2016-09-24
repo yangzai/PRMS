@@ -27,7 +27,7 @@
     <c:param name="radioprogram" value=""/>
     <c:param name="presenter" value=""/>
     <c:param name="producer" value=""/>
-    <c:param name="insert" value="true"/>
+    <c:param name="insertps" value="true"/>
 </c:url>
 <a href="${url}"><fmt:message key="label.scheduleProgramList.add"/></a>
 <br/><br/>
@@ -56,7 +56,7 @@
                     <c:param name="presenterName" value="${scheduleProgramList.presenter.name}"/>
                     <c:param name="producerId" value="${scheduleProgramList.producer.id}"/>
                     <c:param name="producerName" value="${scheduleProgramList.producer.name}"/>
-                    <c:param name="insert" value="false"/>
+                    <c:param name="insertps" value="false"/>
                 </c:url>
                 <a href="${updurl}"><fmt:message key="label.scheduleProgramList.edit"/></a>
                 &nbsp;&nbsp;&nbsp;
@@ -74,7 +74,7 @@
                     <c:param name="presenterName" value="${scheduleProgramList.presenter.name}"/>
                     <c:param name="producerId" value="${scheduleProgramList.producer.id}"/>
                     <c:param name="producerName" value="${scheduleProgramList.producer.name}"/>
-                    <c:param name="insert" value="true"/>
+                    <c:param name="insertps" value="true"/>
                 </c:url>
                 <a href="${copurl}"><fmt:message key="label.scheduleProgramList.copy"/></a>
             </td>

@@ -19,7 +19,6 @@ public class ProgramSlot {
     private RadioProgram radioProgram;
     private Presenter presenter;
     private Producer producer;
-    private User assignedBy;
 
     public ProgramSlot () {
 
@@ -64,21 +63,13 @@ public class ProgramSlot {
         this.producer=producer;
     }
 
-    public User getAssignedBy(){
-        return this.assignedBy;
-    }
-    public void setAssignedBy(User assignedBy){
-        this.assignedBy=assignedBy;
-    }
-
     public void setAll(Date startTime,
-                       Time duration,RadioProgram radioProgram,Presenter presenter,Producer producer,User assignedBy) {
+                       Time duration,RadioProgram radioProgram,Presenter presenter,Producer producer) {
         this.dateOfProgram = startTime;
         this.duration = duration;
         this.radioProgram = radioProgram;
         this.presenter=presenter;
         this.producer=producer;
-        this.assignedBy=assignedBy;
     }
 
     public boolean hasEqualMapping(ProgramSlot valueObject) {

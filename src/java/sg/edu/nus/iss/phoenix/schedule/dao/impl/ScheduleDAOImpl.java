@@ -1,13 +1,19 @@
 package sg.edu.nus.iss.phoenix.schedule.dao.impl;
 
+import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.user.entity.Presenter;
+import sg.edu.nus.iss.phoenix.user.entity.Producer;
 
 import java.sql.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Created by yao on 15/09/16.
@@ -71,7 +77,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     @Override
     public List<ProgramSlot> loadAll() throws SQLException {
         openConnection();
-        String sql = "SELECT * FROM `program-slot` ORDER BY `dateOfProgram` ASC; ";
+        String sql = "SELECT * FROM phoenix.`program-slot` ORDER BY `dateOfProgram` ASC; ";
         List<ProgramSlot> searchResults = listQuery(connection
                 .prepareStatement(sql));
         closeConnection();
@@ -326,7 +332,8 @@ public class ScheduleDAOImpl implements ScheduleDAO{
      */
     protected void singleQuery(PreparedStatement stmt, ProgramSlot valueObject)
             throws NotFoundException, SQLException {
-
+        Presenter presenter;
+        Producer producer;
         ResultSet result = null;
         openConnection();
         try {
@@ -335,12 +342,11 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             if (result.next()) {
                 valueObject.setDuration(result.getTime("duration"));
                 valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
- //               valueObject.setRadioProgram(result.getString("program-name"));
-//                valueObject.setName(result.getString("name"));
-//                valueObject.setDescription(result.getString("desc"));
-//                valueObject.setTypicalDuration(result
-//                        .getTime("typicalDuration"));
-
+                valueObject.setRadioProgram(createRP(stmt));
+                presenter = new Presenter(result.getString("presenter"));
+                valueObject.setPresenter(setPresenterValue(stmt, presenter));
+                producer = new Producer(result.getString("producer"));
+                valueObject.setProducer(setProducerValue(stmt, producer));
             } else {
                 throw new NotFoundException("ProgramSlot Object Not Found!");
             }
@@ -365,33 +371,104 @@ public class ScheduleDAOImpl implements ScheduleDAO{
      * @throws java.sql.SQLException
      */
     protected List<ProgramSlot> listQuery(PreparedStatement stmt) throws SQLException {
+        Presenter presenter;
+        Producer producer;
+        ArrayList<ProgramSlot> searchResults = new ArrayList<>();
+        ResultSet result = null;
+        openConnection();
+        try {
+            result = stmt.executeQuery();
 
-//        ArrayList<RadioProgram> searchResults = new ArrayList<>();
-//        ResultSet result = null;
-//        openConnection();
-//        try {
-//            result = stmt.executeQuery();
-//
-//            while (result.next()) {
-//                RadioProgram temp = createValueObject();
-//
-//                temp.setName(result.getString("name"));
-//                temp.setDescription(result.getString("desc"));
-//                temp.setTypicalDuration(result.getTime("typicalDuration"));
-//
-//                searchResults.add(temp);
-//            }
-//
-//        } finally {
-//            if (result != null)
-//                result.close();
-//            if (stmt != null)
-//                stmt.close();
-//            closeConnection();
-//        }
-//
-//        return (List<RadioProgram>) searchResults;
-        return null;
+            while (result.next()) {
+                ProgramSlot temp = createValueObject();
+
+                temp.setDuration(result.getTime("duration"));
+                temp.setDateOfProgram(result.getDate("dateOfProgram"));
+                temp.setRadioProgram(createRP(stmt));
+                presenter = new Presenter(result.getString("presenter"));
+                temp.setPresenter(setPresenterValue(stmt, presenter));
+                producer = new Producer(result.getString("producer"));
+                temp.setProducer(setProducerValue(stmt, producer));
+                //temp.setPresenter(createPresenter(stmt));
+                //temp.setProducer(createProducer(stmt));
+
+                searchResults.add(temp);
+            }
+
+        } finally {
+            if (result != null)
+                result.close();
+            if (stmt != null)
+                stmt.close();
+            closeConnection();
+        }
+       return (List<ProgramSlot>) searchResults;
+    }
+
+    private RadioProgram createRP(PreparedStatement stmt) throws SQLException {
+        openConnection();
+        ResultSet result = null;
+        String sql = "SELECT * FROM phoenix.`program-slot` LEFT JOIN phoenix.`radio-program` AS rp ON `program-name` = rp.name";
+        RadioProgram program = new RadioProgram();
+        try {
+            stmt = connection.prepareStatement(sql);
+            result = stmt.executeQuery();
+            while (result.next()) {
+                program.setDescription(result.getString("desc"));
+                program.setName(result.getString("name"));
+                program.setTypicalDuration(result.getTime("typicalDuration"));
+            }
+        } finally {
+            result.close();
+            closeConnection();
+        }
+        return program;
+    }
+
+    private Presenter setPresenterValue(PreparedStatement stmt, Presenter presenter) throws SQLException {
+        openConnection();
+        ResultSet result = null;
+        String sql = "SELECT * FROM phoenix.`program-slot` LEFT JOIN phoenix.`user` AS pres ON presenter = pres.id";
+        try {
+            stmt = connection.prepareStatement(sql);
+            result = stmt.executeQuery();
+            while (result.next()) {
+                presenter.setName(result.getString("name"));
+                presenter.setPassword(result.getString("password"));
+                String[] array = result.getString("role").split(":");
+                List<Role> roleList = Arrays.stream(array)
+                        .map(Role::new)
+                        .collect(Collectors.toList());
+                presenter.setRoles((ArrayList<Role>) roleList);
+            }
+        } finally {
+            result.close();
+            closeConnection();
+        }
+        return presenter;
+    }
+
+    private Producer setProducerValue(PreparedStatement stmt, Producer producer) throws SQLException {
+        openConnection();
+        ResultSet result = null;
+        String sql = "select * from phoenix.`program-slot` left join phoenix.`user` as prod on producer = prod.id";
+        try {
+            stmt = connection.prepareStatement(sql);
+            result = stmt.executeQuery();
+            while (result.next()) {
+                producer.setName(result.getString("name"));
+                producer.setPassword(result.getString("password"));
+                String[] array = result.getString("role").split(":");
+                List<Role> roleList = Arrays.stream(array)
+                        .map(Role::new)
+                        .collect(Collectors.toList());
+                producer.setRoles((ArrayList<Role>) roleList);
+            }
+        } finally {
+            result.close();
+            closeConnection();
+        }
+        return producer;
     }
 
     private void openConnection() {
