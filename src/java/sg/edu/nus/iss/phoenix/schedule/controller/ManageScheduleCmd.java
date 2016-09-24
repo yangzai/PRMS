@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +26,9 @@ public class ManageScheduleCmd implements Perform {
     public String perform(String path, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         ReviewSelectScheduledProgramDelegate del = new ReviewSelectScheduledProgramDelegate();
         List<ProgramSlot> data = del.reviewSelectScheduledProgram();
+        //System.out.print(data.get(0).getDuration());
+        System.out.print("hello world");
+        //List<ProgramSlot> data = new ArrayList<ProgramSlot>();
         req.setAttribute("psl", data);
         return "/pages/scheduleProgramList.jsp";
     }
