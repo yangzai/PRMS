@@ -102,8 +102,8 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             stmt.setDate(2, valueObject.getDateOfProgram());
             stmt.setDate(3, null);
             stmt.setString(4, valueObject.getRadioProgram().getName());
-            stmt.setString(5, valueObject.getPresenter().getName());
-            stmt.setString(6, valueObject.getProducer().getName());
+            stmt.setString(5, valueObject.getPresenter().getId());
+            stmt.setString(6, valueObject.getProducer().getId());
             int rowcount = databaseUpdate(stmt);
             if (rowcount != 1) {
                 throw new SQLException("PrimaryKey Error when updating DB!");
@@ -130,8 +130,8 @@ public class ScheduleDAOImpl implements ScheduleDAO{
         try {
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, valueObject.getRadioProgram().getName());
-            stmt.setString(2, valueObject.getPresenter().getName());
-            stmt.setString(3, valueObject.getProducer().getName());
+            stmt.setString(2, valueObject.getPresenter().getId());
+            stmt.setString(3, valueObject.getProducer().getId());
 
             stmt.setTime(4, valueObject.getDuration());
             stmt.setDate(5, valueObject.getDateOfProgram());
