@@ -33,7 +33,7 @@ public class DeleteProgramSlotCmd implements Perform {
 
         ReviewSelectScheduledProgramDelegate rsDel = new ReviewSelectScheduledProgramDelegate();
         List<ProgramSlot> data = rsDel.reviewSelectScheduledProgram();
-        req.setAttribute("rps", data);
+        req.setAttribute("psl", data);
         return "/pages/scheduleProgramList.jsp";
     }
 }
