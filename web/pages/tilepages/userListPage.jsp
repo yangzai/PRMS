@@ -20,6 +20,16 @@
 <a href="${url}"><fmt:message key="label.cruduser.add"/></a>
 <br/><br/>
 <table class="borderAll">
+    <td>
+        <input type="text" name="step" value="${step}">
+        <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}">
+        <input type="text" name="dateOfProgram" value="${ps_duration}">
+        <input type="text" name="insertps" value="${insps}">
+        <input type="text" name="presenterId" value="${ps_presenterId}">
+        <input type="text" name="producerId" value="${ps_producerId}">
+    </td>
+</table>
+<table class="borderAll">
     <tr>
         <th><fmt:message key="label.cruduser.id"/></th>
         <th><fmt:message key="label.cruduser.name"/></th>
