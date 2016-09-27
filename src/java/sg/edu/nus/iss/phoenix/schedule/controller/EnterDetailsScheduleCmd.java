@@ -104,7 +104,7 @@ public class EnterDetailsScheduleCmd implements Perform {
         */
 
         //the format of input date is "2016/09/23 18:27:00"
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             java.util.Date date = dateFormat.parse(dateOfP);
             java.sql.Date dateOfProgram = new java.sql.Date(date.getTime());

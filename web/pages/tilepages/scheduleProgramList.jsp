@@ -55,7 +55,7 @@
                     <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
                     <c:param name="startTime" value="${scheduleProgramList.startTime}"/>
                     <c:param name="duration" value="${scheduleProgramList.duration}"/>
-                    <c:param name="radioProgram" value="${scheduleProgramList.radioProgram.name}"/>
+                    <c:param name="radioProgramName" value="${scheduleProgramList.radioProgram.name}"/>
                     <c:param name="presenterId" value="${scheduleProgramList.presenter.id}"/>
                     <c:param name="presenterName" value="${scheduleProgramList.presenter.name}"/>
                     <c:param name="producerId" value="${scheduleProgramList.producer.id}"/>
@@ -75,7 +75,7 @@
                     <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
                     <c:param name="startTime" value="${scheduleProgramList.startTime}"/>
                     <c:param name="duration" value="${scheduleProgramList.duration}"/>
-                    <c:param name="radioProgram" value="${scheduleProgramList.radioProgram.name}"/>
+                    <c:param name="radioProgramName" value="${scheduleProgramList.radioProgram.name}"/>
                     <c:param name="presenterId" value="${scheduleProgramList.presenter.id}"/>
                     <c:param name="presenterName" value="${scheduleProgramList.presenter.name}"/>
                     <c:param name="producerId" value="${scheduleProgramList.producer.id}"/>
