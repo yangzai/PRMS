@@ -23,8 +23,8 @@ public class ScheduleDelegate {
         return scheduleService.processRetrieveAllAnnualSchedule();
     }
 
-    public void processCreateAnnualWeeklySchedule(int year, User user) {
-        scheduleService.processCreateAnnualWeeklySchedule(year, user);
+    public void processCreateAnnualWeeklySchedule(AnnualSchedule annualSchedule) {
+        scheduleService.processCreateAnnualWeeklySchedule(annualSchedule);
     }
 
     public void processCreate(ProgramSlot ps) {

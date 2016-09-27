@@ -9,6 +9,7 @@ import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.dao.WeeklyScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -16,7 +17,6 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * Created by yangzai on 10/9/16.
@@ -52,16 +52,19 @@ public class ScheduleService {
         }
     }
 
-    public void processCreateAnnualWeeklySchedule(int year, User user) {
+    public void processCreateAnnualWeeklySchedule(AnnualSchedule annualSchedule) {
+        int year = annualSchedule.getYear();
+        User user = annualSchedule.getAssignedBy();
+
         if (year < 0)
             throw new IllegalArgumentException("Year cannot be negative.");
 
         try {
-            if (annualScheduleDAO.checkAnnualScheduleExists(year))
+            if (annualScheduleDAO.checkAnnualScheduleExists(annualSchedule))
                 throw new IllegalArgumentException("Schedule already exist.");
 
             //create annual
-            annualScheduleDAO.createAnnualSchedule(year, user);
+            annualScheduleDAO.createAnnualSchedule(annualSchedule);
 
             //create weekly
             cal.set(year, 1, 1);
@@ -69,7 +72,8 @@ public class ScheduleService {
 
             for (int i = 1; i <= noOfWeeks; i++) {
                 cal.setWeekDate(year, i, Calendar.MONDAY);
-                weeklyScheduleDAO.createWeeklySchedule(cal.getTime(), user);
+                WeeklySchedule weeklySchedule = new WeeklySchedule(cal.getTime(), user);
+                weeklyScheduleDAO.createWeeklySchedule(weeklySchedule);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,9 +92,7 @@ public class ScheduleService {
     public void processModify(ProgramSlot ps) {
         try {
             scheduleDAO.save(ps);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NotFoundException e) {
+        } catch (SQLException | NotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -99,9 +101,7 @@ public class ScheduleService {
         try {
             ProgramSlot ps = new ProgramSlot(startTime, dateOfProgram);
             scheduleDAO.delete(ps);
-        }catch (NotFoundException e) {
-            e.printStackTrace();
-        }catch (SQLException e) {
+        }catch (NotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }

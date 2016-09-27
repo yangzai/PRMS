@@ -41,11 +41,12 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDAO {
     }
 
     @Override
-    public boolean checkAnnualScheduleExists(int year) throws SQLException {
+    public boolean checkAnnualScheduleExists(AnnualSchedule annualSchedule) throws SQLException {
+
         String sql = "SELECT assingedBy FROM `annual-schedule` WHERE `year` = ?";
         try (Connection connection = DBConstants.newConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, year);
+            stmt.setInt(1, annualSchedule.getYear());
             try (ResultSet resultSet = stmt.executeQuery()) {
                 return resultSet.first();
             }
@@ -53,12 +54,12 @@ public class AnnualScheduleDAOImpl implements AnnualScheduleDAO {
     }
 
     @Override
-    public void createAnnualSchedule(int year, User user) throws SQLException {
+    public void createAnnualSchedule(AnnualSchedule annualSchedule) throws SQLException {
         String sql = "INSERT INTO `annual-schedule` VALUES (?, ?)";
         try (Connection connection = DBConstants.newConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, year);
-            stmt.setString(2, user.getId());
+            stmt.setInt(1, annualSchedule.getYear());
+            stmt.setString(2, annualSchedule.getAssignedBy().getId());
             if (stmt.executeUpdate() != 1)
                 throw new SQLException("Insertion failed.");
         }
