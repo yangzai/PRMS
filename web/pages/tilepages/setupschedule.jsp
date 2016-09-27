@@ -46,21 +46,21 @@
                 <td><fmt:message key="label.pslot.rp_name" /></td>
                 <td>
                     <input type="text" name="radioProgramName" value="${ps_radioProgramName}" size=15
-                           maxlength=20>
+                           maxlength=20 readonly>
                 </td>
             </tr>
             <tr>
                 <td><fmt:message key="label.pslot.presenter_name" /></td>
                 <td>
                     <input type="text" name="presenterName" value="${ps_presenterName}" size=15
-                           maxlength=20>
+                           maxlength=20 readonly>
                 </td>
             </tr>
             <tr>
                 <td><fmt:message key="label.pslot.producer_name" /></td>
                 <td>
                     <input type="text" name="producerName" value="${ps_producerName}" size=15
-                           maxlength=20>
+                           maxlength=20 readonly>
                 </td>
             </tr>
             <tr>

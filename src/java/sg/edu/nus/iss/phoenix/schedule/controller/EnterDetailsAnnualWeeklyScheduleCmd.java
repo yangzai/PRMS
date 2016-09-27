@@ -28,9 +28,11 @@ public class EnterDetailsAnnualWeeklyScheduleCmd implements Perform {
             return "/pages/login.jsp";
 
         ScheduleDelegate scheduleDelegate = new ScheduleDelegate();
-        scheduleDelegate.processCreateAnnualWeeklySchedule(
+
+        AnnualSchedule annualSchedule = new AnnualSchedule(
                 Integer.parseInt(req.getParameter("year")), user
         );
+        scheduleDelegate.processCreateAnnualWeeklySchedule(annualSchedule);
 
         List<AnnualSchedule> data = scheduleDelegate.processRetrieveAllAnnualSchedule();
         req.setAttribute("annualScheduleList", data);
