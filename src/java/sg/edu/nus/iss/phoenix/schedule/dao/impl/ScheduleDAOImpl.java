@@ -353,6 +353,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             if (result.next()) {
                 valueObject.setDuration(result.getTime("duration"));
                 valueObject.setDateOfProgram(result.getDate("dateOfProgram"));
+                valueObject.setStartTime(result.getTime("startTime"));
                 radioProgram = new RadioProgram(result.getString("program-name"));
                 valueObject.setRadioProgram(radioProgram);
                 presenter = new Presenter(result.getString("presenter"));
@@ -397,6 +398,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
 
                 temp.setDuration(result.getTime("duration"));
                 temp.setDateOfProgram(result.getDate("dateOfProgram"));
+                temp.setStartTime(result.getTime("startTime"));
 
                 radioProgram = new RadioProgram(result.getString("program-name"));
                 temp.setRadioProgram(radioProgram);
