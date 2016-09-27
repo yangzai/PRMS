@@ -20,6 +20,7 @@ import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.schedule.dao.AnnualScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.dao.WeeklyScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,20 +57,20 @@ public class ScheduleServiceTest {
 
         //setup mocked DAO
         when(annualScheduleDAO.retrieveAllAnnualSchedules()).thenReturn(annualScheduleList);
-        when(annualScheduleDAO.checkAnnualScheduleExists(anyInt())).thenAnswer(i -> {
+        when(annualScheduleDAO.checkAnnualScheduleExists(any(AnnualSchedule.class))).thenAnswer(i -> {
             Object[] args = i.getArguments();
-            int y = (int) args[0];
+            AnnualSchedule annualSchedule = (AnnualSchedule) args[0];
+            int y = annualSchedule.getYear();
+
             return annualScheduleList.stream().anyMatch(as -> as.getYear() == y);
         });
         doAnswer(i -> {
             Object[] args = i.getArguments();
+            AnnualSchedule as = (AnnualSchedule) args[0];
+            annualScheduleList.add(as);
 
-            int y = (int) args[0];
-            User u = (User) args[1];
-
-            annualScheduleList.add(new AnnualSchedule(y, u));
             return null;
-        }).when(annualScheduleDAO).createAnnualSchedule(anyInt(), any(User.class));
+        }).when(annualScheduleDAO).createAnnualSchedule(any(AnnualSchedule.class));
     }
 
     @Test
@@ -84,13 +85,13 @@ public class ScheduleServiceTest {
         User user = new User();
         user.setAll("bb", "password2", "name2", "manager");
         int year = 2000;
-        scheduleService.processCreateAnnualWeeklySchedule(year, user);
+        scheduleService.processCreateAnnualWeeklySchedule(new AnnualSchedule(year, user));
 
         AnnualSchedule createdAnnualSchedule = annualScheduleList.get(annualScheduleList.size() - 1);
         assertThat(createdAnnualSchedule.getYear(), equalTo(year));
         assertThat(createdAnnualSchedule.getAssignedBy(), is(user));
 
-        verify(weeklyScheduleDAO, times(52)).createWeeklySchedule(any(Date.class), any(User.class));
+        verify(weeklyScheduleDAO, times(52)).createWeeklySchedule(any(WeeklySchedule.class));
 
         //TODO: add more verification and assertions after weekly schedule DTO is implemented
     }
@@ -102,7 +103,7 @@ public class ScheduleServiceTest {
         User user = new User();
         user.setAll("cc", "password3", "name3", "manager");
         int year = 1999;
-        scheduleService.processCreateAnnualWeeklySchedule(year, user);
+        scheduleService.processCreateAnnualWeeklySchedule(new AnnualSchedule(year, user));
     }
 
     @Test
@@ -112,6 +113,6 @@ public class ScheduleServiceTest {
         User user = new User();
         user.setAll("dd", "password4", "name4", "manager");
         int year = -1234;
-        scheduleService.processCreateAnnualWeeklySchedule(year, user);
+        scheduleService.processCreateAnnualWeeklySchedule(new AnnualSchedule(year, user));
     }
 }

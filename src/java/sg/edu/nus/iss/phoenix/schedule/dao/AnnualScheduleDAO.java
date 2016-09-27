@@ -1,6 +1,5 @@
 package sg.edu.nus.iss.phoenix.schedule.dao;
 
-import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 
 import java.sql.SQLException;
@@ -13,7 +12,7 @@ public interface AnnualScheduleDAO {
     AnnualSchedule createValueObject();
     List<AnnualSchedule> retrieveAllAnnualSchedules() throws SQLException;
 
-    boolean checkAnnualScheduleExists(int year) throws SQLException;
+    boolean checkAnnualScheduleExists(AnnualSchedule annualSchedule) throws SQLException;
 
-    void createAnnualSchedule(int year, User user) throws SQLException;
+    void createAnnualSchedule(AnnualSchedule annualSchedule) throws SQLException;
 }
