@@ -126,17 +126,18 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     public void save(ProgramSlot valueObject) throws NotFoundException,
             SQLException {
 
-        String sql = "UPDATE `program-slot` SET `program-name` = ?, `presenter` = ?, `producer` = ? WHERE (`startTime` = ? AND `dateOfProgram` = ?); ";
+        String sql = "UPDATE `program-slot` SET `duration` = ?, `program-name` = ?, `presenter` = ?, `producer` = ? WHERE (`startTime` = ? AND `dateOfProgram` = ?); ";
         PreparedStatement stmt = null;
         openConnection();
         try {
             stmt = connection.prepareStatement(sql);
-            stmt.setString(1, valueObject.getRadioProgram().getName());
-            stmt.setString(2, valueObject.getPresenter().getId());
-            stmt.setString(3, valueObject.getProducer().getId());
+            stmt.setTime(1, valueObject.getDuration());
+            stmt.setString(2, valueObject.getRadioProgram().getName());
+            stmt.setString(3, valueObject.getPresenter().getId());
+            stmt.setString(4, valueObject.getProducer().getId());
 
-            stmt.setTime(4, valueObject.getStartTime());
-            stmt.setDate(5, valueObject.getDateOfProgram());
+            stmt.setTime(5, valueObject.getStartTime());
+            stmt.setDate(6, valueObject.getDateOfProgram());
 
             int rowcount = databaseUpdate(stmt);
             if (rowcount == 0) {
@@ -161,7 +162,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     public void delete(ProgramSlot valueObject) throws NotFoundException,
             SQLException {
 
-        if (valueObject.getDuration() == null || valueObject.getDateOfProgram() == null) {
+        if (valueObject.getStartTime() == null || valueObject.getDateOfProgram() == null) {
             throw new NotFoundException("Can not delete without Primary-Key!");
         }
 
