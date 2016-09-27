@@ -22,6 +22,7 @@ public class AddEditProgramSlotCmd implements Perform{
         String step = (req.getParameter("step") != null ? req.getParameter("step") : "details");
 
         req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
+        req.setAttribute("ps_startTime",req.getParameter("startTime"));
         req.setAttribute("ps_duration", req.getParameter("duration"));
         req.setAttribute("ps_radioProgramName", req.getParameter("radioProgramName"));
         req.setAttribute("ps_presenterId", req.getParameter("presenterId"));

@@ -27,9 +27,11 @@ public class DeleteProgramSlotCmd implements Perform {
         ScheduleDelegate del = new ScheduleDelegate();
         String dateOfPr = req.getParameter("dateOfProgram");
         Date dateOfProgram=Date.valueOf(dateOfPr);
+        String stat=req.getParameter("startTime");
+        Time startTime=Time.valueOf(stat);
         String dur=req.getParameter("duration");
         Time duration=Time.valueOf(dur);
-        del.processDelete(duration,dateOfProgram);
+        del.processDelete(startTime,dateOfProgram);
 
         ReviewSelectScheduledProgramDelegate rsDel = new ReviewSelectScheduledProgramDelegate();
         List<ProgramSlot> data = rsDel.reviewSelectScheduledProgram();
