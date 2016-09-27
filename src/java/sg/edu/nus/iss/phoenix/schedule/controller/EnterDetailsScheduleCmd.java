@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Added by Xuemin on 15/09/20.
@@ -45,6 +47,7 @@ public class EnterDetailsScheduleCmd implements Perform {
 
         String step = req.getParameter("step");
         req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
+        req.setAttribute("ps_startTime",req.getParameter("startTime"));
         req.setAttribute("ps_duration", req.getParameter("duration"));
         req.setAttribute("ps_radioProgramName", req.getParameter("radioProgramName"));
         req.setAttribute("ps_presenterId", req.getParameter("presenterId"));
@@ -87,8 +90,21 @@ public class EnterDetailsScheduleCmd implements Perform {
         ps.setDateOfProgram(dateOfProgram);
         */
 
+        String eL = "^\\d{4}-\\d{2}-\\d{2}$";
+        if (!dateOfP.matches(eL)){
+            req.setAttribute("err_message", "Format date error, Date must be in format yyyy-mm-dd");
+            return "/pages/error.jsp";
+        }
+
+        /*
+        if (/\d{4}[-\/]\d{2}[-\/]\d{2}/.test(dateOfP)) {
+            req.setAttribute("err_message", "Format date error");
+            return "/pages/error.jsp";
+        }
+        */
+
         //the format of input date is "2016/09/23 18:27:00"
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         try {
             java.util.Date date = dateFormat.parse(dateOfP);
             java.sql.Date dateOfProgram = new java.sql.Date(date.getTime());
@@ -98,8 +114,29 @@ public class EnterDetailsScheduleCmd implements Perform {
             e.printStackTrace();
         }
 
+
+        //the format of input time is "00:00:30"
+        String staT=req.getParameter("startTime");
+
+        String tL = "^\\d{2}:\\d{2}:\\d{2}$";
+        if (!staT.matches(tL)){
+            req.setAttribute("err_message", "Format startTime error, startTime must be in format tt:tt:tt");
+            return "/pages/error.jsp";
+        }
+
+        Time startTime=Time.valueOf(staT);
+        ps.setStartTime(startTime);
+
+
         //the format of input time is "00:00:30"
         String dur=req.getParameter("duration");
+
+        String dL = "^\\d{2}:\\d{2}:\\d{2}$";
+        if (!dur.matches(dL)){
+            req.setAttribute("err_message", "Format duration error, duration must be in format tt:tt:tt");
+            return "/pages/error.jsp";
+        }
+
         Time duration=Time.valueOf(dur);
         ps.setDuration(duration);
 
