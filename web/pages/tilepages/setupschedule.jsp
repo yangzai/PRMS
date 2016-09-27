@@ -25,23 +25,37 @@
 <body>
 
 <br/><br/>
-<form action="${pageContext.request.contextPath}/nocturne/enterps" method=post onsubmit="return validateForm()">
+<form action="${pageContext.request.contextPath}/nocturne/enterps" method=post >
     <center>
         <table cellpadding=4 cellspacing=2 border=0>
             <tr>
                 <td><fmt:message key="label.pslot.date" /></td>
                 <td>
-                        <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}" size=15
-                               maxlength=20>
-                        <input type="hidden" name="validateDateOfProgram" value="" size=30
-                               maxlength=40 style="border:none">
+                    <c:choose>
+                        <c:when test="${insps=='true'}">
+                            <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}" size=15
+                                   maxlength=20>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}" size=15
+                                   maxlength=20 readonly>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
             </tr>
             <tr>
                 <td><fmt:message key="label.pslot.timeOfProgram" /></td>
                 <td>
-                    <input type="text" name="startTime" value="${ps_startTime}" size=15
-                           maxlength=20>
+                    <c:choose>
+                        <c:when test="${insps=='true'}">
+                            <input type="text" name="startTime" value="${ps_startTime}" size=15
+                                   maxlength=20>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="text" name="startTime" value="${ps_startTime}" size=15
+                                   maxlength=20 readonly>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
             </tr>
             <tr>
