@@ -66,6 +66,7 @@
                         <c:url var="selecturl" scope="page" value="/nocturne/addeditps">
                             <c:param name="radioProgramName" value="${ps_radioProgramName}"/>
                             <c:param name="dateOfProgram" value="${ps_dateOfProgram}"/>
+                            <c:param name="startTime" value="${ps_startTime}"/>
                             <c:param name="duration" value="${ps_duration}"/>
                             <c:param name="step" value="${step}"/>
                             <c:param name="producerId" value="${ps_producerId}"/>
@@ -82,6 +83,7 @@
                         <c:url var="selecturl" scope="page" value="/nocturne/addeditps">
                             <c:param name="radioProgramName" value="${ps_radioProgramName}"/>
                             <c:param name="dateOfProgram" value="${ps_dateOfProgram}"/>
+                            <c:param name="startTime" value="${ps_startTime}"/>
                             <c:param name="duration" value="${ps_duration}"/>
                             <c:param name="step" value="${step}"/>
                             <c:param name="presenterId" value="${ps_presenterId}"/>

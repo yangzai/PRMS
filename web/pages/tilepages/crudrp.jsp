@@ -31,7 +31,8 @@
                 <td>
                     <input type="hidden" name="step" value="${step}">
                     <input type="hidden" name="dateOfProgram" value="${ps_dateOfProgram}">
-                    <input type="hidden" name="dateOfProgram" value="${ps_duration}">
+                    <input type="hidden" name="startTime" value="${ps_startTime}">
+                    <input type="hidden" name="duration" value="${ps_duration}">
                     <input type="hidden" name="insertps" value="${insps}">
                     <input type="hidden" name="presenterId" value="${ps_presenterId}">
                     <input type="hidden" name="producerId" value="${ps_producerId}">
@@ -63,6 +64,7 @@
                             <c:url var="selurl" scope="page" value="/nocturne/addeditps">
                                 <c:param name="radioProgramName" value="${crudrp.name}"/>
                                 <c:param name="dateOfProgram" value="${ps_dateOfProgram}"/>
+                                <c:param name="startTime" value="${ps_startTime}"/>
                                 <c:param name="duration" value="${ps_duration}"/>
                                 <c:param name="step" value="${step}"/>
                                 <c:param name="presenterId" value="${ps_presenterId}"/>

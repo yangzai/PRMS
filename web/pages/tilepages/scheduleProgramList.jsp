@@ -24,6 +24,7 @@
 <c:url var="url" scope="page" value="/nocturne/addeditps">
     <c:param name="duration" value=""/>
     <c:param name="dateOfProgram" value=""/>
+    <c:param name="startTime" value=""/>
     <c:param name="radioprogram" value=""/>
     <c:param name="presenter" value=""/>
     <c:param name="producer" value=""/>
@@ -34,6 +35,7 @@
 <table class="borderAll">
     <tr>
         <th><fmt:message key="label.scheduleProgramList.dateOfProgram"/></th>
+        <th><fmt:message key="label.scheduleProgramList.startTime"/></th>
         <th><fmt:message key="label.scheduleProgramList.duration"/></th>
         <th><fmt:message key="label.scheduleProgramList.radioProgram"/></th>
         <th><fmt:message key="label.scheduleProgramList.presenter"/></th>
@@ -43,6 +45,7 @@
     <c:forEach var="scheduleProgramList" items="${psl}" varStatus="status">
         <tr class="${status.index%2==0?'even':'odd'}">
             <td class="nowrap">${scheduleProgramList.dateOfProgram}</td>
+            <td class="nowrap">${scheduleProgramList.startTime}</td>
             <td class="nowrap">${scheduleProgramList.duration}</td>
             <td class="nowrap">${scheduleProgramList.radioProgram.name}</td>
             <td class="nowrap">${scheduleProgramList.presenter.name}</td>
@@ -50,6 +53,7 @@
             <td class="nowrap">
                 <c:url var="updurl" scope="page" value="/nocturne/addeditps">
                     <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
+                    <c:param name="startTime" value="${scheduleProgramList.startTime}"/>
                     <c:param name="duration" value="${scheduleProgramList.duration}"/>
                     <c:param name="radioProgram" value="${scheduleProgramList.radioProgram.name}"/>
                     <c:param name="presenterId" value="${scheduleProgramList.presenter.id}"/>
@@ -62,12 +66,14 @@
                 &nbsp;&nbsp;&nbsp;
                 <c:url var="delurl" scope="page" value="/nocturne/deleteps">
                     <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
+                    <c:param name="startTime" value="${scheduleProgramList.startTime}"/>
                     <c:param name="duration" value="${scheduleProgramList.duration}"/>
                 </c:url>
                 <a href="${delurl}"><fmt:message key="label.scheduleProgramList.delete"/></a>
                 &nbsp;&nbsp;&nbsp;
                 <c:url var="copurl" scope="page" value="/nocturne/copyps">
                     <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
+                    <c:param name="startTime" value="${scheduleProgramList.startTime}"/>
                     <c:param name="duration" value="${scheduleProgramList.duration}"/>
                     <c:param name="radioProgram" value="${scheduleProgramList.radioProgram.name}"/>
                     <c:param name="presenterId" value="${scheduleProgramList.presenter.id}"/>
