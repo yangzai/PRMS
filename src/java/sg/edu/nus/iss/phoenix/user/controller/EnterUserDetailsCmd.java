@@ -41,6 +41,9 @@ public class EnterUserDetailsCmd implements Perform{
             case ReturnCode.USER_DUPLICATED:
                 httpServletRequest.setAttribute("err_message","Duplicate user id");
                 return "/pages/error.jsp";
+            case ReturnCode.USER_HAS_NO_ROLE:
+                httpServletRequest.setAttribute("err_message","Please choose at least one role");
+                return "/pages/error.jsp";
             default:
                 httpServletRequest.setAttribute("err_message","System error");
                 return "/pages/error.jsp";

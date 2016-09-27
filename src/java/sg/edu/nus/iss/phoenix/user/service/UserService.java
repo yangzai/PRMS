@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.phoenix.user.service;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import sg.edu.nus.iss.phoenix.authenticate.dao.RoleDao;
 import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
@@ -34,34 +35,37 @@ public class UserService {
         roleDAO = factory.getRoleDAO();
     }
 
-    public List<Role> getAllRoles(){
+    public List<Role> getAllRoles() {
         try {
             return roleDAO.loadAll();
-        } catch (Exception ex){
-            logger.log(Level.SEVERE,"SQL Error",ex.toString());
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "SQL Error", ex.toString());
             return new ArrayList<>();
         }
     }
 
-    public int processCreate(User user, String[] chkRoles){
+    public int processCreate(User user, String[] chkRoles) {
         try {
-            if (userDAO.searchMatching(user.getId()) != null ){
+            if (userDAO.searchMatching(user.getId()) != null) {
                 // User id exists
                 return ReturnCode.USER_DUPLICATED;
             }
             user.setRoles(this.searchRolesByStrings(chkRoles));
+            if (user.getRoles().size() == 0) {
+                return ReturnCode.USER_HAS_NO_ROLE;
+            }
             userDAO.create(user);
             return ReturnCode.SUCCESS;
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE,"SQL Error",ex.toString());
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Error", ex.toString());
         }
         return ReturnCode.FAIL;
     }
 
-    public int resetPassword(String userId, String newPassword){
+    public int resetPassword(String userId, String newPassword) {
         try {
             User user = userDAO.searchMatching(userId);
-            if (user == null){
+            if (user == null) {
                 //User does not exist
                 return ReturnCode.USER_NOT_FOUND;
             }
@@ -69,46 +73,48 @@ public class UserService {
             userDAO.save(user);
             return ReturnCode.SUCCESS;
         } catch (Exception e) {
-            logger.log(Level.SEVERE,"Error ", e.toString());
+            logger.log(Level.SEVERE, "Error ", e.toString());
         }
         return ReturnCode.FAIL;
 
     }
-    public ArrayList<Role> searchRolesByStrings(String[] strs){
+
+    public ArrayList<Role> searchRolesByStrings(String[] strs) throws Exception {
         ArrayList<Role> roles = new ArrayList<>();
-        for (String roleStr : strs){
+        if (strs == null) return roles;
+        for (String roleStr : strs) {
             Role role = null;
             try {
                 role = roleDAO.searchMatching(roleStr);
-                if (role != null){
+                if (role != null) {
                     roles.add(role);
                 }
-            } catch (SQLException ex){
-                logger.log(Level.SEVERE,"SQL Error ",ex.toString());
+            } catch (SQLException ex) {
+                logger.log(Level.SEVERE, "SQL Error ", ex.toString());
             }
         }
         return roles;
     }
 
-    public User checkUserExist(String userid){
+    public User checkUserExist(String userid) {
         User user = null;
         try {
             user = userDAO.searchMatching(userid);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE,"SQL Error ", e.toString());
+            logger.log(Level.SEVERE, "SQL Error ", e.toString());
         }
         return user;
     }
 
-    public int deleteUser(User user){
+    public int deleteUser(User user) {
         int returnCode = ReturnCode.FAIL;
         try {
             userDAO.delete(user);
             returnCode = ReturnCode.SUCCESS;
-        } catch (Exception ex){
-            logger.log(Level.SEVERE,"Error ",ex.toString());
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Error ", ex.toString());
         }
-        return  returnCode;
+        return returnCode;
     }
 
 /*    public Map getUserRolesMapping(String userId){
