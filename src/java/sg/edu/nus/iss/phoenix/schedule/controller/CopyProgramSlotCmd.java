@@ -15,8 +15,8 @@ import java.io.IOException;
 public class CopyProgramSlotCmd implements Perform {
     @Override
     public String perform(String s, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        String step = (req.getParameter("step") != null ? req.getParameter("step") : "details");
-
+    //    String step = (req.getParameter("step") != null ? req.getParameter("step") : "details");
+        String step="showProgramslotList";
         req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
         req.setAttribute("ps_startTime",req.getParameter("startTime"));
         req.setAttribute("ps_duration", req.getParameter("duration"));
