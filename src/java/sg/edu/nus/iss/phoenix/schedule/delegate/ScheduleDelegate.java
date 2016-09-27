@@ -35,7 +35,7 @@ public class ScheduleDelegate {
         scheduleService.processModify(ps);
     }
 
-    public void processDelete(Time duration, Date dateOfProgram) {
-        scheduleService.processDelete(duration, dateOfProgram);
+    public void processDelete(Time startTime, Date dateOfProgram) {
+        scheduleService.processDelete(startTime, dateOfProgram);
     }
 }

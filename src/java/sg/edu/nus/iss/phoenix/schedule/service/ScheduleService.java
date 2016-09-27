@@ -95,9 +95,9 @@ public class ScheduleService {
         }
     }
 
-    public void processDelete(Time duration, Date dateOfProgram) {
+    public void processDelete(Time startTime, Date dateOfProgram) {
         try {
-            ProgramSlot ps = new ProgramSlot(duration, dateOfProgram);
+            ProgramSlot ps = new ProgramSlot(startTime, dateOfProgram);
             scheduleDAO.delete(ps);
         }catch (NotFoundException e) {
             e.printStackTrace();
