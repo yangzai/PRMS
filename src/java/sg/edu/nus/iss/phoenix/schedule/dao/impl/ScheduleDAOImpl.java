@@ -161,7 +161,7 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     public void delete(ProgramSlot valueObject) throws NotFoundException,
             SQLException {
 
-        if (valueObject.getDuration() == null || valueObject.getDateOfProgram() == null) {
+        if (valueObject.getStartTime() == null || valueObject.getDateOfProgram() == null) {
             throw new NotFoundException("Can not delete without Primary-Key!");
         }
 
