@@ -73,6 +73,16 @@
                     <input type="hidden" name="insertps" value="${insps}" />
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <input type="hidden" name="presenterId" value="${ps_presenterId}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="hidden" name="producerId" value="${ps_producerId}" />
+                </td>
+            </tr>
         </table>
     </center>
     <c:choose>

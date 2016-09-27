@@ -26,6 +26,8 @@
                     <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}">
                     <input type="text" name="dateOfProgram" value="${ps_duration}">
                     <input type="text" name="insertps" value="${insps}">
+                    <input type="text" name="presenterId" value="${ps_presenterId}">
+                    <input type="text" name="producerId" value="${ps_producerId}">
                 </td>
             </table>
         <%--</c:if>--%>
