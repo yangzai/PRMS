@@ -99,15 +99,15 @@ public class UserServiceTest {
     public void processCreateUserNoRole() throws Exception {
         User user = new User();
         user.setAll("3", "123", "test", null);
-        String[] str = {""}; //put null or incorrect name
+        String[] str = {}; //put null or incorrect name
         when(userDAO.searchMatching(user.getId())).thenReturn(null);
-        assertThat("Can we create user without role?", false,
-                is(userService.processCreate(user, str) == ReturnCode.SUCCESS));
+        //when(roleDAO.searchMatching(str[0])).thenReturn(null);
+        assertThat("Can we create user without role?", true,
+                is(userService.processCreate(user, str) == ReturnCode.USER_HAS_NO_ROLE));
 
         verify(userDAO).searchMatching(user.getId());
-
-        //verifyNoMoreInteractions(userDAO);
+        verifyNoMoreInteractions(userDAO);
         verifyZeroInteractions(roleDAO);
-
     }
+
 }
