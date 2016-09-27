@@ -1,6 +1,5 @@
 package sg.edu.nus.iss.phoenix.schedule.dao.impl;
 
-import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
@@ -10,13 +9,16 @@ import sg.edu.nus.iss.phoenix.user.entity.Presenter;
 import sg.edu.nus.iss.phoenix.user.entity.Producer;
 
 import java.sql.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /**
  * Created by yao on 15/09/16.
+ */
+
+/**
+ * User Data Access Object (DAO). This class contains all database handling that
+ * is needed to permanently store and retrieve User object instances.
  */
 public class ScheduleDAOImpl implements ScheduleDAO{
     Connection connection;
@@ -415,77 +417,6 @@ public class ScheduleDAOImpl implements ScheduleDAO{
         }
        return (List<ProgramSlot>) searchResults;
     }
-
-//    private RadioProgram createRP(PreparedStatement stmt, String program_name) throws SQLException {
-//        openConnection();
-//        ResultSet result = null;
-//        String sql = "SELECT * FROM phoenix.`radio-program` WHERE `name` = ?";
-//        RadioProgram program = new RadioProgram();
-//        try {
-//            stmt = connection.prepareStatement(sql);
-//            stmt.setString(1, program_name);
-//            result = stmt.executeQuery();
-//            while (result.next()) {
-//                program.setDescription(result.getString("desc"));
-//                program.setName(result.getString("name"));
-//                program.setTypicalDuration(result.getTime("typicalDuration"));
-//            }
-//        } finally {
-//            result.close();
-//            closeConnection();
-//        }
-//        return program;
-//    }
-//
-//    private Presenter setPresenterValue(PreparedStatement stmt, String presenter_name) throws SQLException {
-//        openConnection();
-//        ResultSet result = null;
-//        String sql = "SELECT * FROM phoenix.`user` WHERE `id` = ?";
-//        Presenter presenter = new Presenter();
-//        try {
-//            stmt = connection.prepareStatement(sql);
-//            stmt.setString(1, presenter_name);
-//            result = stmt.executeQuery();
-//            while (result.next()) {
-//                presenter.setName(result.getString("name"));
-//                presenter.setPassword(result.getString("password"));
-//                String[] array = result.getString("role").split(":");
-//                List<Role> roleList = Arrays.stream(array)
-//                        .map(Role::new)
-//                        .collect(Collectors.toList());
-//                presenter.setRoles((ArrayList<Role>) roleList);
-//            }
-//        } finally {
-//            result.close();
-//            closeConnection();
-//        }
-//        return presenter;
-//    }
-//
-//    private Producer setProducerValue(PreparedStatement stmt, String producer_name) throws SQLException {
-//        openConnection();
-//        ResultSet result = null;
-//        String sql = "SELECT * FROM phoenix.`user` WHERE `id` = ?";
-//        Producer producer = new Producer();
-//        try {
-//            stmt = connection.prepareStatement(sql);
-//            stmt.setString(1, producer_name);
-//            result = stmt.executeQuery();
-//            while (result.next()) {
-//                producer.setName(result.getString("name"));
-//                producer.setPassword(result.getString("password"));
-//                String[] array = result.getString("role").split(":");
-//                List<Role> roleList = Arrays.stream(array)
-//                        .map(Role::new)
-//                        .collect(Collectors.toList());
-//                producer.setRoles((ArrayList<Role>) roleList);
-//            }
-//        } finally {
-//            result.close();
-//            closeConnection();
-//        }
-//        return producer;
-//    }
 
     private void openConnection() {
         try {
