@@ -16,7 +16,9 @@
       <sourceFolder url="file://$MODULE_DIR$/data-scripts" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/javadoc-scripts" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/nbproject" />
     </content>
     <orderEntry type="inheritedJdk" />
