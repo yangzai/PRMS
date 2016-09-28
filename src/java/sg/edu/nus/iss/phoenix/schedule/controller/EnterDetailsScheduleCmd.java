@@ -41,11 +41,6 @@ public class EnterDetailsScheduleCmd implements Perform {
         ScheduleDelegate del = new ScheduleDelegate();
         ProgramSlot ps = new ProgramSlot();
 
-        //for test, a list of user to present presenter and producer
-        //ReviewSelectUserDelegate delegate = new ReviewSelectUserDelegate();
-        //List<User> userList = delegate.getAllUsers();
-
-        String step = req.getParameter("step");
         req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
         req.setAttribute("ps_startTime",req.getParameter("startTime"));
         req.setAttribute("ps_duration", req.getParameter("duration"));
@@ -55,53 +50,36 @@ public class EnterDetailsScheduleCmd implements Perform {
         req.setAttribute("ps_producerId", req.getParameter("producerId"));
         req.setAttribute("ps_producerName", req.getParameter("producerName"));
         req.setAttribute("insps",req.getParameter("insertps"));
-        if (step.equals("details")){
-            step = "selectPresenter";
-            req.setAttribute("step", step);
+
+        if (req.getParameter("selectRP") != null) {
             ReviewSelectProgramDelegate rpdel = new ReviewSelectProgramDelegate();
             List<RadioProgram> data = rpdel.reviewSelectRadioProgram();
             req.setAttribute("rps", data);
             req.setAttribute("reqrp","selectrp");
             return "/pages/crudrp.jsp";
-        } else if (step.equals("selectPresenter")){
-            step="selectProducer";
-            req.setAttribute("step",step);
+
+        } else if (req.getParameter("selectPresenter") != null){
             ReviewSelectPresenterProducerDelegate ppdel=new ReviewSelectPresenterProducerDelegate();
             List<Presenter> dataOfPre=ppdel.getAllPresenters();
             req.setAttribute("ul",dataOfPre);
-        //   req.setAttribute("ul",userList);
             req.setAttribute("reqtype","selectpre");
             return "/pages/userListPage.jsp";
-        }else if (step.equals("selectProducer")){
-            step="showProgramslotList";
-            req.setAttribute("step",step);
+
+        }else if (req.getParameter("selectProducer")!=null){
             ReviewSelectPresenterProducerDelegate ppdel=new ReviewSelectPresenterProducerDelegate();
             List<Producer> dataOfPro=ppdel.getAllProducers();
             req.setAttribute("ul",dataOfPro);
-        //    req.setAttribute("ul",userList);
             req.setAttribute("reqtype","selectpro");
             return "/pages/userListPage.jsp";
         }
 
 
         String dateOfP=req.getParameter("dateOfProgram");
-        /*
-        Date dateOfProgram=Date.valueOf(dateOfP);
-        ps.setDateOfProgram(dateOfProgram);
-        */
-
         String eL = "^\\d{4}-\\d{2}-\\d{2}$";
         if (!dateOfP.matches(eL)){
             req.setAttribute("err_message", "Format date error, Date must be in format yyyy-mm-dd");
             return "/pages/error.jsp";
         }
-
-        /*
-        if (/\d{4}[-\/]\d{2}[-\/]\d{2}/.test(dateOfP)) {
-            req.setAttribute("err_message", "Format date error");
-            return "/pages/error.jsp";
-        }
-        */
 
         //the format of input date is "2016/09/23 18:27:00"
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -141,14 +119,26 @@ public class EnterDetailsScheduleCmd implements Perform {
         ps.setDuration(duration);
 
         String programName=req.getParameter("radioProgramName");
+        if (programName==null || programName.isEmpty()){
+            req.setAttribute("err_message", "Radio Program is invalid. Please re-select radio program");
+            return "/pages/error.jsp";
+        }
         RadioProgram rp=new RadioProgram(programName);
         ps.setRadioProgram(rp);
 
         String presenterId=req.getParameter("presenterId");
+        if (presenterId==null || presenterId.isEmpty()){
+            req.setAttribute("err_message", "Presenter is invalid. Please re-select a presenter");
+            return "/pages/error.jsp";
+        }
         Presenter presenter= new Presenter(presenterId);
         ps.setPresenter(presenter);
 
         String producerId=req.getParameter("producerId");
+        if (producerId==null || producerId.isEmpty()){
+            req.setAttribute("err_message", "Producer is invalid. Please re-select a producer");
+            return "/pages/error.jsp";
+        }
         Producer producer=new Producer(producerId);
         ps.setProducer(producer);
 
@@ -164,7 +154,6 @@ public class EnterDetailsScheduleCmd implements Perform {
 
         ReviewSelectScheduledProgramDelegate rsdel = new ReviewSelectScheduledProgramDelegate();
         List<ProgramSlot> data = rsdel.reviewSelectScheduledProgram();
-        //parse programslots to scheduleProgramList page
         req.setAttribute("psl", data);
         return "/pages/scheduleProgramList.jsp";
     }

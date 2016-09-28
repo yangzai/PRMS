@@ -19,8 +19,6 @@ import java.util.List;
 public class AddEditProgramSlotCmd implements Perform{
     @Override
     public String perform(String s, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        String step = (req.getParameter("step") != null ? req.getParameter("step") : "details");
-
         req.setAttribute("ps_dateOfProgram", req.getParameter("dateOfProgram"));
         req.setAttribute("ps_startTime",req.getParameter("startTime"));
         req.setAttribute("ps_duration", req.getParameter("duration"));
@@ -29,7 +27,6 @@ public class AddEditProgramSlotCmd implements Perform{
         req.setAttribute("ps_presenterName", req.getParameter("presenterName"));
         req.setAttribute("ps_producerId", req.getParameter("producerId"));
         req.setAttribute("ps_producerName", req.getParameter("producerName"));
-        req.setAttribute("step", step);
         req.setAttribute("insps", req.getParameter("insertps"));
         return "/pages/setupschedule.jsp";
     }
