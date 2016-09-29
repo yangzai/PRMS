@@ -110,4 +110,52 @@ public class UserServiceTest {
         verifyZeroInteractions(roleDAO);
     }
 
+    @Test
+    public void resetPassword() throws Exception {
+        User user = new User();
+        user.setAll("4", "123", "test", "admin");
+
+        when(userDAO.searchMatching(user.getId())).thenReturn(user);
+        assertThat(ReturnCode.SUCCESS, is(userService.resetPassword(user.getId(),"321")));
+
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userDAO).save(userCaptor.capture());
+        User updatedUser = userCaptor.getValue();
+
+        assertThat(updatedUser.getId(), is("4"));
+        assertThat(updatedUser.getName(), is("test"));
+        assertThat(updatedUser.getPassword(), is("321"));
+        assertThat(updatedUser.getRolesInSring().trim(), equalTo("admin"));
+
+        verify(userDAO).searchMatching(user.getId());
+        verifyNoMoreInteractions(userDAO);
+        verifyZeroInteractions(roleDAO);
+    }
+
+    @Test
+    public void resetPasswordNullPassword() throws Exception {
+        User user = new User();
+        user.setAll("6", "123", "test", "admin");
+
+        when(userDAO.searchMatching(user.getId())).thenReturn(user);
+        assertThat("Do we support null password for user reset.", false,
+                is(ReturnCode.SUCCESS == userService.resetPassword(user.getId(),"")));
+
+        verify(userDAO).searchMatching(user.getId());
+        verifyNoMoreInteractions(userDAO);
+        verifyZeroInteractions(roleDAO);
+    }
+
+    @Test
+    public void processDeleteUser() throws Exception {
+        User user = new User();
+        user.setAll("7", "123", "test", "admin");
+
+        assertThat(ReturnCode.SUCCESS, is(userService.deleteUser(user)));
+
+        verify(userDAO).delete(user);
+        verifyNoMoreInteractions(userDAO);
+        verifyZeroInteractions(roleDAO);
+    }
+
 }
