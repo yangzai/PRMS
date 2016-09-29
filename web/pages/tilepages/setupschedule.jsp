@@ -70,6 +70,7 @@
                 <td>
                     <input type="text" name="radioProgramName" value="${ps_radioProgramName}" size=15
                            maxlength=20 readonly>
+                    <input type="submit" name="selectRP" value="Select Radio Program">
                 </td>
             </tr>
             <tr>
@@ -77,6 +78,7 @@
                 <td>
                     <input type="text" name="presenterName" value="${ps_presenterName}" size=15
                            maxlength=20 readonly>
+                    <input type="submit" name="selectPresenter" value="Select Presenter">
                 </td>
             </tr>
             <tr>
@@ -84,6 +86,7 @@
                 <td>
                     <input type="text" name="producerName" value="${ps_producerName}" size=15
                            maxlength=20 readonly>
+                    <input type="submit" name="selectProducer" value="Select Producer">
                 </td>
             </tr>
             <tr>
@@ -103,9 +106,6 @@
             </tr>
         </table>
     </center>
-    <input type="submit" name="selectRP" value="Select Radio Program">
-    <input type="submit" name="selectPresenter" value="Select Presenter">
-    <input type="submit" name="selectProducer" value="Select Producer">
     <input type="submit" name="submit" value="Submit">
 </form>
 
