@@ -115,11 +115,11 @@ DROP TABLE IF EXISTS `phoenix`.`program-slot` ;
 CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
   `duration` TIME NOT NULL ,
   `dateOfProgram` DATETIME NOT NULL ,
-  `startTime` DATETIME NULL ,
+  `startTime` TIME NOT NULL ,
   `program-name` VARCHAR(45) NULL ,
   `presenter` VARCHAR(40) NULL ,
   `producer` VARCHAR(40) NULL ,
-  PRIMARY KEY (`duration`, `dateOfProgram`) ,
+  PRIMARY KEY (`dateOfProgram`, `startTime`) ,
   CONSTRAINT
     FOREIGN KEY (`program-name` )
     REFERENCES `phoenix`.`radio-program` (`name` )
@@ -135,7 +135,7 @@ CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-insert into `phoenix`.`program-slot` values('00:30:00', '1000-01-01 00:00:00', NULL , "news", "dilbert", "dilbert");
+insert into `phoenix`.`program-slot` values('00:30:00', '1000-01-01 00:00:00', '23:30:59' , "news", "dilbert", "dilbert");
 
 CREATE INDEX `name_program_slot` ON `phoenix`.`program-slot` (`program-name` ASC) ;
 

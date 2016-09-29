@@ -11,22 +11,29 @@
 </head>
 <body>
 <h1><fmt:message key="label.cruduser"/></h1>
-<c:url var="url" scope="page" value="/nocturne/addedituser">
-    <c:param name="id" value=""/>
-    <c:param name="name" value=""/>
-    <c:param name="roles" value=""/>
-    <c:param name="insert" value="true"/>
-</c:url>
-<a href="${url}"><fmt:message key="label.cruduser.add"/></a>
+<c:choose>
+    <c:when test="${reqtype=='selectpre'||'selectpro'}">
+        <a><fmt:message key="label.cruduser.select"/></a>
+    </c:when>
+    <c:otherwise>
+        <c:url var="url" scope="page" value="/nocturne/addedituser">
+            <c:param name="id" value=""/>
+            <c:param name="name" value=""/>
+            <c:param name="roles" value=""/>
+            <c:param name="insert" value="true"/>
+        </c:url>
+        <a href="${url}"><fmt:message key="label.cruduser.add"/></a>
+    </c:otherwise>
+</c:choose>
 <br/><br/>
 <table class="borderAll">
     <td>
-        <input type="text" name="step" value="${step}">
-        <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}">
-        <input type="text" name="dateOfProgram" value="${ps_duration}">
-        <input type="text" name="insertps" value="${insps}">
-        <input type="text" name="presenterId" value="${ps_presenterId}">
-        <input type="text" name="producerId" value="${ps_producerId}">
+        <input type="hidden" name="step" value="${step}">
+        <input type="hidden" name="dateOfProgram" value="${ps_dateOfProgram}">
+        <input type="hidden" name="dateOfProgram" value="${ps_duration}">
+        <input type="hidden" name="insertps" value="${insps}">
+        <input type="hidden" name="presenterId" value="${ps_presenterId}">
+        <input type="hidden" name="producerId" value="${ps_producerId}">
     </td>
 </table>
 <table class="borderAll">
@@ -59,6 +66,7 @@
                         <c:url var="selecturl" scope="page" value="/nocturne/addeditps">
                             <c:param name="radioProgramName" value="${ps_radioProgramName}"/>
                             <c:param name="dateOfProgram" value="${ps_dateOfProgram}"/>
+                            <c:param name="startTime" value="${ps_startTime}"/>
                             <c:param name="duration" value="${ps_duration}"/>
                             <c:param name="step" value="${step}"/>
                             <c:param name="producerId" value="${ps_producerId}"/>
@@ -75,6 +83,7 @@
                         <c:url var="selecturl" scope="page" value="/nocturne/addeditps">
                             <c:param name="radioProgramName" value="${ps_radioProgramName}"/>
                             <c:param name="dateOfProgram" value="${ps_dateOfProgram}"/>
+                            <c:param name="startTime" value="${ps_startTime}"/>
                             <c:param name="duration" value="${ps_duration}"/>
                             <c:param name="step" value="${step}"/>
                             <c:param name="presenterId" value="${ps_presenterId}"/>

@@ -15,6 +15,7 @@ public class ProgramSlot {
     //attribute
     private Date dateOfProgram;
     private Time duration;
+    private Time startTime;
     private RadioProgram radioProgram;
     private Presenter presenter;
     private Producer producer;
@@ -22,8 +23,8 @@ public class ProgramSlot {
     public ProgramSlot () {
 
     }
-    public ProgramSlot(Time duration, Date dateOfProgram){
-        this.duration = duration;
+    public ProgramSlot(Time startTime, Date dateOfProgram){
+        this.startTime = startTime;
         this.dateOfProgram = dateOfProgram;
     }
 
@@ -39,6 +40,14 @@ public class ProgramSlot {
     }
     public void setDuration(Time duration){
         this.duration=duration;
+    }
+
+    public Time getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
     }
 
     public RadioProgram getRadioProgram(){
@@ -62,10 +71,11 @@ public class ProgramSlot {
         this.producer=producer;
     }
 
-    public void setAll(Date startTime,
-                       Time duration,RadioProgram radioProgram,Presenter presenter,Producer producer) {
-        this.dateOfProgram = startTime;
+    public void setAll(Date dateOfProgram,
+                       Time duration,Time startTime, RadioProgram radioProgram,Presenter presenter,Producer producer) {
+        this.dateOfProgram = dateOfProgram;
         this.duration = duration;
+        this.startTime = startTime;
         this.radioProgram = radioProgram;
         this.presenter=presenter;
         this.producer=producer;
@@ -83,6 +93,12 @@ public class ProgramSlot {
             if (valueObject.getDuration() != null)
                 return(false);
         } else if (!this.duration.equals(valueObject.getDuration())) {
+            return(false);
+        }
+        if (this.startTime == null) {
+            if (valueObject.getStartTime() != null)
+                return(false);
+        } else if (!this.startTime.equals(valueObject.getDuration())) {
             return(false);
         }
         if (this.radioProgram == null) {

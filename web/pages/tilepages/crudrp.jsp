@@ -11,23 +11,31 @@
 </head>
 <body>
         <h1><fmt:message key="label.crudrp"/></h1>
-        <c:url var="url" scope="page" value="/nocturne/addeditrp">
-        		<c:param name="name" value=""/>
-                <c:param name="description" value=""/>
-                <c:param name="duration" value=""/>
-                <c:param name="insert" value="true"/>
-        </c:url>
-        <a href="${url}"><fmt:message key="label.crudrp.add"/></a>
+        <c:choose>
+            <c:when test="${reqrp=='selectrp'}">
+                <a><fmt:message key="label.crudrp.select"/></a>
+            </c:when>
+            <c:otherwise>
+                <c:url var="url" scope="page" value="/nocturne/addeditrp">
+                    <c:param name="name" value=""/>
+                    <c:param name="description" value=""/>
+                    <c:param name="duration" value=""/>
+                    <c:param name="insert" value="true"/>
+                </c:url>
+                <a href="${url}"><fmt:message key="label.crudrp.add"/></a>
+            </c:otherwise>
+        </c:choose>
         <br/><br/>
         <%--<c:if test="${step = 2}">--%>
             <table class="borderAll">
                 <td>
-                    <input type="text" name="step" value="${step}">
-                    <input type="text" name="dateOfProgram" value="${ps_dateOfProgram}">
-                    <input type="text" name="dateOfProgram" value="${ps_duration}">
-                    <input type="text" name="insertps" value="${insps}">
-                    <input type="text" name="presenterId" value="${ps_presenterId}">
-                    <input type="text" name="producerId" value="${ps_producerId}">
+                    <input type="hidden" name="step" value="${step}">
+                    <input type="hidden" name="dateOfProgram" value="${ps_dateOfProgram}">
+                    <input type="hidden" name="startTime" value="${ps_startTime}">
+                    <input type="hidden" name="duration" value="${ps_duration}">
+                    <input type="hidden" name="insertps" value="${insps}">
+                    <input type="hidden" name="presenterId" value="${ps_presenterId}">
+                    <input type="hidden" name="producerId" value="${ps_producerId}">
                 </td>
             </table>
         <%--</c:if>--%>
@@ -56,6 +64,7 @@
                             <c:url var="selurl" scope="page" value="/nocturne/addeditps">
                                 <c:param name="radioProgramName" value="${crudrp.name}"/>
                                 <c:param name="dateOfProgram" value="${ps_dateOfProgram}"/>
+                                <c:param name="startTime" value="${ps_startTime}"/>
                                 <c:param name="duration" value="${ps_duration}"/>
                                 <c:param name="step" value="${step}"/>
                                 <c:param name="presenterId" value="${ps_presenterId}"/>
