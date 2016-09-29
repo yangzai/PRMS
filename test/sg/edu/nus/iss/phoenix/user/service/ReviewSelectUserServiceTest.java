@@ -15,6 +15,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -47,8 +48,7 @@ public class ReviewSelectUserServiceTest {
         when(userDAO.loadAll()).thenReturn(userList);
 
         List<User> loadedList = reviewSelectUserService.getAllUsers();
-        System.out.println(reviewSelectUserService.getAllUsers().size());
         assertThat(loadedList.size(),equalTo(userList.size()));
-
+        verify(userDAO).loadAll();
     }
 }

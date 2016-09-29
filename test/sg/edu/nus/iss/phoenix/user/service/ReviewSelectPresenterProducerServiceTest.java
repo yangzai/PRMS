@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
@@ -40,10 +41,9 @@ public class ReviewSelectPresenterProducerServiceTest {
         Presenter presenter = new Presenter();
         presenter.setAll("1", "123", "presenter1", "presenter");
         presenterList.add(presenter);
-
         when(userDao.loadAllPresenters()).thenReturn(presenterList);
         assertThat(service.getAllPresenters(), equalTo(presenterList));
-        //verifyNoMoreInteractions(userDao);
+        verify(userDao).loadAllPresenters();
     }
 
 
@@ -55,6 +55,7 @@ public class ReviewSelectPresenterProducerServiceTest {
         producerList.add(producer);
         when(userDao.loadAllProducers()).thenReturn(producerList);
         assertThat(service.getAllProducers(), equalTo(producerList));
+        verify(userDao).loadAllProducers();
     }
 
 }
