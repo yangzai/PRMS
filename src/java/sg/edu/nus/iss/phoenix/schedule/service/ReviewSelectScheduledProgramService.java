@@ -42,8 +42,8 @@ public class ReviewSelectScheduledProgramService {
                 User userPresenter = udao.getObject(programSlot.getPresenter().getId());
                 User userProducer = udao.getObject(programSlot.getProducer().getId());
                 programSlot.setRadioProgram(radioProgram);
-                programSlot.getPresenter().setAll(userPresenter.getId(), userPresenter.getPassword(), userPresenter.getName(), userPresenter.getRolesInSring());
-                programSlot.getProducer().setAll(userProducer.getId(), userProducer.getPassword(), userProducer.getName(), userProducer.getRolesInSring());
+                programSlot.getPresenter().setAll(userPresenter.getId(), userPresenter.getPassword(), userPresenter.getName(), userPresenter.getRolesInString());
+                programSlot.getProducer().setAll(userProducer.getId(), userProducer.getPassword(), userProducer.getName(), userProducer.getRolesInString());
             }
         } catch (SQLException ex) {
             Logger.getLogger(ReviewSelectScheduledProgramService.class.getName()).log(Level.SEVERE, null, ex);

@@ -19,23 +19,34 @@ public class UserDelegate {
         service = new UserService();
     }
 
-    public List<Role> getAllRoles(){
+    public List<Role> getAllRoles() {
         return service.getAllRoles();
     }
 
-    public int processResetPwd(String userId, String newPassword){
+    public int processResetPwd(String userId, String newPassword) {
         return service.resetPassword(userId, newPassword);
     }
 
-    public int processCreate(User user, String[] chkRoles){
+    public int processCreate(User user, String[] chkRoles) {
         return service.processCreate(user, chkRoles);
     }
 
-    public int processDelete(String userid){
+    public int processDelete(String userid) {
         User user = service.checkUserExist(userid);
-        if (user == null){
+        if (user == null) {
             return ReturnCode.USER_NOT_FOUND;
         }
         return service.deleteUser(user);
+    }
+
+    public int processModify(User user, String[] chkRoles) {
+        return service.processModify(user, chkRoles);
+    }
+    public Map getUserRolesMapping(String id){
+        return service.getUserRolesMapping(id);
+    }
+
+    public User checkUserExist(String id){
+        return service.checkUserExist(id);
     }
 }

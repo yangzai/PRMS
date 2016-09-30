@@ -46,7 +46,7 @@
                 <th><fmt:message key="label.cruduser.select"/></th>
             </c:when>
             <c:otherwise>
-                <th><fmt:message key="label.cruduser.resetPwd"/> <fmt:message key="label.cruduser.delete"/></th>
+                <th><fmt:message key="label.cruduser.edit"/> <fmt:message key="label.cruduser.delete"/></th>
             </c:otherwise>
         </c:choose>
     </tr>
@@ -102,7 +102,7 @@
                             <c:param name="name" value="${cruduser.name}"/>
                             <c:param name="insert" value="false"/>
                         </c:url>
-                        <a href="${updurl}"><fmt:message key="label.cruduser.resetPwd"/></a>
+                        <a href="${updurl}"><fmt:message key="label.cruduser.edit"/></a>
                         &nbsp;&nbsp;&nbsp;
                         <c:url var="delurl" scope="page" value="/nocturne/deleteuser">
                             <c:param name="id" value="${cruduser.id}"/>

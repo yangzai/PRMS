@@ -23,14 +23,16 @@ public class EnterUserDetailsCmd implements Perform{
     public String perform(String s, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException, ServletException {
         UserDelegate delegate = new UserDelegate();
         User user = new User();
-        user.setId(httpServletRequest.getParameter("id"));
-        user.setPassword(httpServletRequest.getParameter("password"));
-        user.setName(httpServletRequest.getParameter("name"));
+        user.setId(httpServletRequest.getParameter("id").trim());
+        user.setPassword(httpServletRequest.getParameter("password").trim());
+        user.setName(httpServletRequest.getParameter("name").trim());
         String[] chkRoles = httpServletRequest.getParameterValues("chkRoles");
         String ins = httpServletRequest.getParameter("ins");
-        int returnCode = 0;
+        int returnCode;
         if (ins.equalsIgnoreCase("true")){
             returnCode = delegate.processCreate(user,chkRoles);
+        } else {
+            returnCode = delegate.processModify(user,chkRoles);
         }
         switch (returnCode) {
             case ReturnCode.SUCCESS:
@@ -43,6 +45,9 @@ public class EnterUserDetailsCmd implements Perform{
                 return "/pages/error.jsp";
             case ReturnCode.USER_HAS_NO_ROLE:
                 httpServletRequest.setAttribute("err_message","Please choose at least one role");
+                return "/pages/error.jsp";
+            case ReturnCode.USER_NOT_FOUND:
+                httpServletRequest.setAttribute("err_message","User doest not exist");
                 return "/pages/error.jsp";
             default:
                 httpServletRequest.setAttribute("err_message","System error");

@@ -76,7 +76,28 @@ public class UserService {
             logger.log(Level.SEVERE, "Error ", e.toString());
         }
         return ReturnCode.FAIL;
+    }
 
+    public int processModify(User user, String[] chkRoles) {
+        try {
+            User foundUser = userDAO.searchMatching(user.getId());
+            if (user == null) {
+                //User does not exist
+                return ReturnCode.USER_NOT_FOUND;
+            }
+            if (user.getPassword().equals("") || chkRoles == null) {
+                return ReturnCode.FAIL;
+            }
+            ArrayList<Role> roles = this.searchRolesByStrings(chkRoles);
+            foundUser.setName(user.getName());
+            foundUser.setPassword(user.getPassword());
+            foundUser.setRoles(roles);
+            userDAO.save(foundUser);
+            return ReturnCode.SUCCESS;
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error ", e.toString());
+        }
+        return ReturnCode.FAIL;
     }
 
     public ArrayList<Role> searchRolesByStrings(String[] strs) throws Exception {
@@ -117,19 +138,22 @@ public class UserService {
         return returnCode;
     }
 
-/*    public Map getUserRolesMapping(String userId){
+    public Map getUserRolesMapping(String userId) {
         try {
-            ArrayList roles = userDAO.searchMatching(userId).getRoles();
-            List<Role> allroles = this.getAllRoles();
-            HashMap<String,Boolean> rolesMapping = new HashMap<>();
-            for (Role role: allroles){
-                rolesMapping.put(role.getRole(),roles.contains(role));
+            User user = userDAO.searchMatching(userId);
+            if (user == null) {
+                return new HashMap();
+            }
+            String userRoles = user.getRolesInString().toLowerCase();
+            List<Role> allRoles = this.getAllRoles();
+            HashMap<String, Boolean> rolesMapping = new HashMap<>();
+            for (Role role : allRoles) {
+                rolesMapping.put(role.getRole(), userRoles.contains(role.getRole().toLowerCase()));
             }
             return rolesMapping;
-
-        } catch (Exception ex){
-            logger.log(Level.SEVERE,"SQL Error",ex.toString());
-            return new HashMap();
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "SQL Error", ex.toString());
         }
-    }*/
+        return new HashMap();
+    }
 }

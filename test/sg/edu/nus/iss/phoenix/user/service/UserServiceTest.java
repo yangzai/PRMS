@@ -73,7 +73,7 @@ public class UserServiceTest {
         assertThat(updatedUser.getId(), is("1"));
         assertThat(updatedUser.getName(), is("test"));
         assertThat(updatedUser.getPassword(), is("123"));
-        assertThat(updatedUser.getRolesInSring().trim(), equalTo("manager"));
+        assertThat(updatedUser.getRolesInString().trim(), equalTo("manager"));
 
         //step 7: make sure no other interaction with userDAO during execution
         verifyNoMoreInteractions(userDAO);
@@ -125,7 +125,7 @@ public class UserServiceTest {
         assertThat(updatedUser.getId(), is("4"));
         assertThat(updatedUser.getName(), is("test"));
         assertThat(updatedUser.getPassword(), is("321"));
-        assertThat(updatedUser.getRolesInSring().trim(), equalTo("admin"));
+        assertThat(updatedUser.getRolesInString().trim(), equalTo("admin"));
 
         verify(userDAO).searchMatching(user.getId());
         verifyNoMoreInteractions(userDAO);

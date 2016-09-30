@@ -79,7 +79,7 @@ public class User implements Cloneable, Serializable {
 		this.roles = roles;
 	}
 
-	public String getRolesInSring(){
+	public String getRolesInString(){
 		//Get all roles in String to insert into database
 		String rolesStr = "";
 		for (Role role : this.getRoles()){
