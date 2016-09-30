@@ -71,7 +71,7 @@
                 </c:url>
                 <a href="${delurl}"><fmt:message key="label.scheduleProgramList.delete"/></a>
                 &nbsp;&nbsp;&nbsp;
-                <c:url var="copurl" scope="page" value="/nocturne/copyps">
+                <c:url var="copurl" scope="page" value="/nocturne/addeditps">
                     <c:param name="dateOfProgram" value="${scheduleProgramList.dateOfProgram}"/>
                     <c:param name="startTime" value="${scheduleProgramList.startTime}"/>
                     <c:param name="duration" value="${scheduleProgramList.duration}"/>
