@@ -81,12 +81,14 @@ public class ScheduleService {
 
     }
 
-    public void processCreate(ProgramSlot ps) {
-        try {
-            scheduleDAO.create(ps);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    /**
+     * This method will create a ProgramSlot in the database and catch any exception
+     * @param ps the program slot to be created.
+     * @exception IllegalArgumentException If there is any error when creating programSlot
+     * @exception SQLException Error in SQL insert query
+     */
+    public void processCreate(ProgramSlot ps) throws IllegalArgumentException, SQLException {
+        scheduleDAO.create(ps);
     }
 
     public void processModify(ProgramSlot ps) {

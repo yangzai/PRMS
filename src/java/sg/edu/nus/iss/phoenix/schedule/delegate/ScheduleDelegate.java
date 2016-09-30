@@ -6,6 +6,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
 
@@ -27,7 +28,13 @@ public class ScheduleDelegate {
         scheduleService.processCreateAnnualWeeklySchedule(annualSchedule);
     }
 
-    public void processCreate(ProgramSlot ps) {
+    /**
+     * This method will create a ProgramSlot in the database catch any exception
+     * @param ps the program slot to be created.
+     * @exception IllegalArgumentException If there is any error when creating programSlot
+     * @exception SQLException Error in SQL insert query
+     */
+    public void processCreate(ProgramSlot ps) throws IllegalArgumentException, SQLException {
         scheduleService.processCreate(ps);
     }
 

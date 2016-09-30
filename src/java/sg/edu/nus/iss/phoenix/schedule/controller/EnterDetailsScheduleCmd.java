@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -147,7 +148,16 @@ public class EnterDetailsScheduleCmd implements Perform {
                 "Insert Flag: " + insps);
         //ins==true means create or copy
         if (insps.equalsIgnoreCase("true")) {
-            del.processCreate(ps);
+            try{
+                del.processCreate(ps);
+            } catch (SQLException sqe) {
+                req.setAttribute("err_message", sqe.getMessage());
+                return "/pages/error.jsp";
+            } catch (IllegalArgumentException ile) {
+                req.setAttribute("err_message", ile.getMessage());
+                return "/pages/error.jsp";
+            }
+
         } else {
             del.processModify(ps);
         }
