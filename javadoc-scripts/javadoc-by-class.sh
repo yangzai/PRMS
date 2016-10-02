@@ -7,6 +7,7 @@
 
 base_path=`dirname ${0}`
 root_path=${base_path}/..
+lib_path=${root_path}/lib
 src_path=${root_path}/src/java
 phoenix_path=${src_path}/sg/edu/nus/iss/phoenix
 
@@ -16,5 +17,5 @@ do
 done
 
 if [ ${#arr[@]} -gt 0 ]; then
-    javadoc -d ${root_path}/dist/javadoc -sourcepath ${src_path} ${arr[*]}
+    javadoc -classpath "${lib_path}/*" -d "${root_path}/dist/javadoc" -sourcepath "${src_path}" ${arr[*]}
 fi
