@@ -29,10 +29,14 @@ public class EnterDetailsAnnualWeeklyScheduleCmd implements Perform {
 
         ScheduleDelegate scheduleDelegate = new ScheduleDelegate();
 
-        AnnualSchedule annualSchedule = new AnnualSchedule(
-                Integer.parseInt(req.getParameter("year")), user
-        );
-        scheduleDelegate.processCreateAnnualWeeklySchedule(annualSchedule);
+        try {
+            AnnualSchedule annualSchedule = new AnnualSchedule(
+                    Integer.parseInt(req.getParameter("year")), user
+            );
+            scheduleDelegate.processCreateAnnualWeeklySchedule(annualSchedule);
+        } catch (IllegalArgumentException e) {
+            return "/pages/error.jsp";
+        }
 
         List<AnnualSchedule> data = scheduleDelegate.processRetrieveAllAnnualSchedule();
         req.setAttribute("annualScheduleList", data);
