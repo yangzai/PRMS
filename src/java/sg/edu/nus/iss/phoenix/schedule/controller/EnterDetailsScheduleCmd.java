@@ -150,16 +150,19 @@ public class EnterDetailsScheduleCmd implements Perform {
         if (insps.equalsIgnoreCase("true")) {
             try{
                 del.processCreate(ps);
-            } catch (SQLException sqe) {
-                req.setAttribute("err_message", sqe.getMessage());
-                return "/pages/error.jsp";
             } catch (IllegalArgumentException ile) {
                 req.setAttribute("err_message", ile.getMessage());
                 return "/pages/error.jsp";
             }
 
         } else {
-            del.processModify(ps);
+            try{
+                del.processModify(ps);
+            }catch (IllegalArgumentException ilm){
+                req.setAttribute("err_message",ilm.getMessage());
+                return "/pages/error.jsp";
+            }
+
         }
 
         ReviewSelectScheduledProgramDelegate rsdel = new ReviewSelectScheduledProgramDelegate();

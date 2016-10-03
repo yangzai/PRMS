@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.List;
 
@@ -31,7 +32,13 @@ public class DeleteProgramSlotCmd implements Perform {
         Time startTime=Time.valueOf(stat);
         String dur=req.getParameter("duration");
         Time duration=Time.valueOf(dur);
-        del.processDelete(startTime,dateOfProgram);
+        try {
+            del.processDelete(startTime,dateOfProgram);
+        }catch (IllegalArgumentException ilm){
+            req.setAttribute("err_message",ilm.getMessage());
+            return "/pages/error.jsp";
+        }
+
 
         ReviewSelectScheduledProgramDelegate rsDel = new ReviewSelectScheduledProgramDelegate();
         List<ProgramSlot> data = rsDel.reviewSelectScheduledProgram();
