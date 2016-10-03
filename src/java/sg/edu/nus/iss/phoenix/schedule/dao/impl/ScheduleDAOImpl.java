@@ -22,6 +22,7 @@ import java.util.ArrayList;
  */
 public class ScheduleDAOImpl implements ScheduleDAO{
     Connection connection;
+    boolean isOverlapping;
 
     /* (non-Javadoc)
      * @see sg.edu.nus.iss.phoenix.radioprogram.dao.impl.ProgramDAO#createValueObject()
@@ -419,6 +420,13 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             closeConnection();
         }
        return (List<ProgramSlot>) searchResults;
+    }
+
+    private void checkOverlapping(ProgramSlot valueObject) throws SQLException {
+        String sql = "SELECT * FROM `program-slot` WHERE (`dataOfProgram` = ? ) ORDER BY `startTime` ASC;";
+        List<ProgramSlot> searchResults = listQuery(connection.prepareStatement(sql));
+        closeConnection();
+
     }
 
     private void openConnection() {

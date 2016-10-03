@@ -173,7 +173,7 @@ public class ScheduleServiceTest {
 
         verify(scheduleDAO).delete(updatedps);
         assertThat(updatedps.getDateOfProgram(), is(date));
-        assertThat(updatedps.getDuration(), is(startTime));
+        assertThat(updatedps.getStartTime(), is(startTime));
         assertThat(false, is(ps.equals(updatedps)));
 
         verifyNoMoreInteractions(scheduleDAO);
