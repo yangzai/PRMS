@@ -75,7 +75,7 @@
             </fileset>
 	</path>
         <property name="phoenix.subpath" value="sg/edu/nus/iss/phoenix"/>
-        <javadoc destdir="dist/javadoc" packagenames="sg.edu.nus.iss.phoenix.*" classpathref="classpath">
+        <javadoc destdir="${dist.javadoc.dir}" packagenames="sg.edu.nus.iss.phoenix.*" classpathref="classpath">
             <fileset dir="${src.dir}" defaultexcludes="yes">
                 <include name="${phoenix.subpath}/user/service/UserService.java"/>
                 <include name="${phoenix.subpath}/user/service/ReviewSelectUserService.java"/>
@@ -84,5 +84,5 @@
                 <include name="${phoenix.subpath}/schedule/service/ReviewSelectScheduledProgramService.java"/>
             </fileset>
         </javadoc>
-    </target> 
+    </target>
 </project>
