@@ -145,11 +145,13 @@ public class ScheduleServiceTest {
     public void processCreateTest() throws Exception {
         ProgramSlot ps = new ProgramSlot(startTime,date);
         ps.setAll(date,new Time(3600),startTime, rp, pres, prod);
+        when(scheduleDAO.checkProgramSlotExists(ps)).thenReturn(false);
+
         scheduleService.processCreate(ps);
 
+        verify(scheduleDAO).checkProgramSlotExists(ps);
         verify(scheduleDAO).create(ps);
         verifyNoMoreInteractions(scheduleDAO);
-
     }
 
     @Test
