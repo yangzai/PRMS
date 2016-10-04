@@ -15,7 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by yao on 15/09/16.
+ * <p><strong>ReviewSelectScheduleProgramService</strong> is for Review Select Scheduled Program use case.
+ * It will get the list of all program slot and return </p>
+ * @author Chen Yao
+ * @version 1.0 20 Sep 2016
  */
 public class ReviewSelectScheduledProgramService {
     DAOFactoryImpl factory;
@@ -23,6 +26,9 @@ public class ReviewSelectScheduledProgramService {
     ProgramDAO pdao;
     UserDao udao;
 
+    /**
+     * Constructor of the service, get all the DAO object from factory.
+     */
     public ReviewSelectScheduledProgramService() {
         super();
         // TODO Auto-generated constructor stub
@@ -32,6 +38,11 @@ public class ReviewSelectScheduledProgramService {
         udao = factory.getUserDAO();
     }
 
+    /**
+     * This method will return list of all Program Slot object and their attribute object.
+     * Presenter/Producer and RadioProgram object will also be instantiate and add to the Program Slot.
+     * @return  List of all Program Slot object
+     */
     public List<ProgramSlot> reviewSelectScheduledProgram() {
         List<ProgramSlot> data = null;
         try {

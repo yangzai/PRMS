@@ -15,10 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Tran Ngoc Hieu 20 Sep 2016
- * The ManageSchedule Command is triggered when user select Manage Schedule. It
+ * <p> <strong>ManageScheduleCmd</strong> is triggered when user select Manage Schedule. It
  * will get the list of program slot from Use Case ReviewSelectScheduledProgram
- * and display it in scheduleProgramList page.
+ * and display it in scheduleProgramList page.</p>
+ *
+ * @author Tran Ngoc Hieu
+ * @version 1.0 20 Sep 2016
  */
 @Action("manageschedule")
 public class ManageScheduleCmd implements Perform {
@@ -26,9 +28,6 @@ public class ManageScheduleCmd implements Perform {
     public String perform(String path, HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         ReviewSelectScheduledProgramDelegate del = new ReviewSelectScheduledProgramDelegate();
         List<ProgramSlot> data = del.reviewSelectScheduledProgram();
-        //System.out.print(data.get(0).getDuration());
-        System.out.print("hello world");
-        //List<ProgramSlot> data = new ArrayList<ProgramSlot>();
         req.setAttribute("psl", data);
         return "/pages/scheduleProgramList.jsp";
     }
