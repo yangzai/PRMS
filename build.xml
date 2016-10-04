@@ -68,4 +68,21 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="prms-javadoc-compile" depends="compile">
+        <path id="classpath">
+            <fileset dir="lib">
+                <include name="*.jar" />
+            </fileset>
+	</path>
+        <property name="phoenix.subpath" value="sg/edu/nus/iss/phoenix"/>
+        <javadoc destdir="dist/javadoc" packagenames="sg.edu.nus.iss.phoenix.*" classpathref="classpath">
+            <fileset dir="${src.dir}" defaultexcludes="yes">
+                <include name="${phoenix.subpath}/user/service/UserService.java"/>
+                <include name="${phoenix.subpath}/user/service/ReviewSelectUserService.java"/>
+                <include name="${phoenix.subpath}/user/service/ReviewSelectPresenterProducerService.java"/>
+                <include name="${phoenix.subpath}/schedule/service/ScheduleService.java"/>
+                <include name="${phoenix.subpath}/schedule/service/ReviewSelectScheduledProgramService.java"/>
+            </fileset>
+        </javadoc>
+    </target> 
 </project>
