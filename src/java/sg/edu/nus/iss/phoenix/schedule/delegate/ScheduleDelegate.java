@@ -32,17 +32,16 @@ public class ScheduleDelegate {
      * This method will create a ProgramSlot in the database catch any exception
      * @param ps the program slot to be created.
      * @exception IllegalArgumentException If there is any error when creating programSlot
-     * @exception SQLException Error in SQL insert query
      */
-    public void processCreate(ProgramSlot ps) throws IllegalArgumentException, SQLException {
+    public void processCreate(ProgramSlot ps) throws IllegalArgumentException {
         scheduleService.processCreate(ps);
     }
 
-    public void processModify(ProgramSlot ps) {
+    public void processModify(ProgramSlot ps) throws IllegalArgumentException {
         scheduleService.processModify(ps);
     }
 
-    public void processDelete(Time startTime, Date dateOfProgram) {
+    public void processDelete(Time startTime, Date dateOfProgram) throws IllegalArgumentException{
         scheduleService.processDelete(startTime, dateOfProgram);
     }
 }
