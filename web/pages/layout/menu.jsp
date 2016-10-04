@@ -11,10 +11,20 @@
 </h3>
 <table class="framed">
 	<tr>
+
 		<td><a href="<c:url value="/pages/login.jsp"/>"> <fmt:message
 					key="caption.menu.login" />
 		</a></td>
 	</tr>
+	<c:if test="${sessionScope.user.roles[0].role=='admin'}">
+		<tr>
+			<td>
+				<a href="<c:url value="/nocturne/manageuser"/>"> <fmt:message
+						key="caption.menu.manageuser" />
+				</a>
+			</td>
+		</tr>
+	</c:if>
 	<c:if test="${sessionScope.user.roles[0].role=='manager'}">
 	<!--  search is not implemented , remove it from menu selection
         * <tr>
@@ -31,13 +41,7 @@
 				</a>
 			</td>
 	</tr>
-		<tr>
-			<td>
-				<a href="<c:url value="/nocturne/manageuser"/>"> <fmt:message
-						key="caption.menu.manageuser" />
-				</a>
-			</td>
-		</tr>
+
 		<tr>
 			<td>
 				<a href="<c:url value="/nocturne/manageschedule"/>"> <fmt:message
