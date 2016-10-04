@@ -164,4 +164,18 @@ public interface ScheduleDAO {
      */
     public abstract List<ProgramSlot> searchMatching(ProgramSlot valueObject)
             throws SQLException;
+
+    /**
+     * checkProgramSlotExists-Method. This method returns and forwards to
+     * errorPage if program slot exist of overlapping with other program slot
+     * in database.
+     *
+     * @param valueObject
+     *            This parameter contains the class instance where search will
+     *            be based. Primary-key field should not be set.
+     * @return
+     * @throws sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException
+     * @throws java.sql.SQLException
+     */
+    public abstract boolean checkProgramSlotExists (ProgramSlot valueObject) throws SQLException, NotFoundException;
 }

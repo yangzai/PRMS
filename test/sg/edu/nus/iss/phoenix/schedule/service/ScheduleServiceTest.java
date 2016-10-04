@@ -61,6 +61,7 @@ public class ScheduleServiceTest {
     private Producer prod;
     private Presenter pres;
     private ProgramSlot ps;
+    private Time duration;
 
     @Before
     public void setUp() throws SQLException {
@@ -89,7 +90,7 @@ public class ScheduleServiceTest {
 
         //setup programe slot input
         Calendar now = Calendar.getInstance();
-        //duration = new Time(3600);
+        duration = new Time(3600);
         startTime =new Time(now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE),now.get(Calendar.SECOND));
         date = new java.sql.Date(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
         rp = new RadioProgram("test");
@@ -173,7 +174,7 @@ public class ScheduleServiceTest {
 
         verify(scheduleDAO).delete(updatedps);
         assertThat(updatedps.getDateOfProgram(), is(date));
-        assertThat(updatedps.getDuration(), is(startTime));
+        assertThat(updatedps.getStartTime(), is(startTime));
         assertThat(false, is(ps.equals(updatedps)));
 
         verifyNoMoreInteractions(scheduleDAO);
