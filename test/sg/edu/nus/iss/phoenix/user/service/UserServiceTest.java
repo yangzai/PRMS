@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -116,7 +117,7 @@ public class UserServiceTest {
         user.setAll("4", "123", "test", "admin");
 
         when(userDAO.searchMatching(user.getId())).thenReturn(user);
-        assertThat(ReturnCode.SUCCESS, is(userService.resetPassword(user.getId(),"321")));
+        assertThat(ReturnCode.SUCCESS, is(userService.resetPassword(user.getId(), "321")));
 
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userDAO).save(userCaptor.capture());
@@ -135,11 +136,11 @@ public class UserServiceTest {
     @Test
     public void resetPasswordNullPassword() throws Exception {
         User user = new User();
-        user.setAll("6", "123", "test", "admin");
-
+        user.setAll("6", "", "test", "admin");
+        String[] roles = {"admin"};
         when(userDAO.searchMatching(user.getId())).thenReturn(user);
         assertThat("Do we support null password for user reset.", false,
-                is(ReturnCode.SUCCESS == userService.resetPassword(user.getId(),"")));
+                is(ReturnCode.SUCCESS == userService.processModify(user, roles)));
 
         verify(userDAO).searchMatching(user.getId());
         verifyNoMoreInteractions(userDAO);
