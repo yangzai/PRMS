@@ -74,15 +74,11 @@
                 <include name="*.jar" />
             </fileset>
 	</path>
-        <property name="phoenix.subpath" value="sg/edu/nus/iss/phoenix"/>
-        <javadoc destdir="dist/javadoc" packagenames="sg.edu.nus.iss.phoenix.*" classpathref="classpath">
-            <fileset dir="${src.dir}" defaultexcludes="yes">
-                <include name="${phoenix.subpath}/user/service/UserService.java"/>
-                <include name="${phoenix.subpath}/user/service/ReviewSelectUserService.java"/>
-                <include name="${phoenix.subpath}/user/service/ReviewSelectPresenterProducerService.java"/>
-                <include name="${phoenix.subpath}/schedule/service/ScheduleService.java"/>
-                <include name="${phoenix.subpath}/schedule/service/ReviewSelectScheduledProgramService.java"/>
-            </fileset>
-        </javadoc>
-    </target> 
+        <property name="phoenix.package" value="sg.edu.nus.iss.phoenix"/>
+        <property name="javadoc.packagenames"
+                  value="${phoenix.package}.user.service,${phoenix.package}.schedule.service"/>
+        <javadoc destdir="${dist.javadoc.dir}" sourcepath="${src.dir}"
+                 packagenames="${javadoc.packagenames}"
+                 classpathref="classpath" author="true" version="true"/>
+    </target>
 </project>

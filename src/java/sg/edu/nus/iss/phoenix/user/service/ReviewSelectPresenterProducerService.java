@@ -14,7 +14,9 @@ import java.util.logging.Logger;
 
 /**
  * <p> <strong>ReviewSelectPresenterProducerService</strong> is for Review Select Presenter/Producer use case.
- * This class will help user in selecting Presenter or Producer from database</p>
+ * This class will help user in selecting Presenter or Producer from database. The difference between this
+ * class and <strong>ReviewSelectUserService</strong> is: this class will return the list type Presenter/Producer only
+ * while the ReviewSelectUserService will display all user in the system</p>
  *
  * @author Gao Haijun
  * @version 1.0 15 Sep 2016

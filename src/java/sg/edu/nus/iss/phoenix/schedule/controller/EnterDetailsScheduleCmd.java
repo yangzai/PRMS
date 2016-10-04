@@ -33,10 +33,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Added by Xuemin on 15/09/20.
+ * <p><strong>EnterDetailsScheduleCmd</strong> is a controller for Create/Copy/Modify a program slot.
+ * Based on the selection, it will route the request to different page for selecting Presenter/Producer
+ * RadioProgram or submit the input from user</p>
+ * @author Wang Xuemin, Tran Ngoc Hieu
+ * @version 1.0 20 Sep 2016
  */
 @Action("enterps")
 public class EnterDetailsScheduleCmd implements Perform {
+    /**
+     * This method will determine what is the action user select and route the request to corresponding page.
+     * For final submission, it will create/modify existing program slot by calling the Schedule Service class.
+     * @param path Path of the request
+     * @param req Servlet request contain action and details of user input
+     * @param resp Servlet response
+     */
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         ScheduleDelegate del = new ScheduleDelegate();

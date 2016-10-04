@@ -11,7 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by NguyenTrung on 9/9/16.
+ * <p><strong>ReviewSelectUserService</strong> is meant for use case <strong>Maintain User</strong> to display a list
+ * of all users in the system</p>
+ *
+ * @author Nguyen Bui An Trung
+ * @version 1.0 9 Sep 2016
  */
 public class ReviewSelectUserService {
     private static final Logger logger =
@@ -20,11 +24,18 @@ public class ReviewSelectUserService {
     DAOFactoryImpl factory;
     UserDao userDAO;
 
+    /**
+     * Constructor of the service, get all the DAO object from factory.
+     */
     public ReviewSelectUserService() {
         factory = new DAOFactoryImpl();
         userDAO = factory.getUserDAO();
     }
 
+    /**
+     * This method will return list of all user in the system
+     * @return  List of all User
+     */
     public List<User> getAllUsers(){
         try {
             return userDAO.loadAll();

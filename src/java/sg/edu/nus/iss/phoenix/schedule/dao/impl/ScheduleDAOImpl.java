@@ -423,17 +423,26 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     public boolean checkProgramSlotExists (ProgramSlot valueObject) throws SQLException, NotFoundException {
         boolean isOverlapping = false;
         if (valueObject != null){
-            String sql = "SELECT * FROM `program-slot` WHERE (`dataOfProgram` = ? ) ORDER BY `startTime` ASC;";
-            List<ProgramSlot> searchResults = listQuery(connection.prepareStatement(sql));
-            closeConnection();
-            for (int i = 0; i < searchResults.size(); i++){
-                Time endTime = plusDurationTime(searchResults.get(i).getStartTime(), searchResults.get(i).getDuration());
-                Time voEndTime = plusDurationTime(valueObject.getStartTime(), valueObject.getDuration());
-                if (valueObject.getStartTime().after(endTime) || voEndTime.before(searchResults.get(i).getStartTime())){
-                    isOverlapping = false;
-                } else {
-                    isOverlapping = true;
+            String sql = "SELECT * FROM `program-slot` WHERE (`dateOfProgram` = ? ) ORDER BY `startTime` ASC;";
+            PreparedStatement stmt = null;
+            openConnection();
+            try {
+                stmt = connection.prepareStatement(sql);
+                stmt.setDate(1, valueObject.getDateOfProgram());
+                List<ProgramSlot> searchResults = listQuery(stmt);
+                for (int i = 0; i < searchResults.size(); i++){
+                    Time endTime = plusDurationTime(searchResults.get(i).getStartTime(), searchResults.get(i).getDuration());
+                    Time voEndTime = plusDurationTime(valueObject.getStartTime(), valueObject.getDuration());
+                    if (valueObject.getStartTime().after(endTime) || voEndTime.before(searchResults.get(i).getStartTime())){
+                        isOverlapping = false;
+                    } else {
+                        isOverlapping = true;
+                    }
                 }
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+                closeConnection();
             }
         }else {
             throw new NotFoundException("program slot is null");
