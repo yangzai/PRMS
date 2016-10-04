@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class ScheduleDAOImpl implements ScheduleDAO{
     Connection connection;
 
+
     /* (non-Javadoc)
      * @see sg.edu.nus.iss.phoenix.radioprogram.dao.impl.ProgramDAO#createValueObject()
      */
@@ -93,30 +94,28 @@ public class ScheduleDAOImpl implements ScheduleDAO{
     @Override
     public synchronized void create(ProgramSlot valueObject)
             throws SQLException {
+            String sql = " ";
+            PreparedStatement stmt = null;
+            openConnection();
+            try {
+                sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, `program-name`, `presenter`, `producer`) VALUES (?,?,?,?,?,?); ";
+                stmt = connection.prepareStatement(sql);
+                stmt.setTime(1, valueObject.getDuration());
+                stmt.setDate(2, valueObject.getDateOfProgram());
+                stmt.setTime(3, valueObject.getStartTime());
+                stmt.setString(4, valueObject.getRadioProgram().getName());
+                stmt.setString(5, valueObject.getPresenter().getId());
+                stmt.setString(6, valueObject.getProducer().getId());
+                int rowcount = databaseUpdate(stmt);
+                if (rowcount != 1) {
+                    throw new SQLException("PrimaryKey Error when updating DB!");
+                }
 
-        String sql = " ";
-        PreparedStatement stmt = null;
-        openConnection();
-        try {
-            sql = "INSERT INTO `program-slot` (`duration`, `dateOfProgram`, `startTime`, `program-name`, `presenter`, `producer`) VALUES (?,?,?,?,?,?); ";
-            stmt = connection.prepareStatement(sql);
-            stmt.setTime(1, valueObject.getDuration());
-            stmt.setDate(2, valueObject.getDateOfProgram());
-            stmt.setTime(3, valueObject.getStartTime());
-            stmt.setString(4, valueObject.getRadioProgram().getName());
-            stmt.setString(5, valueObject.getPresenter().getId());
-            stmt.setString(6, valueObject.getProducer().getId());
-            int rowcount = databaseUpdate(stmt);
-            if (rowcount != 1) {
-                throw new SQLException("PrimaryKey Error when updating DB!");
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+                closeConnection();
             }
-
-        } finally {
-            if (stmt != null)
-                stmt.close();
-            closeConnection();
-        }
-
     }
 
     /* (non-Javadoc)
@@ -419,6 +418,35 @@ public class ScheduleDAOImpl implements ScheduleDAO{
             closeConnection();
         }
        return (List<ProgramSlot>) searchResults;
+    }
+
+    public boolean checkProgramSlotExists (ProgramSlot valueObject) throws SQLException, NotFoundException {
+        boolean isOverlapping = false;
+        if (valueObject != null){
+            String sql = "SELECT * FROM `program-slot` WHERE (`dataOfProgram` = ? ) ORDER BY `startTime` ASC;";
+            List<ProgramSlot> searchResults = listQuery(connection.prepareStatement(sql));
+            closeConnection();
+            for (int i = 0; i < searchResults.size(); i++){
+                Time endTime = plusDurationTime(searchResults.get(i).getStartTime(), searchResults.get(i).getDuration());
+                Time voEndTime = plusDurationTime(valueObject.getStartTime(), valueObject.getDuration());
+                if (valueObject.getStartTime().after(endTime) || voEndTime.before(searchResults.get(i).getStartTime())){
+                    isOverlapping = false;
+                } else {
+                    isOverlapping = true;
+                }
+            }
+        }else {
+            throw new NotFoundException("program slot is null");
+        }
+        return isOverlapping;
+    }
+
+    private Time plusDurationTime(Time startTime, Time durationTime) {
+        long totalSeconds = durationTime.toLocalTime().getHour() * 3600 +
+                durationTime.toLocalTime().getMinute() * 60 +
+                durationTime.toLocalTime().getSecond();
+        Time endTime = Time.valueOf(startTime.toLocalTime().plusSeconds(totalSeconds));
+        return endTime;
     }
 
     private void openConnection() {

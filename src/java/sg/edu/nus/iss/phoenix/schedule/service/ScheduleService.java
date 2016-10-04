@@ -103,7 +103,15 @@ public class ScheduleService {
      * @exception IllegalArgumentException If there is any error when creating programSlot
      */
     public void processCreate(ProgramSlot ps) throws IllegalArgumentException {
+        boolean isProgramSlotExist;
         try {
+            isProgramSlotExist = scheduleDAO.checkProgramSlotExists(ps);
+        } catch (SQLException | NotFoundException e) {
+            throw new IllegalArgumentException("Internal Server error");
+        }
+        if (isProgramSlotExist){
+            throw new IllegalArgumentException("Error overlapping with existing program slot in the system");
+        } else try {
             scheduleDAO.create(ps);
         }catch (SQLException e){
             e.printStackTrace();
