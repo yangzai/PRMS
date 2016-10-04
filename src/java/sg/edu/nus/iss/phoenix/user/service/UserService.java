@@ -131,7 +131,7 @@ public class UserService {
      * @param strs User object to be modified
      * @return List of roles object
      */
-    public ArrayList<Role> searchRolesByStrings(String[] strs) throws Exception {
+    public ArrayList<Role> searchRolesByStrings(String[] strs) {
         ArrayList<Role> roles = new ArrayList<>();
         if (strs == null) return roles;
         for (String roleStr : strs) {
