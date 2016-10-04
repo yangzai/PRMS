@@ -87,8 +87,13 @@ public class ScheduleService {
      * @exception IllegalArgumentException If there is any error when creating programSlot
      * @exception SQLException Error in SQL insert query
      */
-    public void processCreate(ProgramSlot ps) throws IllegalArgumentException, SQLException {
-        scheduleDAO.create(ps);
+    public boolean processCreate(ProgramSlot ps) throws IllegalArgumentException, SQLException, NotFoundException{
+        if (!scheduleDAO.checkProgramSlotExists(ps)){
+            scheduleDAO.create(ps);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     public void processModify(ProgramSlot ps) {

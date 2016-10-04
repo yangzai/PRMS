@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.phoenix.schedule.delegate;
 
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
@@ -34,8 +35,8 @@ public class ScheduleDelegate {
      * @exception IllegalArgumentException If there is any error when creating programSlot
      * @exception SQLException Error in SQL insert query
      */
-    public void processCreate(ProgramSlot ps) throws IllegalArgumentException, SQLException {
-        scheduleService.processCreate(ps);
+    public boolean processCreate(ProgramSlot ps) throws IllegalArgumentException, SQLException, NotFoundException{
+        return scheduleService.processCreate(ps);
     }
 
     public void processModify(ProgramSlot ps) {
